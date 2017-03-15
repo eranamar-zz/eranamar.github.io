@@ -7,8 +7,10 @@ layout: default
   .MathJax * {
       color: black;
   }
-  div.post-content {
+  div.hide-with-loader {
     display: none; 
+  }
+  div.post-content{
     text-align: justify;
   }
 </style>
@@ -20,15 +22,18 @@ layout: default
     <p class="post-meta"><time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%b %-d, %Y" }}</time>{% if page.author %} • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ page.author }}</span></span>{% endif %}</p>
   </header>
   <div id="loader" >
-    Loading...
+    Loading content and comments...
   </div>
-  <div class="post-content" itemprop="articleBody">
-    {{ content }}
-  </div>
+  <div class="hide-with-loader">
+    <div class="post-content" itemprop="articleBody">
+      {{ content }}
+    
+    </div>
 
-  {% if site.disqus.shortname %}
-    {% include disqus_comments.html %}
-  {% endif %}
+    {% if site.disqus.shortname %}
+      {% include disqus_comments.html %}
+    {% endif %}
+  </div>
 </article>
 
 <script type="text/javascript">
@@ -40,7 +45,7 @@ layout: default
     });
 
     $(document).ready(function(){
-      var post = $('div.post-content');
+      var post = $('div.hide-with-loader');
       var loader = $('#loader');
       if(post.length){
         console.log(post);

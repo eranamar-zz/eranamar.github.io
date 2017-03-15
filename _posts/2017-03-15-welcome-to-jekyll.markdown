@@ -4,6 +4,7 @@ author: Yosef Pogrow
 title:  "testing the system (not real post)"
 date:   2017-03-15 14:02:35 +0200
 categories: sublinear algorithm
+comments: true
 ---
 
 <div id="globalWrapper">
