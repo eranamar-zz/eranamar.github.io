@@ -3,6 +3,16 @@ layout: default
 ---
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
+<style type="text/css">
+  .MathJax * {
+      color: black;
+  }
+  div.post-content {
+    display: none; 
+    text-align: justify;
+  }
+</style>
+
 <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
@@ -12,7 +22,7 @@ layout: default
   <div id="loader" >
     Loading...
   </div>
-  <div class="post-content" style="display:none; text-align:justify;" itemprop="articleBody">
+  <div class="post-content" itemprop="articleBody">
     {{ content }}
   </div>
 
@@ -41,4 +51,4 @@ layout: default
         });
       }
     });
-  </script>
+</script>
