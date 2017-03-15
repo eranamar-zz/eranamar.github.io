@@ -1,0 +1,44 @@
+---
+layout: default
+---
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">{{ page.title | escape }}</h1>
+    <p class="post-meta"><time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%b %-d, %Y" }}</time>{% if page.author %} • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ page.author }}</span></span>{% endif %}</p>
+  </header>
+  <div id="loader" >
+    Loading...
+  </div>
+  <div class="post-content" style="display:none; text-align:justify;" itemprop="articleBody">
+    {{ content }}
+  </div>
+
+  {% if site.disqus.shortname %}
+    {% include disqus_comments.html %}
+  {% endif %}
+</article>
+
+<script type="text/javascript">
+  'use strict';
+    MathJax.Hub.Config({
+      showMathMenu: false,
+      showMathMenuMSIE: false,
+      showProcessingMessages: true
+    });
+
+    $(document).ready(function(){
+      var post = $('div.post-content');
+      var loader = $('#loader');
+      if(post.length){
+        console.log(post);
+        
+        MathJax.Hub.Register.StartupHook("End",function () {
+          loader.hide();
+          post.show();
+        });
+      }
+    });
+  </script>
