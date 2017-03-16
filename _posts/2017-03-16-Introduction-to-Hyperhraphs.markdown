@@ -84,7 +84,10 @@ w
 </span> then, <span class="MathJax_Preview">
 <script type="math/tex;mode=display">
 
-w_{G}\left(S\right)=\sum_{e\in E:e\cap S\notin\{\emptyset,e\}}w(e)
+w_{G}\left(S\right)=\sum_{\begin{array}{c}
+e\in E\\
+e\cap S\notin\{\emptyset,e\}
+\end{array}}w(e)
 
 </script>
 </span>
@@ -168,7 +171,7 @@ E_{\epsilon}
 </h3>
 <div class="Unindented">
 For regular graphs, we know how to reduce the number of edges to be <span class="MathJax_Preview"><script type="math/tex">
-\mathcal{O}\left(\nicefrac{n}{\epsilon^{2}}\right)
+\mathcal{O}\left(n/\epsilon^{2}\right)
 </script>
 </span> for any <span class="MathJax_Preview"><script type="math/tex">
 \epsilon\in\left(0,1\right)
@@ -177,13 +180,13 @@ For regular graphs, we know how to reduce the number of edges to be <span class=
 n^{2}
 </script>
 </span>, there is an algorithms that can reduce the number of edges to <span class="MathJax_Preview"><script type="math/tex">
-\mathcal{O}\left(\nicefrac{n}{\epsilon^{2}}\right)
+\mathcal{O}\left(n/\epsilon^{2}\right)
 </script>
 </span>, while maintaining approximately the same weights for all possible cuts in the graph. Moreover, that algorithm find the cut-sparsifier in polynomial time. 
 </div>
 <div class="Indented">
 Later results show that this upper bound is also a lower bound, that is, there are graphs that cannot be reduced into less that <span class="MathJax_Preview"><script type="math/tex">
-\mathcal{O}\left(\nicefrac{n}{\epsilon^{2}}\right)
+\mathcal{O}\left(n/\epsilon^{2}\right)
 </script>
 </span> edges.
 </div>
