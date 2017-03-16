@@ -20,10 +20,10 @@ email: eran.amar@weizmann.ac.il
 disqus: {
     shortname: theorylunch
 }
-description:  # this means to ignore newlines until "baseurl:"
-  Computer Science topics over lunch.
+description:  
+  Computer Science topics over lunch
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: https://eranamar.github.io # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  eranamar
 google_analytics: UA-85168990-2
 # Build settings

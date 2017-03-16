@@ -50,9 +50,7 @@ layout: default
     $(document).ready(function(){
       var post = $('div.hide-with-loader');
       var loader = $('#loader');
-      if(post.length){
-        console.log(post);
-        
+      if(post.length){        
         MathJax.Hub.Register.StartupHook("End",function () {
           loader.hide();
           post.show();
