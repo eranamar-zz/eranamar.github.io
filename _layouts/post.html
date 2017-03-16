@@ -1,6 +1,14 @@
 ---
 layout: default
 ---
+<script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+		showMathMenu: false,
+		showMathMenuMSIE: false,
+		showProcessingMessages: true,
+		messageStyle: "normal"
+    });
+</script>
 <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 <style type="text/css">
@@ -38,12 +46,7 @@ layout: default
 
 <script type="text/javascript">
   'use strict';
-    MathJax.Hub.Config({
-      showMathMenu: false,
-      showMathMenuMSIE: false,
-      showProcessingMessages: true
-    });
-
+    
     $(document).ready(function(){
       var post = $('div.hide-with-loader');
       var loader = $('#loader');
