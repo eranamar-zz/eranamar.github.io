@@ -19,7 +19,7 @@ All the discussions in this blog was originated during our daily meeting for lun
 
 # Who are the authors?
 
-We are Master students from [Weizmann Institute of Science](https://www.weizmann.ac.il/feinberg/academics/msc-program-outline) working in several fields of Computer Science. Note that the writter of a post (mentioned as the "author" of the post) is usually just the one who volunteer to write it and NOT the one who brought up or presented the topic during out lunch.
+We are Master students from [Weizmann Institute of Science](https://www.weizmann.ac.il/feinberg/academics/msc-program-outline) working in several fields of Computer Science. Note that the writter of a post (mentioned as the "author" of the post) is usually just the one who volunteer to write it and NOT the one who brought up or presented the topic during our lunch.
 
 
 If you find any errors or want to give us comments, please send an email to [Eran](mailto:eran.amar@weizmann.ac.il). 
