@@ -1,6 +1,6 @@
 <head>
   <script> 
-		window.location.pathname.indexOf("{{site.baseurl}}") !== 0 && window.location.replace(window.location.protocol + window.location.host + "{{site.baseurl}}" + window.location.pathname);
+		window.location.pathname.indexOf("{{site.baseurl}}") !== 0 && window.location.replace("{{site.baseurl}}" + window.location.pathname);
   </script>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
