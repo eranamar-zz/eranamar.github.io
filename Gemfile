@@ -11,6 +11,8 @@ ruby RUBY_VERSION
 # Happy Jekylling!
 #gem "jekyll", "3.4.2"
 
+gem 'jekyll-watch'
+
 # This is the default theme for new Jekyll sites. You may change this to anything you like.
 gem "minima", "~> 2.0"
 
@@ -21,6 +23,8 @@ gem "github-pages", group: :jekyll_plugins
 # If you have any plugins, put them here!
 group :jekyll_plugins do
    gem "jekyll-feed", "~> 0.6"
+   gem "jekyll-minifier"
+   gem "sitemap_generator"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

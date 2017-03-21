@@ -17,9 +17,8 @@ author: Eran Amar, Yosef Pogrow, Ron Shiff
 repository: eranamar/eranamar.github.io
 title: Theory Lunch
 email: eran.amar@weizmann.ac.il
-disqus: {
-    shortname: theorylunch
-}
+disqus: 
+  shortname: theorylunch
 description:  
   Computer Science topics over lunch
 baseurl: "" # the subpath of your site, e.g. /blog
@@ -29,8 +28,12 @@ google_analytics: UA-85168990-2
 # Build settings
 markdown: kramdown
 theme: minima
-gems:
+gems: 
   - jekyll-feed
+  - jekyll-minifier
+  - jekyll-sitemap
 exclude:
   - Gemfile
   - Gemfile.lock
+sitemap: 
+  filename: "sitemap.xml"

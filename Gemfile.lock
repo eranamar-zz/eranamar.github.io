@@ -9,24 +9,25 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.0)
       public_suffix (~> 2.0, >= 2.0.2)
+    builder (3.2.3)
     coffee-script (2.4.1)
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
     colorator (1.1.0)
+    cssminify2 (2.0.1)
     ethon (0.10.1)
       ffi (>= 1.3.0)
     execjs (2.7.0)
     faraday (0.11.0)
       multipart-post (>= 1.2, < 3)
-    ffi (1.9.18)
     ffi (1.9.18-x64-mingw32)
     forwardable-extended (2.6.0)
     gemoji (3.0.0)
-    github-pages (127)
+    github-pages (128)
       activesupport (= 4.2.7)
       github-pages-health-check (= 1.3.3)
-      jekyll (= 3.4.1)
+      jekyll (= 3.4.2)
       jekyll-avatar (= 0.4.2)
       jekyll-coffeescript (= 1.0.1)
       jekyll-default-layout (= 0.1.4)
@@ -75,8 +76,9 @@ GEM
     html-pipeline (2.5.0)
       activesupport (>= 2)
       nokogiri (>= 1.4)
+    htmlcompressor (0.3.1)
     i18n (0.8.1)
-    jekyll (3.4.1)
+    jekyll (3.4.2)
       addressable (~> 2.4)
       colorator (~> 1.0)
       jekyll-sass-converter (~> 1.0)
@@ -104,6 +106,11 @@ GEM
       activesupport (~> 4.0)
       html-pipeline (~> 2.3)
       jekyll (~> 3.0)
+    jekyll-minifier (0.1.1)
+      cssminify2 (~> 2.0)
+      htmlcompressor (~> 0.3)
+      jekyll (~> 3.0)
+      uglifier (~> 2.7)
     jekyll-optional-front-matter (0.1.2)
       jekyll (~> 3.0)
     jekyll-paginate (1.1.0)
@@ -167,8 +174,6 @@ GEM
     minitest (5.10.1)
     multipart-post (2.0.0)
     net-dns (0.8.0)
-    nokogiri (1.6.8.1)
-      mini_portile2 (~> 2.1.0)
     nokogiri (1.6.8.1-x64-mingw32)
       mini_portile2 (~> 2.1.0)
     octokit (4.6.2)
@@ -185,6 +190,8 @@ GEM
     sawyer (0.8.1)
       addressable (>= 2.3.5, < 2.6)
       faraday (~> 0.8, < 1.0)
+    sitemap_generator (5.3.1)
+      builder (~> 3.0)
     terminal-table (1.7.3)
       unicode-display_width (~> 1.1.1)
     thread_safe (0.3.6)
@@ -194,17 +201,22 @@ GEM
       thread_safe (~> 0.1)
     tzinfo-data (1.2017.1)
       tzinfo (>= 1.0.0)
+    uglifier (2.7.2)
+      execjs (>= 0.3.0)
+      json (>= 1.8.0)
     unicode-display_width (1.1.3)
     wdm (0.1.1)
 
 PLATFORMS
-  ruby
   x64-mingw32
 
 DEPENDENCIES
   github-pages
   jekyll-feed (~> 0.6)
+  jekyll-minifier
+  jekyll-watch
   minima (~> 2.0)
+  sitemap_generator
   tzinfo-data
   wdm (>= 0.1.0)
 
