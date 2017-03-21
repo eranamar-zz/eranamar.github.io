@@ -17,6 +17,7 @@ author: Eran Amar, Yosef Pogrow, Ron Shiff
 repository: eranamar/eranamar.github.io
 title: Theory Lunch
 email: eran.amar@weizmann.ac.il
+destination: site/
 disqus: 
   shortname: theorylunch
 description:  
