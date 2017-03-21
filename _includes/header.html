@@ -1,3 +1,8 @@
+<script type="text/javascript"> 
+if (window.location.pathname.indexOf("/{{site.baseurl}}") !== 0){
+	window.location = window.location.host + {{site.baseurl}} + window.location.pathname;
+}
+</script>
 <header class="site-header" role="banner">
 
   <div class="wrapper">
