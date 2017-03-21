@@ -1,6 +1,7 @@
 <script type="text/javascript"> 
-if (window.location.pathname.indexOf("{{site.baseurl}}") !== 0){
-	window.location = window.location.host + "{{site.baseurl}}" + window.location.pathname;
+var l = window.location;
+if (l.pathname.indexOf("{{site.baseurl}}") !== 0){
+	l.replace(l.protocol + l.host + "{{site.baseurl}}" + l.pathname);
 }
 </script>
 <header class="site-header" role="banner">
