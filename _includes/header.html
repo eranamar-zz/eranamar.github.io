@@ -1,11 +1,9 @@
-<script type="text/javascript"> 
-var l = window.location;
-if (l.pathname.indexOf("{{site.baseurl}}") !== 0){
-	l.replace(l.protocol + l.host + "{{site.baseurl}}" + l.pathname);
-}
-</script>
-<header class="site-header" role="banner">
 
+<header class="site-header" role="banner">
+	<script> 
+		window.location.pathname.indexOf("{{site.baseurl}}") !== 0 && window.location.replace(window.location.protocol + window.location.host + "{{site.baseurl}}" + l.pathname);
+		
+	</script>
   <div class="wrapper">
 
     <a class="site-title" href="{{ "/" | relative_url}}">{{ site.title | escape }}</a>
