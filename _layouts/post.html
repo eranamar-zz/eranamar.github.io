@@ -25,6 +25,49 @@ layout: default
     margin-bottom: 15px;
     margin-top: 15px;
   }
+  .Theorem {
+    display: block;
+    margin: 12px 0;
+    font-style: italic;
+  }
+  .Theorem:before {
+      content: "Theorem.";
+      font-weight: bold;
+      font-style: normal;
+  }
+  .Lemma {
+      display: block;
+      margin: 12px 0;
+      font-style: italic;
+  }
+  .Lemma:before {
+      content: "Lemma.";
+      font-weight: bold;
+      font-style: normal;
+  }
+  .Proof {
+      display: block;
+      margin: 12px 0;
+      font-style: normal;
+  }
+  .Proof:before {
+      content: "Proof.";
+      font-style: italic;
+  }
+  .Proof:after {
+      content: "\25FC";
+      float:right;
+  }
+  .Definition {
+      display: block;
+      margin: 12px 0;
+      font-style: normal;
+  }
+  .Definition:before {
+      content: "Definition.";
+      font-weight: bold;
+      font-style: normal;
+  }
 </style>
 
 <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
