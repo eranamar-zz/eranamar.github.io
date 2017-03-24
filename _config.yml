@@ -24,6 +24,7 @@ description:
   Computer Science topics over lunch
 baseurl: "/site" # the subpath of your site, e.g. /blog
 url: https://eranamar.github.io # the base hostname & protocol for your site, e.g. http://example.com
+url_production: https://eranamar.github.io
 github_username:  eranamar
 google_analytics: UA-85168990-2
 # Build settings
