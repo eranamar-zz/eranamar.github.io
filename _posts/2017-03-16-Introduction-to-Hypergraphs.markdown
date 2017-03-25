@@ -51,7 +51,7 @@ e=\left\{ u,v\right\} \in E\subseteq\left\{ A\mid A\subseteq V,\:\:\left|A\right
 </span>. The function <span class="MathJax_Preview"><script type="math/tex">
 w:\:E\rightarrow\mathbb{R}_{\ge0}
 </script>
-</span> assign non-negative weight for each edge in the graph, and called weight function.
+</span> assign non-negative weight for each edge in the graph, and called weight function. For instance, we can model friendships in Facebook as a graph, the vertices will be all the users in Facebook, and there will be an edge between any pair of useres if they are “friends” of each other.
 </div>
 <div class="Indented">
 A <i>cut</i> in a graph <span class="MathJax_Preview"><script type="math/tex">
@@ -97,22 +97,37 @@ in words, the weight of a cut is the sum of weights of all edges that cross it.
 <a class="toc" name="toc-Section-2">2</a> Generalizing to Hyper-Graphs
 </h1>
 <div class="Unindented">
+The model of a graph, as defined above, can’t be used to describe non binary relationships. For example, say we want to model Facebook groups via a graph; the only way to do so is by including in the set of vertices also all the Facebook groups and then connecting each user to all its groups with edges. The main limitation here is that the vertices have more than one meaning (they can describe both <i>users</i> and <i>groups</i>). In order to avoid such ambiguity we can use a richer model, we can use Hypergraphs.
+</div>
+<div class="Indented">
 Hypergraphs are generalization of graphs in the sense that edges may be of arbitrary size. Meaning that now <span class="MathJax_Preview"><script type="math/tex">
 E\subseteq2^{V}\backslash\emptyset=\left\{ A\mid A\subseteq V,\:\:\left|A\right|>0\right\} 
 </script>
-</span>. For instance, <span class="MathJax_Preview"><script type="math/tex">
+</span>. Going back to our example, we can model Facebook groups by the graph <span class="MathJax_Preview"><script type="math/tex">
+\left(V,E\right)
+</script>
+</span> when <span class="MathJax_Preview"><script type="math/tex">
+V
+</script>
+</span> is the set of all users, and any group in Facebook will be an edge <span class="MathJax_Preview"><script type="math/tex">
+e\in2^{V}
+</script>
+</span> such that <span class="MathJax_Preview"><script type="math/tex">
+e
+</script>
+</span> contains the users belongs to that group. More mathematical example will be <span class="MathJax_Preview"><script type="math/tex">
 G=\left(\left[5\right],\left\{ \left\{ 4\right\} ,\left\{ 1,2,5\right\} \right\} \right)
 </script>
-</span> is a valid hypergraph with two edges: <span class="MathJax_Preview"><script type="math/tex">
+</span>, which is a valid hypergraph with two edges: <span class="MathJax_Preview"><script type="math/tex">
 \left\{ 4\right\} 
 </script>
 </span> and <span class="MathJax_Preview"><script type="math/tex">
 \left\{ 1,2,5\right\} 
 </script>
-</span>. Note that the definition of <i>cuts</i> and <i>cut weight</i> can be transfer easily into hypergraphs because they stay the same as with regular graphs.
+</span>. 
 </div>
 <div class="Indented">
-Usually we will be interested in family of hypergraphs with limited size, that is, hypergraphs where each edge is of size at most <span class="MathJax_Preview"><script type="math/tex">
+Note that the definition of <i>cuts</i> and <i>cut weight</i> can be transfer easily into hypergraphs because they stay the same as with regular graphs. Usually we will be interested in family of hypergraphs with limited size, that is, hypergraphs where each edge is of size at most <span class="MathJax_Preview"><script type="math/tex">
 r
 </script>
 </span>. Such hypergraphs are said to be <i>r-uniform</i>.
