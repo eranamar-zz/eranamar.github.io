@@ -172,15 +172,12 @@ a=0
 \epsilon<1
 </script>
 </span> is now holds whenever <span class="MathJax_Preview"><script type="math/tex">
-\mu<t
+t<\mu
 </script>
 </span>, which make sense because Chernoff’s bound, as we defined it in the beginning, only concerned with deviations that are up to <span class="MathJax_Preview"><script type="math/tex">
 \mu
 </script>
-</span> (because <span class="MathJax_Preview"><script type="math/tex">
-\epsilon\in\left(0,1\right)
-</script>
-</span>). 
+</span>. 
 </div>
 <div class="Indented">
 Next, the term we got for Hoeffding is simplified further into <span class="MathJax_Preview">
