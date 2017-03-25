@@ -259,5 +259,5 @@ t\in\left[0,n\left(1-2p\right)\right]
 <br></div>
 
 <div class="Indented">
-Note the differences from the beginning of the post: in this theorem the variables are i.i.d (rather than only independent) and they are discrete.
+Note the differences between that regime and the one from the definition at the beginning of the post: in this theorem the variables are i.i.d (rather than only independent) and they are discrete.
 </div>
