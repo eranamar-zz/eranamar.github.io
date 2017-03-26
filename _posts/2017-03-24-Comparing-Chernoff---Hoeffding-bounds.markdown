@@ -66,7 +66,7 @@ X:=\sum_{i=1}^{n}X_{i}
 </span>
 </div>
 <div class="Unindented">
-\begin_inset Separator plain\end_inset
+
 </div>
 <div class="Definition">
 Hoeffding bound. Let <span class="MathJax_Preview"><script type="math/tex">
@@ -96,7 +96,7 @@ t
 </span>
 </div>
 <div class="Unindented">
-\begin_inset Separator plain\end_inset
+
 </div>
 <h1 class="Section">
 <a class="toc" name="toc-Section-2">2</a> Writing Hoeffding’s bound as a Chernoff’s bound 
@@ -259,7 +259,7 @@ t\in\left[0,n\left(1-2p\right)\right]
 </span>
 <br></div>
 <div class="Unindented">
-\begin_inset Separator plain\end_inset
+
 </div>
 <div class="Indented">
 Note the differences between that regime and the one from the definition at the beginning of the post: in this theorem the variables are i.i.d (rather than only independent) and they are discrete.
