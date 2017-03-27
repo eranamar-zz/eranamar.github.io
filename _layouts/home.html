@@ -21,12 +21,12 @@ h2 {
           <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
         </h2>
 		<span>		
-			{{ post | tags }}	
+			tags: {{ post | tags }}	
 		</span>
       </li>
     {% endfor %}
   </ul>
-  <h3 class="heading">Available Tags</h1>
+  <h3 class="heading">All Tags</h1>
   <div>
   {{site | tag_cloud }}
   <div>
