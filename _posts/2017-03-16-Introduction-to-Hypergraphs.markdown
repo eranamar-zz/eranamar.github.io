@@ -4,6 +4,7 @@ author: Eran Amar
 title:  Introduction to Hypergraphs
 date:   2017-03-16
 comments: true
+tags: hypergraphs cuts_sparsifier
 ---
 
 
@@ -15,6 +16,7 @@ comments: true
 Warning: <a href="http://www.mathjax.org/">MathJax</a> requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser.
 </div><hr>
 </hr></noscript>
+
 
 
 <div class="Unindented">

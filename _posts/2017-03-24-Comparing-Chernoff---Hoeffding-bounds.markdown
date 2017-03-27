@@ -4,6 +4,7 @@ author: Eran Amar
 title:  Comparing Chernoff - Hoeffding bounds
 date:   2017-03-24
 comments: true
+tags: probability_theory
 ---
 
 
@@ -15,6 +16,7 @@ comments: true
 Warning: <a href="http://www.mathjax.org/">MathJax</a> requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser.
 </div><hr>
 </hr></noscript>
+
 
 
 <h1 class="Section">
