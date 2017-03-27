@@ -32,10 +32,12 @@ markdown: kramdown
 theme: minima
 gems: 
   - jekyll-feed
-  - jekyll-minifier
+#  - jekyll-minifier
   - jekyll-sitemap
 exclude:
   - Gemfile
   - Gemfile.lock
 sitemap: 
   filename: "sitemap.xml"
+tag_page_layout: tag_page
+tag_page_dir: tag
