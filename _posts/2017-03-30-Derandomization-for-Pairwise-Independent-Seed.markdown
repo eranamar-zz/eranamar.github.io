@@ -1,0 +1,458 @@
+---
+layout: post
+author: Eran Amar
+title:  Derandomization for Pairwise Independent Seed
+date:   2017-03-30
+comments: true
+tags: probability_theory algorithms
+---
+
+
+<script type="math/tex">
+\newcommand{\lyxlock}{}
+</script>
+<noscript>
+<div class="warning">
+Warning: <a href="http://www.mathjax.org/">MathJax</a> requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser.
+</div><hr>
+</hr></noscript>
+
+
+
+<h1 class="Section">
+<a class="toc" name="toc-Section-1">1</a> Randomized Algorithm Settings
+</h1>
+<div class="Unindented">
+Randomized algorithm is an algorithm that in addition to its input also uses internally <span class="MathJax_Preview"><script type="math/tex">
+t
+</script>
+</span> coin-tosses (i.e. random bits) in order to decide on its output, so different invocations of the algorithm with the same input may yield different outputs that depends on the results of the coins. One can think about the internal coin-tosses as a binary string <span class="MathJax_Preview"><script type="math/tex">
+r
+</script>
+</span> of length <span class="MathJax_Preview"><script type="math/tex">
+t
+</script>
+</span> that is being fixed before the algorithm starts, a.k.a <i>seed</i>, and the randomness now comes from choosing different string for each invocation. 
+</div>
+<div class="Indented">
+Note that tossing <span class="MathJax_Preview"><script type="math/tex">
+t
+</script>
+</span> fair coins, is exactly like drawing a random string <span class="MathJax_Preview"><script type="math/tex">
+r
+</script>
+</span> from the set <span class="MathJax_Preview"><script type="math/tex">
+\left\{ 0,1\right\} ^{t}
+</script>
+</span> where all candidates have equal probability (i.e. each has a probability of <span class="MathJax_Preview"><script type="math/tex">
+2^{-t}
+</script>
+</span>).
+</div>
+<div class="Indented">
+Say we have a randomize algorithm <span class="MathJax_Preview"><script type="math/tex">
+A
+</script>
+</span> for some problem that we would like to solve. We have a guarantee that for any input <span class="MathJax_Preview"><script type="math/tex">
+x
+</script>
+</span> of length <span class="MathJax_Preview"><script type="math/tex">
+n
+</script>
+</span>, algorithm <span class="MathJax_Preview"><script type="math/tex">
+A
+</script>
+</span> runs in <span class="MathJax_Preview"><script type="math/tex">
+poly\left(n\right)
+</script>
+</span>, and outputs either a valid solution <span class="MathJax_Preview"><script type="math/tex">
+S
+</script>
+</span> if it succeeds or output <span class="MathJax_Preview"><script type="math/tex">
+failed
+</script>
+</span>. The success probability of the algorithm is <span class="MathJax_Preview"><script type="math/tex">
+p
+</script>
+</span> (which may be even infinitesimally small). 
+</div>
+<div class="Indented">
+The first question to ask is, <i>can we convert the randomized algorithm into a deterministic one?</i>
+</div>
+<h1 class="Section">
+<a class="toc" name="toc-Section-2">2</a> Brute Force Derandomization
+</h1>
+<div class="Unindented">
+The answer is<i> yes</i>, and there is a simple way to do that: Upon receiving an input <span class="MathJax_Preview"><script type="math/tex">
+x
+</script>
+</span>, iterate over all possible strings <span class="MathJax_Preview"><script type="math/tex">
+r\in\left\{ 0,1\right\} ^{t}
+</script>
+</span> and run <span class="MathJax_Preview"><script type="math/tex">
+A_{r}\left(x\right)
+</script>
+</span>. That is, simulate <span class="MathJax_Preview"><script type="math/tex">
+A
+</script>
+</span> on <span class="MathJax_Preview"><script type="math/tex">
+x
+</script>
+</span> with <span class="MathJax_Preview"><script type="math/tex">
+r
+</script>
+</span> as the random seed. Return the first solution that <span class="MathJax_Preview"><script type="math/tex">
+A
+</script>
+</span> outputs (i.e. anything that is not <span class="MathJax_Preview"><script type="math/tex">
+failed
+</script>
+</span>).
+</div>
+<div class="Indented">
+The idea behind this method is that if there is a non-zero probability for <span class="MathJax_Preview"><script type="math/tex">
+A
+</script>
+</span> to output a valid solution for the input <span class="MathJax_Preview"><script type="math/tex">
+x
+</script>
+</span>, then there must be a random seed that leads to that output when executing algorithm <span class="MathJax_Preview"><script type="math/tex">
+A
+</script>
+</span> on <span class="MathJax_Preview"><script type="math/tex">
+x
+</script>
+</span>. So all we need to do is iterating over all possible seeds of length <span class="MathJax_Preview"><script type="math/tex">
+t
+</script>
+</span>, and that leads to a deterministic algorithm. 
+</div>
+<div class="Indented">
+You probably already see the problem here. If <span class="MathJax_Preview"><script type="math/tex">
+t=\mathcal{O}\left(n\right)
+</script>
+</span> then the running time of the deterministic procedure is <span class="MathJax_Preview"><script type="math/tex">
+2^{\mathcal{O}\left(t\right)}poly\left(n\right)
+</script>
+</span>.
+</div>
+<div class="Indented">
+Terrible, terrible running time.
+</div>
+<div class="Indented">
+On the other hand, if <span class="MathJax_Preview"><script type="math/tex">
+t
+</script>
+</span> is a constant or even up to <span class="MathJax_Preview"><script type="math/tex">
+\mathcal{O}\left(\log n\right)
+</script>
+</span>, then the resulting running time will stay polynomial, and everybody is happy. In the next section we will see that with an additional assumption, we can “decrease” the seed length from <span class="MathJax_Preview"><script type="math/tex">
+n
+</script>
+</span> to <span class="MathJax_Preview"><script type="math/tex">
+\log n
+</script>
+</span> bits.
+</div>
+<h1 class="Section">
+<a class="toc" name="toc-Section-3">3</a> Pairwise Independent Seed
+</h1>
+<div class="Unindented">
+We start off with a definition.
+</div>
+<div class="Definition">
+<span class="MathJax_Preview"><script type="math/tex">
+k
+</script>
+</span>-wise Independent Family. Let <span class="MathJax_Preview"><script type="math/tex">
+\mathcal{X}
+</script>
+</span> be a set of random variables. We say that <span class="MathJax_Preview"><script type="math/tex">
+\mathcal{X}
+</script>
+</span> is a <span class="MathJax_Preview"><script type="math/tex">
+k
+</script>
+</span>-wise independent family if for any subset of <span class="MathJax_Preview"><script type="math/tex">
+k
+</script>
+</span> variables <span class="MathJax_Preview"><script type="math/tex">
+X_{1},..,X_{k}\in\mathcal{X}
+</script>
+</span>, and values <span class="MathJax_Preview"><script type="math/tex">
+y_{1},...,y_{k}
+</script>
+</span> <span class="MathJax_Preview">
+<script type="math/tex;mode=display">
+
+\mathbf{P}\left[\bigwedge_{i\in I}X_{i}=y_{i}\right]=\prod_{i\in I}\mathbf{P}\left[X_{i}=y_{i}\right]\qquad\forall I\subseteq\left[k\right]
+
+</script>
+</span>
+that is, any subset of <span class="MathJax_Preview"><script type="math/tex">
+k
+</script>
+</span> random variables from <span class="MathJax_Preview"><script type="math/tex">
+\mathcal{X}
+</script>
+</span> are independent.
+</div>
+<div class="Definition*">
+The family <span class="MathJax_Preview"><script type="math/tex">
+\mathcal{X}
+</script>
+</span> is called pairwise independent family when <span class="MathJax_Preview"><script type="math/tex">
+k=2
+</script>
+</span>.
+</div>
+<div class="Unindented">
+
+</div>
+<div class="Indented">
+What this definition have with our settings? observe that up until now we implicitly assumed that the algorithm needs its coins to be fully independent. That is, if we think of <span class="MathJax_Preview"><script type="math/tex">
+s
+</script>
+</span> as a series of Bernoulli r.vs then we actually required <span class="MathJax_Preview"><script type="math/tex">
+s
+</script>
+</span> to be <span class="MathJax_Preview"><script type="math/tex">
+t
+</script>
+</span>-wise independent family, which is much stronger property than pairwise independence. If we relax that requirement and assume that the algorithm only needs its coins to be pairwise independent, then there is a way (described in next section) to construct <span class="MathJax_Preview"><script type="math/tex">
+n
+</script>
+</span> <i>pairwise independent</i> bits using only <span class="MathJax_Preview"><script type="math/tex">
+\mathcal{O}\left(\log n\right)
+</script>
+</span> <i>fully independent</i> bits. That construction can be “embedded” into our algorithm such that we ultimately ends up with a procedure that only requires <span class="MathJax_Preview"><script type="math/tex">
+\mathcal{O}\left(\log n\right)
+</script>
+</span> fully independent seed. Applying the derandomization method from previous section will result with a deterministic algorithm that will still run in <span class="MathJax_Preview"><script type="math/tex">
+poly\left(n\right)
+</script>
+</span> time.
+</div>
+<div class="Indented">
+Of course, we may assume pairwise independent only if it won’t break the correctness analysis of the randomized algorithm that we want to derandomize.
+</div>
+<h1 class="Section">
+<a class="toc" name="toc-Section-4">4</a> Stretching the Seed
+</h1>
+<div class="Unindented">
+Suppose we have <span class="MathJax_Preview"><script type="math/tex">
+\approx\log n
+</script>
+</span> fair fully independent coins, we want to construct a method to generate from them <span class="MathJax_Preview"><script type="math/tex">
+\approx n
+</script>
+</span> fair pairwise independent bits. The following claim shows such construction.
+</div>
+<div class="Claim">
+Suppose we have <span class="MathJax_Preview"><script type="math/tex">
+t:=\log\left(n\right)+1
+</script>
+</span> fully independent Bernoulli random variables, each with probability <span class="MathJax_Preview"><script type="math/tex">
+\frac{1}{2}
+</script>
+</span>. Fix them is some arbitrary order to get a (random) vector <span class="MathJax_Preview"><script type="math/tex">
+\mathbf{s}
+</script>
+</span> of length <span class="MathJax_Preview"><script type="math/tex">
+t
+</script>
+</span>. Let <span class="MathJax_Preview"><script type="math/tex">
+\mathcal{S}=\left\{ \left\langle \mathbf{s},\mathbf{x}\right\rangle _{mod2}\mid\mathbf{x}\in\left\{ 0,1\right\} ^{t},\:\:x\ne\mathbf{0}\right\} 
+</script>
+</span> be the set of all possible sums modulo 2 of those r.vs and note that <span class="MathJax_Preview"><script type="math/tex">
+\left|\mathcal{S}\right|=2^{t}-1=\Theta\left(n\right)
+</script>
+</span>, then <span class="MathJax_Preview"><script type="math/tex">
+\mathcal{S}
+</script>
+</span> is a family of pairwise independent bits.
+</div>
+<div class="Unindented">
+To prove that we start with a very basic lemma.
+</div>
+<div class="Lemma">
+Let <span class="MathJax_Preview"><script type="math/tex">
+X,Y\sim Bernoulli\left(0.5\right)
+</script>
+</span> be two independent random variables, let <span class="MathJax_Preview"><script type="math/tex">
+Z=X+Y
+</script>
+</span> then <span class="MathJax_Preview"><script type="math/tex">
+Z\sim Bernoulli\left(0.5\right)
+</script>
+</span>. Moreover, <span class="MathJax_Preview"><script type="math/tex">
+Z
+</script>
+</span> is independent from <span class="MathJax_Preview"><script type="math/tex">
+X
+</script>
+</span> and from <span class="MathJax_Preview"><script type="math/tex">
+Y
+</script>
+</span>.
+</div>
+<div class="Proof">
+For any <span class="MathJax_Preview"><script type="math/tex">
+b\in\left\{ 0,1\right\} 
+</script>
+</span><span class="MathJax_Preview">
+<script type="math/tex;mode=display">
+\begin{align*}
+\mathbf{P}\left[X+Y=b\right] & =\mathbf{P}\left[X=1,Y=1-b\right]+\mathbf{P}\left[X=0,Y=b\right]\\
+ & =\mathbf{P}\left[X=1\right]\mathbf{P}\left[Y=1-b\right]+\mathbf{P}\left[X=0\right]\mathbf{P}\left[Y=b\right]\\
+ & =\frac{1}{2}\left(\mathbf{P}\left[Y=1-b\right]+\mathbf{P}\left[Y=1-b\right]\right)\\
+ & =\frac{1}{2}
+\end{align*}
+</script>
+</span>
+thus <span class="MathJax_Preview"><script type="math/tex">
+Z\sim Bernoulli\left(0.5\right)
+</script>
+</span>. Next w.l.o.g we prove that <span class="MathJax_Preview"><script type="math/tex">
+Z
+</script>
+</span> independent from <span class="MathJax_Preview"><script type="math/tex">
+X
+</script>
+</span>. Take any <span class="MathJax_Preview"><script type="math/tex">
+b_{1},b_{2}\in\left\{ 0,1\right\} 
+</script>
+</span>. If <span class="MathJax_Preview"><script type="math/tex">
+b_{1}=b_{2}
+</script>
+</span> then <span class="MathJax_Preview">
+<script type="math/tex;mode=display">
+\begin{align*}
+\mathbf{P}\left[X=b_{1},Z=b_{2}\right] & =\mathbf{P}\left[X=b_{1},X+Y=b_{1}\right]\\
+ & =\mathbf{P}\left[X=b_{1},Y=0\right]\\
+ & =\mathbf{P}\left[X=b_{1}\right]\mathbf{P}\left[Y=0\right]\\
+ & =\mathbf{P}\left[X=b_{1}\right]\cdot\frac{1}{2}\\
+ & =\mathbf{P}\left[X=b_{1}\right]\mathbf{P}\left[Z=b_{1}\right]
+\end{align*}
+</script>
+</span>
+and we done. And if <span class="MathJax_Preview"><script type="math/tex">
+b_{2}=1-b_{1}
+</script>
+</span> then very similarly we get<span class="MathJax_Preview">
+<script type="math/tex;mode=display">
+\begin{align*}
+\mathbf{P}\left[X=b_{1},Z=b_{2}\right] & =\mathbf{P}\left[X=b_{1},X+Y=1-b_{1}\right]\\
+ & =\mathbf{P}\left[X=b_{1},Y=1\right]\\
+ & =\mathbf{P}\left[X=b_{1}\right]\mathbf{P}\left[Z=b_{1}\right]
+\end{align*}
+</script>
+</span>
+which conclude the proof.
+</div>
+<div class="Unindented">
+Now we prove the claim from above.
+</div>
+<div class="Proof">
+Take two different variables <span class="MathJax_Preview"><script type="math/tex">
+\left\langle \mathbf{s},\mathbf{x}_{1}\right\rangle \in\mathcal{S}
+</script>
+</span> and <span class="MathJax_Preview"><script type="math/tex">
+\left\langle \mathbf{s},\mathbf{x}_{2}\right\rangle \in\mathcal{S}
+</script>
+</span>, and let <span class="MathJax_Preview"><script type="math/tex">
+b_{1},b_{2}\in\left\{ 0,1\right\} 
+</script>
+</span> (all the operations in the proof are <b>modulo 2</b>). Obviously, we only care about the set of indices which are non-zero in the vectors <span class="MathJax_Preview"><script type="math/tex">
+\mathbf{x}_{1}
+</script>
+</span> and <span class="MathJax_Preview"><script type="math/tex">
+\mathbf{x}_{2}
+</script>
+</span>. Let those sets be <span class="MathJax_Preview"><script type="math/tex">
+I_{1},I_{2}
+</script>
+</span> respectively. Consider the case that w.l.o.g <span class="MathJax_Preview"><script type="math/tex">
+I_{1}\subset I_{2}
+</script>
+</span> (we know that <span class="MathJax_Preview"><script type="math/tex">
+I_{1}\ne I_{2}
+</script>
+</span>) and denote <span class="MathJax_Preview"><script type="math/tex">
+m_{1}=\sum_{i\in I_{1}}\mathbf{s}_{i}
+</script>
+</span> and <span class="MathJax_Preview"><script type="math/tex">
+m_{2}=\sum_{i\in I_{2}\backslash I_{1}}\mathbf{s}_{i}
+</script>
+</span>, then <span class="MathJax_Preview">
+<script type="math/tex;mode=display">
+\begin{align*}
+\mathbf{P}\left[\left\langle \mathbf{s},\mathbf{x}_{1}\right\rangle =b_{1},\:\left\langle \mathbf{s},\mathbf{x}_{2}\right\rangle =b_{2}\right] & =\mathbf{P}\left[\sum_{i\in I_{1}}\mathbf{s}_{i}=b_{1},\:\sum_{i\in I_{2}}\mathbf{s}_{i}=b_{2}\right]\\
+ & =\mathbf{P}\left[m_{1}=b_{1},\:m_{1}+m_{2}=b_{2}\right]
+\end{align*}
+</script>
+</span>
+First note that <span class="MathJax_Preview"><script type="math/tex">
+m_{1}
+</script>
+</span> independent of <span class="MathJax_Preview"><script type="math/tex">
+m_{2}
+</script>
+</span> because they are summations of mutual sets of indices. Then applying the lemma recursively on the summation inside <span class="MathJax_Preview"><script type="math/tex">
+m_{1}
+</script>
+</span> we get that <span class="MathJax_Preview"><script type="math/tex">
+m_{1}\sim Bernoulli\left(0.5\right)
+</script>
+</span>. Applying again the lemma we conclude that <span class="MathJax_Preview"><script type="math/tex">
+\left(m_{1}+m_{2}\right)\sim Bernoulli\left(0.5\right)
+</script>
+</span> and it is independent from <span class="MathJax_Preview"><script type="math/tex">
+m_{1}
+</script>
+</span> which completes that part of the proof. <br>
+So consider the case when <span class="MathJax_Preview"><script type="math/tex">
+I_{1}\nsubseteq I_{2}
+</script>
+</span> and <span class="MathJax_Preview"><script type="math/tex">
+I_{2}\nsubseteq I_{1}
+</script>
+</span>. Let <span class="MathJax_Preview"><script type="math/tex">
+m_{0}=\sum_{i\in I_{1}\cap I_{2}}\mathbf{s}_{i}
+</script>
+</span>, <span class="MathJax_Preview"><script type="math/tex">
+m_{1}=\sum_{i\in I_{1}\backslash I_{2}}\mathbf{s}_{i}
+</script>
+</span> and <span class="MathJax_Preview"><script type="math/tex">
+m_{2}=\sum_{i\in I_{2}\backslash I_{1}}\mathbf{s}_{i}
+</script>
+</span>. If <span class="MathJax_Preview"><script type="math/tex">
+I_{1}\cap I_{2}=\emptyset
+</script>
+</span> then define <span class="MathJax_Preview"><script type="math/tex">
+m_{0}=0
+</script>
+</span> with probability <span class="MathJax_Preview"><script type="math/tex">
+1
+</script>
+</span>. We get that <span class="MathJax_Preview">
+<script type="math/tex;mode=display">
+
+\mathbf{P}\left[\left\langle \mathbf{s},\mathbf{x}_{1}\right\rangle =b_{1},\:\left\langle \mathbf{s},\mathbf{x}_{2}\right\rangle =b_{2}\right]=\mathbf{P}\left[m_{0}+m_{1}=b_{1},\:m_{0}+m_{2}=b_{2}\right]
+
+</script>
+</span>
+ with proper activation of the lemma, we get probability of <span class="MathJax_Preview"><script type="math/tex">
+\frac{1}{4}
+</script>
+</span> which is exactly <span class="MathJax_Preview"><script type="math/tex">
+\mathbf{P}\left[\left\langle \mathbf{s},\mathbf{x}_{1}\right\rangle =b_{1}\right]\cdot\mathbf{P}\left[\left\langle \mathbf{s},\mathbf{x}_{2}\right\rangle =b_{2}\right]
+</script>
+</span>, as required.
+<br></div>
+<div class="Unindented">
+
+</div>
+<div class="Indented">
+Last remark. In our settings the randomized algorithm either return a solution or says “failed”, if we have a polynomial procedure to validate a solution we can generalize the settings to the case when the algorithm always output a solution, and then we verify it to determine if it is “succeeds” case of “failed” case.
+</div>
