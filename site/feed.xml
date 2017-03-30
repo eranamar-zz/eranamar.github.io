@@ -1,4 +1,745 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="http://jekyllrb.com" version="3.4.2">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-03-27T10:12:46+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">Theory Lunch</title><subtitle>Computer Science topics over lunch</subtitle><author><name>Eran Amar, Yosef Pogrow, Ron Shiff</name></author><entry><title type="html">Comparing Chernoff - Hoeffding bounds</title><link href="https://eranamar.github.io/site/2017/03/24/Comparing-Chernoff-Hoeffding-bounds.html" rel="alternate" type="text/html" title="Comparing Chernoff - Hoeffding bounds" /><published>2017-03-24T00:00:00+02:00</published><updated>2017-03-24T00:00:00+02:00</updated><id>https://eranamar.github.io/site/2017/03/24/Comparing-Chernoff---Hoeffding-bounds</id><content type="html" xml:base="https://eranamar.github.io/site/2017/03/24/Comparing-Chernoff-Hoeffding-bounds.html">&lt;script type=&quot;math/tex&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="http://jekyllrb.com" version="3.4.2">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-03-30T11:12:37+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">Theory Lunch</title><subtitle>Computer Science topics over lunch</subtitle><author><name>Eran Amar, Yosef Pogrow, Ron Shiff</name></author><entry><title type="html">Derandomization for Pairwise Independent Seed</title><link href="https://eranamar.github.io/site/2017/03/30/Derandomization-for-Pairwise-Independent-Seed.html" rel="alternate" type="text/html" title="Derandomization for Pairwise Independent Seed" /><published>2017-03-30T00:00:00+03:00</published><updated>2017-03-30T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/03/30/Derandomization-for-Pairwise-Independent-Seed</id><content type="html" xml:base="https://eranamar.github.io/site/2017/03/30/Derandomization-for-Pairwise-Independent-Seed.html">&lt;script type=&quot;math/tex&quot;&gt;
+
+\newcommand{\lyxlock}{}
+
+&lt;/script&gt;
+
+&lt;noscript&gt;
+&lt;div class=&quot;warning&quot;&gt;
+
+Warning: &lt;a href=&quot;http://www.mathjax.org/&quot;&gt;MathJax&lt;/a&gt; requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser.
+
+&lt;/div&gt;&lt;hr /&gt;
+&amp;lt;/hr&amp;gt;&lt;/noscript&gt;
+
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-1&quot;&gt;1&lt;/a&gt; Randomized Algorithm Settings
+
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+
+Randomized algorithm is an algorithm that in addition to its input also uses internally &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+t
+
+&lt;/script&gt;
+&lt;/span&gt; coin-tosses (i.e. random bits) in order to decide on its output, so different invocations of the algorithm with the same input may yield different outputs that depends on the results of the coins. One can think about the internal coin-tosses as a binary string &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+r
+
+&lt;/script&gt;
+&lt;/span&gt; of length &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+t
+
+&lt;/script&gt;
+&lt;/span&gt; that is being fixed before the algorithm starts, a.k.a &lt;i&gt;seed&lt;/i&gt;, and the randomness now comes from choosing different string for each invocation. 
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Note that tossing &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+t
+
+&lt;/script&gt;
+&lt;/span&gt; fair coins, is exactly like drawing a random string &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+r
+
+&lt;/script&gt;
+&lt;/span&gt; from the set &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\left\{ 0,1\right\} ^{t}
+
+&lt;/script&gt;
+&lt;/span&gt; where all candidates have equal probability (i.e. each has a probability of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+2^{-t}
+
+&lt;/script&gt;
+&lt;/span&gt;).
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Say we have a randomize algorithm &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+A
+
+&lt;/script&gt;
+&lt;/span&gt; for some problem that we would like to solve. We have a guarantee that for any input &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+x
+
+&lt;/script&gt;
+&lt;/span&gt; of length &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+n
+
+&lt;/script&gt;
+&lt;/span&gt;, algorithm &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+A
+
+&lt;/script&gt;
+&lt;/span&gt; runs in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+poly\left(n\right)
+
+&lt;/script&gt;
+&lt;/span&gt;, and outputs either a valid solution &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+S
+
+&lt;/script&gt;
+&lt;/span&gt; if it succeeds or output &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+failed
+
+&lt;/script&gt;
+&lt;/span&gt;. The success probability of the algorithm is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+p
+
+&lt;/script&gt;
+&lt;/span&gt; (which may be even infinitesimally small). 
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+The first question to ask is, &lt;i&gt;can we convert the randomized algorithm into a deterministic one?&lt;/i&gt;
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-2&quot;&gt;2&lt;/a&gt; Brute Force Derandomization
+
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+
+The answer is&lt;i&gt; yes&lt;/i&gt;, and there is a simple way to do that: Upon receiving an input &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+x
+
+&lt;/script&gt;
+&lt;/span&gt;, iterate over all possible strings &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+r\in\left\{ 0,1\right\} ^{t}
+
+&lt;/script&gt;
+&lt;/span&gt; and run &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+A_{r}\left(x\right)
+
+&lt;/script&gt;
+&lt;/span&gt;. That is, simulate &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+A
+
+&lt;/script&gt;
+&lt;/span&gt; on &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+x
+
+&lt;/script&gt;
+&lt;/span&gt; with &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+r
+
+&lt;/script&gt;
+&lt;/span&gt; as the random seed. Return the first solution that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+A
+
+&lt;/script&gt;
+&lt;/span&gt; outputs (i.e. anything that is not &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+failed
+
+&lt;/script&gt;
+&lt;/span&gt;).
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+The idea behind this method is that if there is a non-zero probability for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+A
+
+&lt;/script&gt;
+&lt;/span&gt; to output a valid solution for the input &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+x
+
+&lt;/script&gt;
+&lt;/span&gt;, then there must be a random seed that leads to that output when executing algorithm &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+A
+
+&lt;/script&gt;
+&lt;/span&gt; on &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+x
+
+&lt;/script&gt;
+&lt;/span&gt;. So all we need to do is iterating over all possible seeds of length &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+t
+
+&lt;/script&gt;
+&lt;/span&gt;, and that leads to a deterministic algorithm. 
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+You probably already see the problem here. If &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+t=\mathcal{O}\left(n\right)
+
+&lt;/script&gt;
+&lt;/span&gt; then the running time of the deterministic procedure is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+2^{\mathcal{O}\left(t\right)}poly\left(n\right)
+
+&lt;/script&gt;
+&lt;/span&gt;.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Terrible, terrible running time.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+On the other hand, if &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+t
+
+&lt;/script&gt;
+&lt;/span&gt; is a constant or even up to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{O}\left(\log n\right)
+
+&lt;/script&gt;
+&lt;/span&gt;, then the resulting running time will stay polynomial, and everybody is happy. In the next section we will see that with an additional assumption, we can “decrease” the seed length from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+n
+
+&lt;/script&gt;
+&lt;/span&gt; to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\log n
+
+&lt;/script&gt;
+&lt;/span&gt; bits.
+
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-3&quot;&gt;3&lt;/a&gt; Pairwise Independent Seed
+
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+
+We start off with a definition.
+
+&lt;/div&gt;
+&lt;div class=&quot;Definition&quot;&gt;
+&lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+k
+
+&lt;/script&gt;
+&lt;/span&gt;-wise Independent Family. Let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{X}
+
+&lt;/script&gt;
+&lt;/span&gt; be a set of random variables. We say that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{X}
+
+&lt;/script&gt;
+&lt;/span&gt; is a &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+k
+
+&lt;/script&gt;
+&lt;/span&gt;-wise independent family if for any subset of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+k
+
+&lt;/script&gt;
+&lt;/span&gt; variables &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+X_{1},..,X_{k}\in\mathcal{X}
+
+&lt;/script&gt;
+&lt;/span&gt;, and values &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+y_{1},...,y_{k}
+
+&lt;/script&gt;
+&lt;/span&gt; &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+
+
+\mathbf{P}\left[\bigwedge_{i\in I}X_{i}=y_{i}\right]=\prod_{i\in I}\mathbf{P}\left[X_{i}=y_{i}\right]\qquad\forall I\subseteq\left[k\right]
+
+
+
+&lt;/script&gt;
+&lt;/span&gt;
+
+that is, any subset of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+k
+
+&lt;/script&gt;
+&lt;/span&gt; random variables from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{X}
+
+&lt;/script&gt;
+&lt;/span&gt; are independent.
+
+&lt;/div&gt;
+&lt;div class=&quot;Definition*&quot;&gt;
+
+The family &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{X}
+
+&lt;/script&gt;
+&lt;/span&gt; is called pairwise independent family when &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+k=2
+
+&lt;/script&gt;
+&lt;/span&gt;.
+
+&lt;/div&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+
+
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+What this definition have with our settings? observe that up until now we implicitly assumed that the algorithm needs its coins to be fully independent. That is, if we think of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+s
+
+&lt;/script&gt;
+&lt;/span&gt; as a series of Bernoulli r.vs then we actually required &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+s
+
+&lt;/script&gt;
+&lt;/span&gt; to be &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+t
+
+&lt;/script&gt;
+&lt;/span&gt;-wise independent family, which is much stronger property than pairwise independence. If we relax that requirement and assume that the algorithm only needs its coins to be pairwise independent, then there is a way (described in next section) to construct &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+n
+
+&lt;/script&gt;
+&lt;/span&gt; &lt;i&gt;pairwise independent&lt;/i&gt; bits using only &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{O}\left(\log n\right)
+
+&lt;/script&gt;
+&lt;/span&gt; &lt;i&gt;fully independent&lt;/i&gt; bits. That construction can be “embedded” into our algorithm such that we ultimately ends up with a procedure that only requires &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{O}\left(\log n\right)
+
+&lt;/script&gt;
+&lt;/span&gt; fully independent seed. Applying the derandomization method from previous section will result with a deterministic algorithm that will still run in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+poly\left(n\right)
+
+&lt;/script&gt;
+&lt;/span&gt; time.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Of course, we may assume pairwise independent only if it won’t break the correctness analysis of the randomized algorithm that we want to derandomize.
+
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-4&quot;&gt;4&lt;/a&gt; Stretching the Seed
+
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+
+Suppose we have &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\approx\log n
+
+&lt;/script&gt;
+&lt;/span&gt; fair fully independent coins, we want to construct a method to generate from them &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\approx n
+
+&lt;/script&gt;
+&lt;/span&gt; fair pairwise independent bits. The following claim shows such construction.
+
+&lt;/div&gt;
+&lt;div class=&quot;Claim&quot;&gt;
+
+Suppose we have &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+t:=\log\left(n\right)+1
+
+&lt;/script&gt;
+&lt;/span&gt; fully independent Bernoulli random variables, each with probability &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\frac{1}{2}
+
+&lt;/script&gt;
+&lt;/span&gt;. Fix them is some arbitrary order to get a (random) vector &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbf{s}
+
+&lt;/script&gt;
+&lt;/span&gt; of length &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+t
+
+&lt;/script&gt;
+&lt;/span&gt;. Let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{S}=\left\{ \left\langle \mathbf{s},\mathbf{x}\right\rangle _{mod2}\mid\mathbf{x}\in\left\{ 0,1\right\} ^{t},\:\:x\ne\mathbf{0}\right\} 
+
+&lt;/script&gt;
+&lt;/span&gt; be the set of all possible sums modulo 2 of those r.vs and note that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\left|\mathcal{S}\right|=2^{t}-1=\Theta\left(n\right)
+
+&lt;/script&gt;
+&lt;/span&gt;, then &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{S}
+
+&lt;/script&gt;
+&lt;/span&gt; is a family of pairwise independent bits.
+
+&lt;/div&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+
+To prove that we start with a very basic lemma.
+
+&lt;/div&gt;
+&lt;div class=&quot;Lemma&quot;&gt;
+
+Let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+X,Y\sim Bernoulli\left(0.5\right)
+
+&lt;/script&gt;
+&lt;/span&gt; be two independent random variables, let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+Z=X+Y
+
+&lt;/script&gt;
+&lt;/span&gt; then &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+Z\sim Bernoulli\left(0.5\right)
+
+&lt;/script&gt;
+&lt;/span&gt;. Moreover, &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+Z
+
+&lt;/script&gt;
+&lt;/span&gt; is independent from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+X
+
+&lt;/script&gt;
+&lt;/span&gt; and from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+Y
+
+&lt;/script&gt;
+&lt;/span&gt;.
+
+&lt;/div&gt;
+&lt;div class=&quot;Proof&quot;&gt;
+
+For any &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+b\in\left\{ 0,1\right\} 
+
+&lt;/script&gt;
+&lt;/span&gt;&lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\begin{align*}
+
+\mathbf{P}\left[X+Y=b\right] &amp; =\mathbf{P}\left[X=1,Y=1-b\right]+\mathbf{P}\left[X=0,Y=b\right]\\
+
+ &amp; =\mathbf{P}\left[X=1\right]\mathbf{P}\left[Y=1-b\right]+\mathbf{P}\left[X=0\right]\mathbf{P}\left[Y=b\right]\\
+
+ &amp; =\frac{1}{2}\left(\mathbf{P}\left[Y=1-b\right]+\mathbf{P}\left[Y=1-b\right]\right)\\
+
+ &amp; =\frac{1}{2}
+
+\end{align*}
+
+&lt;/script&gt;
+&lt;/span&gt;
+
+thus &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+Z\sim Bernoulli\left(0.5\right)
+
+&lt;/script&gt;
+&lt;/span&gt;. Next w.l.o.g we prove that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+Z
+
+&lt;/script&gt;
+&lt;/span&gt; independent from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+X
+
+&lt;/script&gt;
+&lt;/span&gt;. Take any &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+b_{1},b_{2}\in\left\{ 0,1\right\} 
+
+&lt;/script&gt;
+&lt;/span&gt;. If &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+b_{1}=b_{2}
+
+&lt;/script&gt;
+&lt;/span&gt; then &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\begin{align*}
+
+\mathbf{P}\left[X=b_{1},Z=b_{2}\right] &amp; =\mathbf{P}\left[X=b_{1},X+Y=b_{1}\right]\\
+
+ &amp; =\mathbf{P}\left[X=b_{1},Y=0\right]\\
+
+ &amp; =\mathbf{P}\left[X=b_{1}\right]\mathbf{P}\left[Y=0\right]\\
+
+ &amp; =\mathbf{P}\left[X=b_{1}\right]\cdot\frac{1}{2}\\
+
+ &amp; =\mathbf{P}\left[X=b_{1}\right]\mathbf{P}\left[Z=b_{1}\right]
+
+\end{align*}
+
+&lt;/script&gt;
+&lt;/span&gt;
+
+and we done. And if &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+b_{2}=1-b_{1}
+
+&lt;/script&gt;
+&lt;/span&gt; then very similarly we get&lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\begin{align*}
+
+\mathbf{P}\left[X=b_{1},Z=b_{2}\right] &amp; =\mathbf{P}\left[X=b_{1},X+Y=1-b_{1}\right]\\
+
+ &amp; =\mathbf{P}\left[X=b_{1},Y=1\right]\\
+
+ &amp; =\mathbf{P}\left[X=b_{1}\right]\mathbf{P}\left[Z=b_{1}\right]
+
+\end{align*}
+
+&lt;/script&gt;
+&lt;/span&gt;
+
+which conclude the proof.
+
+&lt;/div&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+
+Now we prove the claim from above.
+
+&lt;/div&gt;
+&lt;div class=&quot;Proof&quot;&gt;
+
+Take two different variables &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\left\langle \mathbf{s},\mathbf{x}_{1}\right\rangle \in\mathcal{S}
+
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\left\langle \mathbf{s},\mathbf{x}_{2}\right\rangle \in\mathcal{S}
+
+&lt;/script&gt;
+&lt;/span&gt;, and let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+b_{1},b_{2}\in\left\{ 0,1\right\} 
+
+&lt;/script&gt;
+&lt;/span&gt; (all the operations in the proof are &lt;b&gt;modulo 2&lt;/b&gt;). Obviously, we only care about the set of indices which are non-zero in the vectors &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbf{x}_{1}
+
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbf{x}_{2}
+
+&lt;/script&gt;
+&lt;/span&gt;. Let those sets be &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+I_{1},I_{2}
+
+&lt;/script&gt;
+&lt;/span&gt; respectively. Consider the case that w.l.o.g &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+I_{1}\subset I_{2}
+
+&lt;/script&gt;
+&lt;/span&gt; (we know that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+I_{1}\ne I_{2}
+
+&lt;/script&gt;
+&lt;/span&gt;) and denote &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+m_{1}=\sum_{i\in I_{1}}\mathbf{s}_{i}
+
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+m_{2}=\sum_{i\in I_{2}\backslash I_{1}}\mathbf{s}_{i}
+
+&lt;/script&gt;
+&lt;/span&gt;, then &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\begin{align*}
+
+\mathbf{P}\left[\left\langle \mathbf{s},\mathbf{x}_{1}\right\rangle =b_{1},\:\left\langle \mathbf{s},\mathbf{x}_{2}\right\rangle =b_{2}\right] &amp; =\mathbf{P}\left[\sum_{i\in I_{1}}\mathbf{s}_{i}=b_{1},\:\sum_{i\in I_{2}}\mathbf{s}_{i}=b_{2}\right]\\
+
+ &amp; =\mathbf{P}\left[m_{1}=b_{1},\:m_{1}+m_{2}=b_{2}\right]
+
+\end{align*}
+
+&lt;/script&gt;
+&lt;/span&gt;
+
+First note that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+m_{1}
+
+&lt;/script&gt;
+&lt;/span&gt; independent of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+m_{2}
+
+&lt;/script&gt;
+&lt;/span&gt; because they are summations of mutual sets of indices. Then applying the lemma recursively on the summation inside &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+m_{1}
+
+&lt;/script&gt;
+&lt;/span&gt; we get that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+m_{1}\sim Bernoulli\left(0.5\right)
+
+&lt;/script&gt;
+&lt;/span&gt;. Applying again the lemma we conclude that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\left(m_{1}+m_{2}\right)\sim Bernoulli\left(0.5\right)
+
+&lt;/script&gt;
+&lt;/span&gt; and it is independent from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+m_{1}
+
+&lt;/script&gt;
+&lt;/span&gt; which completes that part of the proof. &lt;br /&gt;
+
+So consider the case when &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+I_{1}\nsubseteq I_{2}
+
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+I_{2}\nsubseteq I_{1}
+
+&lt;/script&gt;
+&lt;/span&gt;. Let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+m_{0}=\sum_{i\in I_{1}\cap I_{2}}\mathbf{s}_{i}
+
+&lt;/script&gt;
+&lt;/span&gt;, &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+m_{1}=\sum_{i\in I_{1}\backslash I_{2}}\mathbf{s}_{i}
+
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+m_{2}=\sum_{i\in I_{2}\backslash I_{1}}\mathbf{s}_{i}
+
+&lt;/script&gt;
+&lt;/span&gt;. If &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+I_{1}\cap I_{2}=\emptyset
+
+&lt;/script&gt;
+&lt;/span&gt; then define &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+m_{0}=0
+
+&lt;/script&gt;
+&lt;/span&gt; with probability &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+1
+
+&lt;/script&gt;
+&lt;/span&gt;. We get that &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+
+
+\mathbf{P}\left[\left\langle \mathbf{s},\mathbf{x}_{1}\right\rangle =b_{1},\:\left\langle \mathbf{s},\mathbf{x}_{2}\right\rangle =b_{2}\right]=\mathbf{P}\left[m_{0}+m_{1}=b_{1},\:m_{0}+m_{2}=b_{2}\right]
+
+
+
+&lt;/script&gt;
+&lt;/span&gt;
+
+ with proper activation of the lemma, we get probability of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\frac{1}{4}
+
+&lt;/script&gt;
+&lt;/span&gt; which is exactly &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbf{P}\left[\left\langle \mathbf{s},\mathbf{x}_{1}\right\rangle =b_{1}\right]\cdot\mathbf{P}\left[\left\langle \mathbf{s},\mathbf{x}_{2}\right\rangle =b_{2}\right]
+
+&lt;/script&gt;
+&lt;/span&gt;, as required.
+
+&lt;br /&gt;&lt;/div&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+
+
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Last remark. In our settings the randomized algorithm either return a solution or says “failed”, if we have a polynomial procedure to validate a solution we can generalize the settings to the case when the algorithm always output a solution, and then we verify it to determine if it is “succeeds” case of “failed” case.
+
+&lt;/div&gt;</content><author><name>Eran Amar</name></author><category term="probability_theory" /><category term="algorithms" /><summary type="html"></summary></entry><entry><title type="html">Comparing Chernoff - Hoeffding bounds</title><link href="https://eranamar.github.io/site/2017/03/24/Comparing-Chernoff-Hoeffding-bounds.html" rel="alternate" type="text/html" title="Comparing Chernoff - Hoeffding bounds" /><published>2017-03-24T00:00:00+02:00</published><updated>2017-03-24T00:00:00+02:00</updated><id>https://eranamar.github.io/site/2017/03/24/Comparing-Chernoff---Hoeffding-bounds</id><content type="html" xml:base="https://eranamar.github.io/site/2017/03/24/Comparing-Chernoff-Hoeffding-bounds.html">&lt;script type=&quot;math/tex&quot;&gt;
 
 \newcommand{\lyxlock}{}
 
