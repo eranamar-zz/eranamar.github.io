@@ -195,10 +195,7 @@ k
 </span> random variables from <span class="MathJax_Preview"><script type="math/tex">
 \mathcal{X}
 </script>
-</span> are independent.
-</div>
-<div class="Definition*">
-The family <span class="MathJax_Preview"><script type="math/tex">
+</span> are fully independent. The family <span class="MathJax_Preview"><script type="math/tex">
 \mathcal{X}
 </script>
 </span> is called pairwise independent family when <span class="MathJax_Preview"><script type="math/tex">
