@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="http://jekyllrb.com" version="3.4.2">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-03-30T11:15:40+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">Theory Lunch</title><subtitle>Computer Science topics over lunch</subtitle><author><name>Eran Amar, Yosef Pogrow, Ron Shiff</name></author><entry><title type="html">Derandomization for Pairwise Independent Seed</title><link href="https://eranamar.github.io/site/2017/03/30/Derandomization-for-Pairwise-Independent-Seed.html" rel="alternate" type="text/html" title="Derandomization for Pairwise Independent Seed" /><published>2017-03-30T00:00:00+03:00</published><updated>2017-03-30T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/03/30/Derandomization-for-Pairwise-Independent-Seed</id><content type="html" xml:base="https://eranamar.github.io/site/2017/03/30/Derandomization-for-Pairwise-Independent-Seed.html">&lt;script type=&quot;math/tex&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="http://jekyllrb.com" version="3.4.2">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-03-30T13:48:17+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">Theory Lunch</title><subtitle>Computer Science topics over lunch</subtitle><author><name>Eran Amar, Yosef Pogrow, Ron Shiff</name></author><entry><title type="html">Derandomization for Pairwise Independent Seed</title><link href="https://eranamar.github.io/site/2017/03/30/Derandomization-for-Pairwise-Independent-Seed.html" rel="alternate" type="text/html" title="Derandomization for Pairwise Independent Seed" /><published>2017-03-30T00:00:00+03:00</published><updated>2017-03-30T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/03/30/Derandomization-for-Pairwise-Independent-Seed</id><content type="html" xml:base="https://eranamar.github.io/site/2017/03/30/Derandomization-for-Pairwise-Independent-Seed.html">&lt;script type=&quot;math/tex&quot;&gt;
 
 \newcommand{\lyxlock}{}
 
@@ -566,12 +566,12 @@ Now we prove the claim from above.
 
 Take two different variables &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 
-\left\langle \mathbf{s},\mathbf{x}_{1}\right\rangle \in\mathcal{S}
+X_{1}=\left\langle \mathbf{s},\mathbf{x}_{1}\right\rangle \in\mathcal{S}
 
 &lt;/script&gt;
 &lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 
-\left\langle \mathbf{s},\mathbf{x}_{2}\right\rangle \in\mathcal{S}
+X_{2}=\left\langle \mathbf{s},\mathbf{x}_{2}\right\rangle \in\mathcal{S}
 
 &lt;/script&gt;
 &lt;/span&gt;, and let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
@@ -579,7 +579,7 @@ Take two different variables &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;s
 b_{1},b_{2}\in\left\{ 0,1\right\} 
 
 &lt;/script&gt;
-&lt;/span&gt; (all the operations in the proof are &lt;b&gt;modulo 2&lt;/b&gt;). Obviously, we only care about the set of indices which are non-zero in the vectors &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt; (all the operations in the proof are &lt;b&gt;modulo 2&lt;/b&gt;). Obviously, we only care about the set of indices which are non-zero in the random vectors &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 
 \mathbf{x}_{1}
 
@@ -589,142 +589,111 @@ b_{1},b_{2}\in\left\{ 0,1\right\}
 \mathbf{x}_{2}
 
 &lt;/script&gt;
-&lt;/span&gt;. Let those sets be &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt;. Let these sets be &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 
 I_{1},I_{2}
 
 &lt;/script&gt;
-&lt;/span&gt; respectively. Consider the case that w.l.o.g &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt; respectively. Denote &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 
-I_{1}\subset I_{2}
-
-&lt;/script&gt;
-&lt;/span&gt; (we know that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-
-I_{1}\ne I_{2}
+M_{0}=\sum_{i\in I_{1}\cap I_{2}}\mathbf{s}_{i}
 
 &lt;/script&gt;
-&lt;/span&gt;) and denote &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt;, &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 
-m_{1}=\sum_{i\in I_{1}}\mathbf{s}_{i}
+M_{1}=\sum_{i\in I_{1}\backslash I_{2}}\mathbf{s}_{i}
 
 &lt;/script&gt;
 &lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 
-m_{2}=\sum_{i\in I_{2}\backslash I_{1}}\mathbf{s}_{i}
+M_{2}=\sum_{i\in I_{2}\backslash I_{1}}\mathbf{s}_{i}
 
 &lt;/script&gt;
-&lt;/span&gt;, then &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;/span&gt; where summation over empty set is defined as the constant &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+0
+
+&lt;/script&gt;
+&lt;/span&gt;. Note that any pair of variables from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\left\{ M_{0},M_{1},M_{2}\right\} 
+
+&lt;/script&gt;
+&lt;/span&gt; are independent because they defined on mutually disjoint set of indices, moreover each of them is distributed as &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+Bernoulli\left(0.5\right)
+
+&lt;/script&gt;
+&lt;/span&gt; by the lemma from above. When plugging in the new notations we get&lt;span class=&quot;MathJax_Preview&quot;&gt;
 &lt;script type=&quot;math/tex;mode=display&quot;&gt;
 
 \begin{align*}
 
-\mathbf{P}\left[\left\langle \mathbf{s},\mathbf{x}_{1}\right\rangle =b_{1},\:\left\langle \mathbf{s},\mathbf{x}_{2}\right\rangle =b_{2}\right] &amp; =\mathbf{P}\left[\sum_{i\in I_{1}}\mathbf{s}_{i}=b_{1},\:\sum_{i\in I_{2}}\mathbf{s}_{i}=b_{2}\right]\\
-
- &amp; =\mathbf{P}\left[m_{1}=b_{1},\:m_{1}+m_{2}=b_{2}\right]
+\mathbf{P}\left[X_{1}=b_{1},\:X_{2}=b_{2}\right] &amp; =\mathbf{P}\left[M_{0}+M_{1}=b_{1},\:M_{0}+M_{2}=b_{2}\right]
 
 \end{align*}
 
 &lt;/script&gt;
 &lt;/span&gt;
 
-First note that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+Because &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 
-m_{1}
-
-&lt;/script&gt;
-&lt;/span&gt; independent of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-
-m_{2}
+I_{1}\ne I_{2}
 
 &lt;/script&gt;
-&lt;/span&gt; because they are summations of mutual sets of indices. Then applying the lemma recursively on the summation inside &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt; there must be at most one variable from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 
-m_{1}
-
-&lt;/script&gt;
-&lt;/span&gt; we get that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-
-m_{1}\sim Bernoulli\left(0.5\right)
+\left\{ M_{0},M_{1},M_{2}\right\} 
 
 &lt;/script&gt;
-&lt;/span&gt;. Applying again the lemma we conclude that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt; which may be constant. Therefore, no matter which &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 
-\left(m_{1}+m_{2}\right)\sim Bernoulli\left(0.5\right)
-
-&lt;/script&gt;
-&lt;/span&gt; and it is independent from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-
-m_{1}
+M_{i}
 
 &lt;/script&gt;
-&lt;/span&gt; which completes that part of the proof. &lt;br /&gt;
+&lt;/span&gt; it is (if any), either &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 
-So consider the case when &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-
-I_{1}\nsubseteq I_{2}
+X_{1}
 
 &lt;/script&gt;
-&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt; or &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 
-I_{2}\nsubseteq I_{1}
-
-&lt;/script&gt;
-&lt;/span&gt;. Let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-
-m_{0}=\sum_{i\in I_{1}\cap I_{2}}\mathbf{s}_{i}
+X_{2}
 
 &lt;/script&gt;
-&lt;/span&gt;, &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt; is the sum of two non-constant components. W.l.o.g let it be &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 
-m_{1}=\sum_{i\in I_{1}\backslash I_{2}}\mathbf{s}_{i}
-
-&lt;/script&gt;
-&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-
-m_{2}=\sum_{i\in I_{2}\backslash I_{1}}\mathbf{s}_{i}
+X_{1}
 
 &lt;/script&gt;
-&lt;/span&gt;. If &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt;, then it has the &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 
-I_{1}\cap I_{2}=\emptyset
-
-&lt;/script&gt;
-&lt;/span&gt; then define &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-
-m_{0}=0
+M_{1}
 
 &lt;/script&gt;
-&lt;/span&gt; with probability &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt; component which does not appear in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 
-1
-
-&lt;/script&gt;
-&lt;/span&gt;. We get that &lt;span class=&quot;MathJax_Preview&quot;&gt;
-&lt;script type=&quot;math/tex;mode=display&quot;&gt;
-
-
-
-\mathbf{P}\left[\left\langle \mathbf{s},\mathbf{x}_{1}\right\rangle =b_{1},\:\left\langle \mathbf{s},\mathbf{x}_{2}\right\rangle =b_{2}\right]=\mathbf{P}\left[m_{0}+m_{1}=b_{1},\:m_{0}+m_{2}=b_{2}\right]
-
-
+X_{2}
 
 &lt;/script&gt;
-&lt;/span&gt;
+&lt;/span&gt; and can flip the result of the sum with probability &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 
- with proper activation of the lemma, we get probability of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-
-\frac{1}{4}
+0.5
 
 &lt;/script&gt;
-&lt;/span&gt; which is exactly &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt; &lt;b&gt;regardless&lt;/b&gt; on what happen anywhere else, therefore &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 
-\mathbf{P}\left[\left\langle \mathbf{s},\mathbf{x}_{1}\right\rangle =b_{1}\right]\cdot\mathbf{P}\left[\left\langle \mathbf{s},\mathbf{x}_{2}\right\rangle =b_{2}\right]
+X_{1}
 
 &lt;/script&gt;
-&lt;/span&gt;, as required.
+&lt;/span&gt; is not dependent on &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 
-&lt;br /&gt;&lt;/div&gt;
+X_{2}
+
+&lt;/script&gt;
+&lt;/span&gt;, concluding the proof.
+
+&lt;/div&gt;
 &lt;div class=&quot;Unindented&quot;&gt;
 
 
@@ -732,7 +701,7 @@ m_{0}=0
 &lt;/div&gt;
 &lt;div class=&quot;Indented&quot;&gt;
 
-Last remark. In our settings the randomized algorithm either return a solution or says “failed”, if we have a polynomial procedure to validate a solution we can generalize the settings to the case when the algorithm always output a solution, and then we verify it to determine if it is “succeeds” case of “failed” case.
+Last one remark. In our settings the randomized algorithm either return a solution or says “failed”, if we have a polynomial procedure to validate a solution we can generalize the settings to the case when the algorithm always output a solution, and then we verify it to determine if it is “succeeds” case of “failed” case.
 
 &lt;/div&gt;</content><author><name>Eran Amar</name></author><category term="probability_theory" /><category term="algorithms" /><summary type="html"></summary></entry><entry><title type="html">Comparing Chernoff - Hoeffding bounds</title><link href="https://eranamar.github.io/site/2017/03/24/Comparing-Chernoff-Hoeffding-bounds.html" rel="alternate" type="text/html" title="Comparing Chernoff - Hoeffding bounds" /><published>2017-03-24T00:00:00+02:00</published><updated>2017-03-24T00:00:00+02:00</updated><id>https://eranamar.github.io/site/2017/03/24/Comparing-Chernoff---Hoeffding-bounds</id><content type="html" xml:base="https://eranamar.github.io/site/2017/03/24/Comparing-Chernoff-Hoeffding-bounds.html">&lt;script type=&quot;math/tex&quot;&gt;
 

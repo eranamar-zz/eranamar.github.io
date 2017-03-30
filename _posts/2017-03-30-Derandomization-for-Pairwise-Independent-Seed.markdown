@@ -352,104 +352,86 @@ Now we prove the claim from above.
 </div>
 <div class="Proof">
 Take two different variables <span class="MathJax_Preview"><script type="math/tex">
-\left\langle \mathbf{s},\mathbf{x}_{1}\right\rangle \in\mathcal{S}
+X_{1}=\left\langle \mathbf{s},\mathbf{x}_{1}\right\rangle \in\mathcal{S}
 </script>
 </span> and <span class="MathJax_Preview"><script type="math/tex">
-\left\langle \mathbf{s},\mathbf{x}_{2}\right\rangle \in\mathcal{S}
+X_{2}=\left\langle \mathbf{s},\mathbf{x}_{2}\right\rangle \in\mathcal{S}
 </script>
 </span>, and let <span class="MathJax_Preview"><script type="math/tex">
 b_{1},b_{2}\in\left\{ 0,1\right\} 
 </script>
-</span> (all the operations in the proof are <b>modulo 2</b>). Obviously, we only care about the set of indices which are non-zero in the vectors <span class="MathJax_Preview"><script type="math/tex">
+</span> (all the operations in the proof are <b>modulo 2</b>). Obviously, we only care about the set of indices which are non-zero in the random vectors <span class="MathJax_Preview"><script type="math/tex">
 \mathbf{x}_{1}
 </script>
 </span> and <span class="MathJax_Preview"><script type="math/tex">
 \mathbf{x}_{2}
 </script>
-</span>. Let those sets be <span class="MathJax_Preview"><script type="math/tex">
+</span>. Let these sets be <span class="MathJax_Preview"><script type="math/tex">
 I_{1},I_{2}
 </script>
-</span> respectively. Consider the case that w.l.o.g <span class="MathJax_Preview"><script type="math/tex">
-I_{1}\subset I_{2}
+</span> respectively. Denote <span class="MathJax_Preview"><script type="math/tex">
+M_{0}=\sum_{i\in I_{1}\cap I_{2}}\mathbf{s}_{i}
 </script>
-</span> (we know that <span class="MathJax_Preview"><script type="math/tex">
-I_{1}\ne I_{2}
-</script>
-</span>) and denote <span class="MathJax_Preview"><script type="math/tex">
-m_{1}=\sum_{i\in I_{1}}\mathbf{s}_{i}
+</span>, <span class="MathJax_Preview"><script type="math/tex">
+M_{1}=\sum_{i\in I_{1}\backslash I_{2}}\mathbf{s}_{i}
 </script>
 </span> and <span class="MathJax_Preview"><script type="math/tex">
-m_{2}=\sum_{i\in I_{2}\backslash I_{1}}\mathbf{s}_{i}
+M_{2}=\sum_{i\in I_{2}\backslash I_{1}}\mathbf{s}_{i}
 </script>
-</span>, then <span class="MathJax_Preview">
+</span> where summation over empty set is defined as the constant <span class="MathJax_Preview"><script type="math/tex">
+0
+</script>
+</span>. Note that any pair of variables from <span class="MathJax_Preview"><script type="math/tex">
+\left\{ M_{0},M_{1},M_{2}\right\} 
+</script>
+</span> are independent because they defined on mutually disjoint set of indices, moreover each of them is distributed as <span class="MathJax_Preview"><script type="math/tex">
+Bernoulli\left(0.5\right)
+</script>
+</span> by the lemma from above. When plugging in the new notations we get<span class="MathJax_Preview">
 <script type="math/tex;mode=display">
 \begin{align*}
-\mathbf{P}\left[\left\langle \mathbf{s},\mathbf{x}_{1}\right\rangle =b_{1},\:\left\langle \mathbf{s},\mathbf{x}_{2}\right\rangle =b_{2}\right] & =\mathbf{P}\left[\sum_{i\in I_{1}}\mathbf{s}_{i}=b_{1},\:\sum_{i\in I_{2}}\mathbf{s}_{i}=b_{2}\right]\\
- & =\mathbf{P}\left[m_{1}=b_{1},\:m_{1}+m_{2}=b_{2}\right]
+\mathbf{P}\left[X_{1}=b_{1},\:X_{2}=b_{2}\right] & =\mathbf{P}\left[M_{0}+M_{1}=b_{1},\:M_{0}+M_{2}=b_{2}\right]
 \end{align*}
 </script>
 </span>
-First note that <span class="MathJax_Preview"><script type="math/tex">
-m_{1}
+Because <span class="MathJax_Preview"><script type="math/tex">
+I_{1}\ne I_{2}
 </script>
-</span> independent of <span class="MathJax_Preview"><script type="math/tex">
-m_{2}
+</span> there must be at most one variable from <span class="MathJax_Preview"><script type="math/tex">
+\left\{ M_{0},M_{1},M_{2}\right\} 
 </script>
-</span> because they are summations of mutual sets of indices. Then applying the lemma recursively on the summation inside <span class="MathJax_Preview"><script type="math/tex">
-m_{1}
+</span> which may be constant. Therefore, no matter which <span class="MathJax_Preview"><script type="math/tex">
+M_{i}
 </script>
-</span> we get that <span class="MathJax_Preview"><script type="math/tex">
-m_{1}\sim Bernoulli\left(0.5\right)
+</span> it is (if any), either <span class="MathJax_Preview"><script type="math/tex">
+X_{1}
 </script>
-</span>. Applying again the lemma we conclude that <span class="MathJax_Preview"><script type="math/tex">
-\left(m_{1}+m_{2}\right)\sim Bernoulli\left(0.5\right)
+</span> or <span class="MathJax_Preview"><script type="math/tex">
+X_{2}
 </script>
-</span> and it is independent from <span class="MathJax_Preview"><script type="math/tex">
-m_{1}
+</span> is the sum of two non-constant components. W.l.o.g let it be <span class="MathJax_Preview"><script type="math/tex">
+X_{1}
 </script>
-</span> which completes that part of the proof. <br>
-So consider the case when <span class="MathJax_Preview"><script type="math/tex">
-I_{1}\nsubseteq I_{2}
+</span>, then it has the <span class="MathJax_Preview"><script type="math/tex">
+M_{1}
 </script>
-</span> and <span class="MathJax_Preview"><script type="math/tex">
-I_{2}\nsubseteq I_{1}
+</span> component which does not appear in <span class="MathJax_Preview"><script type="math/tex">
+X_{2}
 </script>
-</span>. Let <span class="MathJax_Preview"><script type="math/tex">
-m_{0}=\sum_{i\in I_{1}\cap I_{2}}\mathbf{s}_{i}
+</span> and can flip the result of the sum with probability <span class="MathJax_Preview"><script type="math/tex">
+0.5
 </script>
-</span>, <span class="MathJax_Preview"><script type="math/tex">
-m_{1}=\sum_{i\in I_{1}\backslash I_{2}}\mathbf{s}_{i}
+</span> <b>regardless</b> on what happen anywhere else, therefore <span class="MathJax_Preview"><script type="math/tex">
+X_{1}
 </script>
-</span> and <span class="MathJax_Preview"><script type="math/tex">
-m_{2}=\sum_{i\in I_{2}\backslash I_{1}}\mathbf{s}_{i}
+</span> is not dependent on <span class="MathJax_Preview"><script type="math/tex">
+X_{2}
 </script>
-</span>. If <span class="MathJax_Preview"><script type="math/tex">
-I_{1}\cap I_{2}=\emptyset
-</script>
-</span> then define <span class="MathJax_Preview"><script type="math/tex">
-m_{0}=0
-</script>
-</span> with probability <span class="MathJax_Preview"><script type="math/tex">
-1
-</script>
-</span>. We get that <span class="MathJax_Preview">
-<script type="math/tex;mode=display">
-
-\mathbf{P}\left[\left\langle \mathbf{s},\mathbf{x}_{1}\right\rangle =b_{1},\:\left\langle \mathbf{s},\mathbf{x}_{2}\right\rangle =b_{2}\right]=\mathbf{P}\left[m_{0}+m_{1}=b_{1},\:m_{0}+m_{2}=b_{2}\right]
-
-</script>
-</span>
- with proper activation of the lemma, we get probability of <span class="MathJax_Preview"><script type="math/tex">
-\frac{1}{4}
-</script>
-</span> which is exactly <span class="MathJax_Preview"><script type="math/tex">
-\mathbf{P}\left[\left\langle \mathbf{s},\mathbf{x}_{1}\right\rangle =b_{1}\right]\cdot\mathbf{P}\left[\left\langle \mathbf{s},\mathbf{x}_{2}\right\rangle =b_{2}\right]
-</script>
-</span>, as required.
-<br></div>
+</span>, concluding the proof.
+</div>
 <div class="Unindented">
 
 </div>
 <div class="Indented">
-Last remark. In our settings the randomized algorithm either return a solution or says “failed”, if we have a polynomial procedure to validate a solution we can generalize the settings to the case when the algorithm always output a solution, and then we verify it to determine if it is “succeeds” case of “failed” case.
+Last one remark. In our settings the randomized algorithm either return a solution or says “failed”, if we have a polynomial procedure to validate a solution we can generalize the settings to the case when the algorithm always output a solution, and then we verify it to determine if it is “succeeds” case of “failed” case.
 </div>
