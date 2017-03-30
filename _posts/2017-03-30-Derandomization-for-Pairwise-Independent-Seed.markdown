@@ -384,7 +384,7 @@ M_{2}=\sum_{i\in I_{2}\backslash I_{1}}\mathbf{s}_{i}
 </span>. Note that any pair of variables from <span class="MathJax_Preview"><script type="math/tex">
 \left\{ M_{0},M_{1},M_{2}\right\} 
 </script>
-</span> are independent because they defined on mutually disjoint set of indices. Moreover, by the lemma from above, each of them is distributed as <span class="MathJax_Preview"><script type="math/tex">
+</span> are independent because they defined on mutually disjoint set of indices. Moreover, by the lemma from above, each of them if it is not a constant zero then it is distributed as <span class="MathJax_Preview"><script type="math/tex">
 Bernoulli\left(0.5\right)
 </script>
 </span>. When plugging in the new notations we get<span class="MathJax_Preview">
