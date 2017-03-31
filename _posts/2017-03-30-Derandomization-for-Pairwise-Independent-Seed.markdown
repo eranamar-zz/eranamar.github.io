@@ -132,7 +132,7 @@ You probably already see the problem here. If <span class="MathJax_Preview"><scr
 t=\mathcal{O}\left(n\right)
 </script>
 </span> then the running time of the deterministic procedure is <span class="MathJax_Preview"><script type="math/tex">
-2^{\mathcal{O}\left(t\right)}poly\left(n\right)
+2^{\mathcal{O}\left(n\right)}poly\left(n\right)
 </script>
 </span>.
 </div>
