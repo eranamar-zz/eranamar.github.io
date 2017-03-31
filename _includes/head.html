@@ -7,14 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="AUTHOR" content="Eran Amar">
   <meta name="Keywords" content="Amar Eran, Eran Amar, eranamar, Blog, computer science, theory of computer science, Weizmann Institute, probability, statistics">
-    
   <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
   <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">  
-  
-  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"  integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc="
-  crossorigin="anonymous"></script>
-
-  
   <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }}" href="{{ "/feed.xml" | relative_url }}">

@@ -9,7 +9,8 @@ layout: default
 		messageStyle: "normal"
     });
 </script>
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 <style type="text/css">
   .MathJax * {
@@ -93,8 +94,8 @@ layout: default
   <div id="loader" >
     Loading content and comments...
   </div>
-  <div class="hide-with-loader">
-    <div class="post-content" itemprop="articleBody">
+  <div class="">
+    <div class="post-content hide-with-loader" itemprop="articleBody">
       {{ content }}
     
     </div>
@@ -111,11 +112,17 @@ layout: default
     $(document).ready(function(){
       var post = $('div.hide-with-loader');
       var loader = $('#loader');
-      if(post.length){        
-        MathJax.Hub.Register.StartupHook("End",function () {
+
+      var show_post = function () {
           loader.hide();
           post.show();
-        });
+          if(window.activate_disqus_comments){
+            window.activate_disqus_comments();
+          }
+      };
+
+      if(post.length){        
+        MathJax.Hub.Register.StartupHook("End", show_post);
       }
     });
 </script>
