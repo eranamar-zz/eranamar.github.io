@@ -10,14 +10,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="AUTHOR" content="Eran Amar">
   <meta name="Keywords" content="Amar Eran, Eran Amar, eranamar, Blog, computer science, theory of computer science, Weizmann Institute, probability, statistics">
-    
   <title>Comparing Chernoff - Hoeffding bounds</title>
   <meta name="description" content="Warning: MathJax requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser. &amp;lt;/hr&amp;gt;">  
-  
-  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"  integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc="
-  crossorigin="anonymous"></script>
-
-  
   <link rel="stylesheet" href="/site/assets/main.css">
   <link rel="canonical" href="https://eranamar.github.io/site/2017/03/24/Comparing-Chernoff-Hoeffding-bounds.html">
   <link rel="alternate" type="application/rss+xml" title="Theory Lunch" href="/site/feed.xml">
@@ -100,7 +94,8 @@
 		messageStyle: "normal"
     });
 </script>
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 <style type="text/css">
   .MathJax * {
@@ -184,8 +179,8 @@
   <div id="loader" >
     Loading content and comments...
   </div>
-  <div class="hide-with-loader">
-    <div class="post-content" itemprop="articleBody">
+  <div class="">
+    <div class="post-content hide-with-loader" itemprop="articleBody">
       <script type="math/tex">
 \newcommand{\lyxlock}{}
 </script>
@@ -464,7 +459,10 @@ Note the differences between that regime and the one from the definition at the 
       s.src = 'https://theorylunch.disqus.com/embed.js';
 
       s.setAttribute('data-timestamp', +new Date());
-      (d.head || d.body).appendChild(s);
+      
+      window.activate_disqus_comments = function (){
+        (d.head || d.body).appendChild(s);
+      };
     })();
   </script>
   <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
@@ -480,11 +478,17 @@ Note the differences between that regime and the one from the definition at the 
     $(document).ready(function(){
       var post = $('div.hide-with-loader');
       var loader = $('#loader');
-      if(post.length){        
-        MathJax.Hub.Register.StartupHook("End",function () {
+
+      var show_post = function () {
           loader.hide();
           post.show();
-        });
+          if(window.activate_disqus_comments){
+            window.activate_disqus_comments();
+          }
+      };
+
+      if(post.length){        
+        MathJax.Hub.Register.StartupHook("End", show_post);
       }
     });
 </script>
@@ -495,9 +499,9 @@ Note the differences between that regime and the one from the definition at the 
     <footer class="site-footer">
 
   <div class="wrapper">
-
-    <h2 class="footer-heading">Theory Lunch</h2>
-
+    <a href="/site/">
+      <h2 class="footer-heading">Theory Lunch</h2>
+    </a>
     <div class="footer-col-wrapper">
       <div class="footer-col footer-col-1">
         <ul class="contact-list">
