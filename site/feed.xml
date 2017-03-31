@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="http://jekyllrb.com" version="3.4.2">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-03-30T17:56:18+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">Theory Lunch</title><subtitle>Computer Science topics over lunch</subtitle><author><name>Eran Amar, Yosef Pogrow, Ron Shiff</name></author><entry><title type="html">Derandomization for Pairwise Independent Seed</title><link href="https://eranamar.github.io/site/2017/03/30/Derandomization-for-Pairwise-Independent-Seed.html" rel="alternate" type="text/html" title="Derandomization for Pairwise Independent Seed" /><published>2017-03-30T00:00:00+03:00</published><updated>2017-03-30T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/03/30/Derandomization-for-Pairwise-Independent-Seed</id><content type="html" xml:base="https://eranamar.github.io/site/2017/03/30/Derandomization-for-Pairwise-Independent-Seed.html">&lt;script type=&quot;math/tex&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="http://jekyllrb.com" version="3.4.2">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-03-31T10:09:16+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">Theory Lunch</title><subtitle>Computer Science topics over lunch</subtitle><author><name>Eran Amar, Yosef Pogrow, Ron Shiff</name></author><entry><title type="html">Derandomization for Pairwise Independent Seed</title><link href="https://eranamar.github.io/site/2017/03/30/Derandomization-for-Pairwise-Independent-Seed.html" rel="alternate" type="text/html" title="Derandomization for Pairwise Independent Seed" /><published>2017-03-30T00:00:00+03:00</published><updated>2017-03-30T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/03/30/Derandomization-for-Pairwise-Independent-Seed</id><content type="html" xml:base="https://eranamar.github.io/site/2017/03/30/Derandomization-for-Pairwise-Independent-Seed.html">&lt;script type=&quot;math/tex&quot;&gt;
 \newcommand{\lyxlock}{}
 &lt;/script&gt;
 
@@ -184,7 +184,7 @@ k
 &lt;/span&gt; random variables from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \mathcal{X}
 &lt;/script&gt;
-&lt;/span&gt; are fully independent. The family &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt; is fully independent. The family &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \mathcal{X}
 &lt;/script&gt;
 &lt;/span&gt; is called pairwise independent family when &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
@@ -220,7 +220,7 @@ poly\left(n\right)
 &lt;/span&gt; time.
 &lt;/div&gt;
 &lt;div class=&quot;Indented&quot;&gt;
-Of course, we may assume pairwise independent only if it won’t break the correctness analysis of the randomized algorithm that we want to derandomize.
+Of course, we may assume pairwise independence only if it won’t break the correctness analysis of the randomized algorithm that we want to derandomize.
 &lt;/div&gt;
 &lt;h1 class=&quot;Section&quot;&gt;
 &lt;a class=&quot;toc&quot; name=&quot;toc-Section-4&quot;&gt;4&lt;/a&gt; Stretching the Seed
