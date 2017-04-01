@@ -29,7 +29,9 @@ div.sub-title {
 div.hide-with-loader {
     display: none; 
 }
-h1, h2, h3, h4, h5, h6, p, blockquote, pre, ul, ol, dl, figure, .highlight {
+.post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6, 
+.post-content p, .post-content blockquote, .post-content pre, 
+.post-content ul, .post-content ol, .post-content dl, .post-content figure, .highlight {
     margin-bottom: 15px;
     margin-top: 15px;
 }
