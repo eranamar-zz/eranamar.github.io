@@ -1,0 +1,93 @@
+.page-content, .sub-title, .page-link {
+    --x-height-multiplier: 0.35;
+    --baseline-multiplier: 0.179;
+    font-family: Georgia,Cambria,"Times New Roman",Times,serif;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.58;
+    letter-spacing: -.004em;
+    word-break: break-word;
+    word-wrap: break-word;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+div.page-content{
+  font-size: 18px;
+}
+
+div.sub-title {
+  font-size: 16px;
+}
+
+.MathJax * {
+  color: black;
+}
+.MathJax_Preview {
+  margin-left: 4px;
+}
+div.hide-with-loader {
+    display: none; 
+}
+h1, h2, h3, h4, h5, h6, p, blockquote, pre, ul, ol, dl, figure, .highlight {
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+.Indented, .Unindented, .Theorem, .Lemma, .Claim, .Proof, .Definition {
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-align: justify;
+}
+.Theorem {
+    display: block;
+    margin: 12px 0;
+    font-style: italic;
+}
+.Theorem:before {
+  content: "Theorem.";
+  font-weight: bold;
+  font-style: normal;
+}
+.Lemma {
+  display: block;
+  margin: 12px 0;
+  font-style: italic;
+}
+.Lemma:before {
+  content: "Lemma.";
+  font-weight: bold;
+  font-style: normal;
+}
+.Claim {
+  display: block;
+  margin: 12px 0;
+  font-style: italic;
+}
+.Claim:before {
+  content: "Claim.";
+  font-weight: bold;
+  font-style: normal;
+}
+.Proof {
+  display: block;
+  margin: 12px 0;
+  font-style: normal;
+}
+.Proof:before {
+  content: "Proof.";
+  font-style: italic;
+}
+.Proof:after {
+  content: "\25FC";
+  float:right;
+}
+.Definition {
+  display: block;
+  margin: 12px 0;
+  font-style: normal;
+}
+.Definition:before {
+  content: "Definition.";
+  font-weight: bold;
+  font-style: normal;
+}
