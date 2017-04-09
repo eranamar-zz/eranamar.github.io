@@ -1,4 +1,347 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="http://jekyllrb.com" version="3.4.2">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-04-01T11:12:05+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">Theory Lunch</title><subtitle>Computer Science topics over lunch</subtitle><author><name>Eran Amar, Yosef Pogrow, Ron Shiff</name></author><entry><title type="html">Derandomization for Pairwise Independent Seed</title><link href="https://eranamar.github.io/site/2017/03/30/Derandomization-for-Pairwise-Independent-Seed.html" rel="alternate" type="text/html" title="Derandomization for Pairwise Independent Seed" /><published>2017-03-30T00:00:00+03:00</published><updated>2017-03-30T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/03/30/Derandomization-for-Pairwise-Independent-Seed</id><content type="html" xml:base="https://eranamar.github.io/site/2017/03/30/Derandomization-for-Pairwise-Independent-Seed.html">&lt;script type=&quot;math/tex&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="http://jekyllrb.com" version="3.4.2">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-04-09T18:07:33+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">Theory Lunch</title><subtitle>Computer Science topics over lunch</subtitle><author><name>Eran Amar, Yosef Pogrow, Ron Shiff</name></author><entry><title type="html">Memory Efficient Algorithm for Finding Cycles in Graphs</title><link href="https://eranamar.github.io/site/2017/04/06/Memory-Efficient-Algorithm-for-Finding-Cycles-in-Graphs.html" rel="alternate" type="text/html" title="Memory Efficient Algorithm for Finding Cycles in Graphs" /><published>2017-04-06T00:00:00+03:00</published><updated>2017-04-06T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/04/06/Memory-Efficient-Algorithm-for-Finding-Cycles-in-Graphs</id><content type="html" xml:base="https://eranamar.github.io/site/2017/04/06/Memory-Efficient-Algorithm-for-Finding-Cycles-in-Graphs.html">&lt;script type=&quot;math/tex&quot;&gt;
+\newcommand{\lyxlock}{}
+&lt;/script&gt;
+
+&lt;noscript&gt;
+&lt;div class=&quot;warning&quot;&gt;
+Warning: &lt;a href=&quot;http://www.mathjax.org/&quot;&gt;MathJax&lt;/a&gt; requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser.
+&lt;/div&gt;&lt;hr /&gt;
+&amp;lt;/hr&amp;gt;&lt;/noscript&gt;
+
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-1&quot;&gt;1&lt;/a&gt; Cycle Detection in Graphs 
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+Somewhere in 2015, I encountered a nice algorithmic question during an interview for some algotreading company. The question was &lt;i&gt;how one can decide if there is a cycle in an undirected connected graph&lt;/i&gt;? There are two immediate answers here, the first is running &lt;i&gt;Breadth First Search (BFS)&lt;/i&gt; on arbitrary node and memorizing the nodes that were already visited. The search ends either when the algorithm complete scanning the whole graph or when it reach some node twice, outputting “Yes” or “No” respectively. Another possible solution is by running &lt;i&gt;Depth First Search (DFS)&lt;/i&gt; and keeping a variable to count the length of the path explored. The algorithm declare a cycle if the length of the path reach the number of vertices in the graph. For the rest of this post, denote that number by &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+n
+&lt;/script&gt;
+&lt;/span&gt;.
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+Those two solutions are simple, and more importantly, have the same &lt;i&gt;space complexity&lt;/i&gt;. That is, both consumes around the same amount of working memory (in bits) ignoring the memory needed for the input and output of the algorithm. Even though DFS have implementation that requires less memory than BFS, ultimately both requires &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\Omega\left(n\log n\right)
+&lt;/script&gt;
+&lt;/span&gt; bits. One can justify the space complexity as follow: both algorithms has to keep track of their search (a queue in BFS and a stack is DFS) which potentially can be as large as the entire graph thus &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\Omega\left(n\right)
+&lt;/script&gt;
+&lt;/span&gt;, and each node need &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\Omega\left(\log n\right)
+&lt;/script&gt;
+&lt;/span&gt; bits for encoding so the total space complexity is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\Omega\left(n\log n\right)
+&lt;/script&gt;
+&lt;/span&gt; bits.
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+During the rest of this post we will focus on &lt;i&gt;space complexity&lt;/i&gt; rather than &lt;i&gt;time complexity&lt;/i&gt;. We will present an algorithm that can determine if there is a cycle in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{O}\left(\log^{2}n\right)
+&lt;/script&gt;
+&lt;/span&gt; bits [base on &lt;a class=&quot;URL&quot; href=&quot;http://www.sciencedirect.com/science/article/pii/S002200007080006X&quot;&gt;this paper&lt;/a&gt;] and then discuss the importance of some related problems.
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-2&quot;&gt;2&lt;/a&gt; The &lt;i&gt;s-t Connectivity&lt;/i&gt; Problem
+&lt;/h1&gt;
+&lt;h2 class=&quot;Subsection&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Subsection-2.1&quot;&gt;2.1&lt;/a&gt; Solving &lt;i&gt;s-t connectivity&lt;/i&gt; as a Sub-step
+&lt;/h2&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+We will start from solving a slightly different problem then uses its solution as a procedure in our cycle-detection algorithm. 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+Introducing the &lt;i&gt;undirected s-t connectivity&lt;/i&gt; problem: The input is an undirected graph &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+G=\left(V,E\right)
+&lt;/script&gt;
+&lt;/span&gt; of size &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+n
+&lt;/script&gt;
+&lt;/span&gt; and two vertices &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+s,t\in V
+&lt;/script&gt;
+&lt;/span&gt;. The output should be &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+1
+&lt;/script&gt;
+&lt;/span&gt; if there is path in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+G
+&lt;/script&gt;
+&lt;/span&gt; that connects &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+s
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+t
+&lt;/script&gt;
+&lt;/span&gt;, and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+0
+&lt;/script&gt;
+&lt;/span&gt; otherwise. The &lt;i&gt;directed s-t connectivity&lt;/i&gt; is the about the same but the input graph is connected (i.e its edges has directions) and the output should be &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+1
+&lt;/script&gt;
+&lt;/span&gt; whether there is a &lt;i&gt;directed&lt;/i&gt; path from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+s
+&lt;/script&gt;
+&lt;/span&gt; to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+t
+&lt;/script&gt;
+&lt;/span&gt;.
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+Before we present the algorithm, we first define the following predicate: for any &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+u,v\in V
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+k\in\mathbb{N}
+&lt;/script&gt;
+&lt;/span&gt; define &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+conn\left(u,v;k\right)=1
+&lt;/script&gt;
+&lt;/span&gt; if exists a path from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+u
+&lt;/script&gt;
+&lt;/span&gt; to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+v
+&lt;/script&gt;
+&lt;/span&gt; of at most &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+k
+&lt;/script&gt;
+&lt;/span&gt; steps (i.e. edges), otherwise &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+conn\left(u,v;k\right)=0
+&lt;/script&gt;
+&lt;/span&gt;. 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+The next observations are key points needed to solve the &lt;i&gt;s-t connectivity &lt;/i&gt;efficiently (both for directed and undirected case).
+&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;
+For any &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+u,v\in V
+&lt;/script&gt;
+&lt;/span&gt; and any &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+k\in\mathbb{N}
+&lt;/script&gt;
+&lt;/span&gt;, we have that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+conn\left(u,v;2^{k}\right)=1
+&lt;/script&gt;
+&lt;/span&gt; if and only if &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\exists w\in V
+&lt;/script&gt;
+&lt;/span&gt; such that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+conn\left(u,w;2^{k-1}\right)=1
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+conn\left(w,v;2^{k-1}\right)=1
+&lt;/script&gt;
+&lt;/span&gt;
+&lt;/li&gt;
+&lt;li&gt;
+Let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+u,v\in V
+&lt;/script&gt;
+&lt;/span&gt;, they are connected if and only if &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+conn\left(u,v;2^{\lceil\log n\rceil}\right)=1
+&lt;/script&gt;
+&lt;/span&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+From here the algorithm is straight forward: denote the algorithm by &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+Alg\left(u,v;2^{k}\right)
+&lt;/script&gt;
+&lt;/span&gt; that upon receiving &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+u,v
+&lt;/script&gt;
+&lt;/span&gt; from the graph &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+G=\left(V,E\right)
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+k\in\mathbb{N}
+&lt;/script&gt;
+&lt;/span&gt;:
+&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;
+If &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+k=0
+&lt;/script&gt;
+&lt;/span&gt; output &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{1}_{\left[u=v\right]}
+&lt;/script&gt;
+&lt;/span&gt;, and if &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+k=1
+&lt;/script&gt;
+&lt;/span&gt; output &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{1}_{\left[u=v\vee\left(u,v\right)\in E\right]}
+&lt;/script&gt;
+&lt;/span&gt;
+&lt;/li&gt;
+&lt;li&gt;
+For each &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+w\in V
+&lt;/script&gt;
+&lt;/span&gt;: if &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+Alg\left(u,w;2^{k-1}\right)=1
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+Alg\left(w,v;2^{k-1}\right)=1
+&lt;/script&gt;
+&lt;/span&gt; then output &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+1
+&lt;/script&gt;
+&lt;/span&gt;
+&lt;/li&gt;
+&lt;li&gt;
+Output &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+0
+&lt;/script&gt;
+&lt;/span&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+The solution for &lt;i&gt;s-t connectivity&lt;/i&gt; is achieved by outputting “Yes” if and only if &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+Alg\left(s,t,2^{\lceil\log n\rceil}\right)=1
+&lt;/script&gt;
+&lt;/span&gt;. 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+Obviously, the depth of the recursion is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{O}\left(\log n\right)
+&lt;/script&gt;
+&lt;/span&gt; and in each level of the recursion the algorithm only needs to keep track of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+w
+&lt;/script&gt;
+&lt;/span&gt;, which is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{O}\left(\log n\right)
+&lt;/script&gt;
+&lt;/span&gt; bits, therefore the total memory complexity of the algorithm is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{O}\left(\log^{2}n\right)
+&lt;/script&gt;
+&lt;/span&gt; bits.
+&lt;/div&gt;
+&lt;h2 class=&quot;Subsection&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Subsection-2.2&quot;&gt;2.2&lt;/a&gt; Extending the algorithm to detect cycles
+&lt;/h2&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+How solving the &lt;i&gt;s-t connectivity&lt;/i&gt; problem helps us with cycle detection? The next observation answer that: let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+G=\left(V,E\right)
+&lt;/script&gt;
+&lt;/span&gt; be the graph in question and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+u,v\in V
+&lt;/script&gt;
+&lt;/span&gt; two endpoints of some edge, they must stay connected after removing that edge from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+G
+&lt;/script&gt;
+&lt;/span&gt; if and only if both participating in a cycle contained in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+G
+&lt;/script&gt;
+&lt;/span&gt;.
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+For the directed case the algorithm is as follow: iterate over any edge &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\left(u,v\right)\in E
+&lt;/script&gt;
+&lt;/span&gt;, delete it temporarily from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+G
+&lt;/script&gt;
+&lt;/span&gt; and check if &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+Alg\left(v,u;2^{\lceil\log n\rceil}\right)=1
+&lt;/script&gt;
+&lt;/span&gt; on the resulting graph, that is, if &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+v
+&lt;/script&gt;
+&lt;/span&gt; is still connected to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+u
+&lt;/script&gt;
+&lt;/span&gt; even after you delete the edge from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+u
+&lt;/script&gt;
+&lt;/span&gt; to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+v
+&lt;/script&gt;
+&lt;/span&gt;. If &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+Alg\left(v,u;2^{\lceil\log n\rceil}\right)=1
+&lt;/script&gt;
+&lt;/span&gt; then declare a cycle, else, restore back the edge and continue to the next one. Note that this solution also works for undirected graphs. The memory complexity is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{O}\left(\log^{2}n\right)+\log n=\mathcal{O}\left(\log^{2}n\right)
+&lt;/script&gt;
+&lt;/span&gt; and we done.
+&lt;/div&gt;
+&lt;h2 class=&quot;Subsection&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Subsection-2.3&quot;&gt;2.3&lt;/a&gt; Is it the best we can do?
+&lt;/h2&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+Actually, for undirected graphs there is an algorithm with &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{O}\left(\log n\right)
+&lt;/script&gt;
+&lt;/span&gt; bits, improving the square on the log from the construction from previous section. The interested reader can read more about it &lt;a class=&quot;URL&quot; href=&quot;http://www.cs.cornell.edu/courses/cs682/2008sp/Handouts/Reingold05.pdf&quot;&gt;here&lt;/a&gt;. For the directed case it is an open question whether we can improve the &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\log^{2}n
+&lt;/script&gt;
+&lt;/span&gt; or not.
+&lt;/div&gt;
+&lt;h2 class=&quot;Subsection&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Subsection-2.4&quot;&gt;2.4&lt;/a&gt; Beyond Cycles in Graphs
+&lt;/h2&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+The &lt;i&gt;directed s-t connectivity &lt;/i&gt;problem is important because it captures the “hardness” of any problem that requires logarithmic amount of memory space. The reduction to show that is actually very easy, suppose we have an algorithm that solves some problem in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{O}\left(s\right)
+&lt;/script&gt;
+&lt;/span&gt; space where &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+s
+&lt;/script&gt;
+&lt;/span&gt; is logarithmic in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+n
+&lt;/script&gt;
+&lt;/span&gt; (the size of the input), generate the following directed graph: create a vertex &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+v
+&lt;/script&gt;
+&lt;/span&gt; for any state (memory configuration) of the algorithm. Since its memory is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{O}\left(s\right)
+&lt;/script&gt;
+&lt;/span&gt;, there are at most &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+2^{\mathcal{O}\left(s\right)}=\mathcal{O}\left(n\right)
+&lt;/script&gt;
+&lt;/span&gt; states (thus vertices). Create an edge from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+u
+&lt;/script&gt;
+&lt;/span&gt; to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+v
+&lt;/script&gt;
+&lt;/span&gt; iff &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+v
+&lt;/script&gt;
+&lt;/span&gt; is a valid possible successor state of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+u
+&lt;/script&gt;
+&lt;/span&gt;. Add a vertex &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+t
+&lt;/script&gt;
+&lt;/span&gt; and connects to it all the states that leads to outputting “Yes”. Denote by &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+s
+&lt;/script&gt;
+&lt;/span&gt; the starting-state of the algorithm and now solving the original problem is equivalent to finding a directed path from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+s
+&lt;/script&gt;
+&lt;/span&gt; to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+t
+&lt;/script&gt;
+&lt;/span&gt; in the states-graph.
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+This reduction was presented by Walter Savitch in 1970, and it also works for Nondeterministic algorithms. The conclusion is that any nondeterministic problem that can be solved in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{O}\left(s\right)
+&lt;/script&gt;
+&lt;/span&gt; space (where &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+s
+&lt;/script&gt;
+&lt;/span&gt; is logarithmic in the size of the input) can be solved deterministically in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{O}\left(s^{2}\right)
+&lt;/script&gt;
+&lt;/span&gt;. Applying that conclusion with the algorithm for &lt;i&gt;directed s-t connectivity&lt;/i&gt; yields that any problem with nondeterministic &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{O}\left(\log n\right)
+&lt;/script&gt;
+&lt;/span&gt; memory can be solved deterministically (via reduction to &lt;i&gt;directed s-t connectivity&lt;/i&gt;) with &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{O}\left(\log^{2}n\right)
+&lt;/script&gt;
+&lt;/span&gt; memory.
+&lt;/div&gt;</content><author><name>Eran Amar</name></author><category term="complexity" /><category term="algorithms" /><summary type="html">Warning: MathJax requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser. &amp;lt;/hr&amp;gt;</summary></entry><entry><title type="html">Derandomization for Pairwise Independent Seed</title><link href="https://eranamar.github.io/site/2017/03/30/Derandomization-for-Pairwise-Independent-Seed.html" rel="alternate" type="text/html" title="Derandomization for Pairwise Independent Seed" /><published>2017-03-30T00:00:00+03:00</published><updated>2017-03-30T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/03/30/Derandomization-for-Pairwise-Independent-Seed</id><content type="html" xml:base="https://eranamar.github.io/site/2017/03/30/Derandomization-for-Pairwise-Independent-Seed.html">&lt;script type=&quot;math/tex&quot;&gt;
 \newcommand{\lyxlock}{}
 &lt;/script&gt;
 
@@ -241,7 +584,7 @@ t:=\log\left(n\right)+1
 &lt;/span&gt; fully independent Bernoulli random variables, each with probability &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \frac{1}{2}
 &lt;/script&gt;
-&lt;/span&gt;. Fix them is some arbitrary order to get a (random) vector &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt;. Fix them in some arbitrary order to get a (random) vector &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \mathbf{s}
 &lt;/script&gt;
 &lt;/span&gt; of length &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
@@ -690,7 +1033,7 @@ Warning: &lt;a href=&quot;http://www.mathjax.org/&quot;&gt;MathJax&lt;/a&gt; req
 &amp;lt;/hr&amp;gt;&lt;/noscript&gt;
 
 &lt;div class=&quot;Unindented&quot;&gt;
-In this post, I will review some of the basic definitions about hypergraphs and sparsifiers on them. I will start from the very basic definitions about Graphs, then generalizing them to Hypergraphs. Later, I will present the definition of cuts sparsifiers and some lower bound related to them.
+In this post, I will review some of the basic definitions about hypergraphs and cuts sparsifier on them. I will start from the very basic definitions about Graphs, then generalizing them to Hypergraphs. Later, I will present the definition of cuts sparsifier and some lower bound related to them.
 &lt;/div&gt;
 &lt;h1 class=&quot;Section&quot;&gt;
 &lt;a class=&quot;toc&quot; name=&quot;toc-Section-1&quot;&gt;1&lt;/a&gt; Basic definitions in Graphs
@@ -723,7 +1066,7 @@ e=\left\{ u,v\right\} \in E\subseteq\left\{ A\mid A\subseteq V,\:\:\left|A\right
 &lt;/span&gt;. The function &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 w:\:E\rightarrow\mathbb{R}_{\ge0}
 &lt;/script&gt;
-&lt;/span&gt; assign non-negative weight for each edge in the graph, and called weight function. For instance, we can model friendships in Facebook as a graph, the vertices will be all the users in Facebook, and there will be an edge between any pair of useres if they are “friends” of each other.
+&lt;/span&gt; assign non-negative weight for each edge in the graph, and called weight function. For instance, we can model friendships in Facebook as a graph, the vertices will be all the users in Facebook, and there will be an edge between any pair of users if they are “friends” of each other.
 &lt;/div&gt;
 &lt;div class=&quot;Indented&quot;&gt;
 A &lt;i&gt;cut&lt;/i&gt; in a graph &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
@@ -747,7 +1090,7 @@ S\cap e\ne\emptyset
 &lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \left(V\backslash S\right)\cap e\ne\emptyset
 &lt;/script&gt;
-&lt;/span&gt;. Now we can talk about the &lt;i&gt;weight of the cut&lt;/i&gt;, that is, if we have a cut that is defined by &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt;, that is, the edge “touches” both parts of the graph. Now we can talk about the &lt;i&gt;weight of the cut&lt;/i&gt;, that is, if we have a cut that is defined by &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 S
 &lt;/script&gt;
 &lt;/span&gt; and a weight function &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
