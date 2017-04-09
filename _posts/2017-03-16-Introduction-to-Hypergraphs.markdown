@@ -20,7 +20,7 @@ Warning: <a href="http://www.mathjax.org/">MathJax</a> requires JavaScript to co
 
 
 <div class="Unindented">
-In this post, I will review some of the basic definitions about hypergraphs and sparsifiers on them. I will start from the very basic definitions about Graphs, then generalizing them to Hypergraphs. Later, I will present the definition of cuts sparsifiers and some lower bound related to them.
+In this post, I will review some of the basic definitions about hypergraphs and cuts sparsifier on them. I will start from the very basic definitions about Graphs, then generalizing them to Hypergraphs. Later, I will present the definition of cuts sparsifier and some lower bound related to them.
 </div>
 <h1 class="Section">
 <a class="toc" name="toc-Section-1">1</a> Basic definitions in Graphs
@@ -53,7 +53,7 @@ e=\left\{ u,v\right\} \in E\subseteq\left\{ A\mid A\subseteq V,\:\:\left|A\right
 </span>. The function <span class="MathJax_Preview"><script type="math/tex">
 w:\:E\rightarrow\mathbb{R}_{\ge0}
 </script>
-</span> assign non-negative weight for each edge in the graph, and called weight function. For instance, we can model friendships in Facebook as a graph, the vertices will be all the users in Facebook, and there will be an edge between any pair of useres if they are “friends” of each other.
+</span> assign non-negative weight for each edge in the graph, and called weight function. For instance, we can model friendships in Facebook as a graph, the vertices will be all the users in Facebook, and there will be an edge between any pair of users if they are “friends” of each other.
 </div>
 <div class="Indented">
 A <i>cut</i> in a graph <span class="MathJax_Preview"><script type="math/tex">
@@ -77,7 +77,7 @@ S\cap e\ne\emptyset
 </span> and <span class="MathJax_Preview"><script type="math/tex">
 \left(V\backslash S\right)\cap e\ne\emptyset
 </script>
-</span>. Now we can talk about the <i>weight of the cut</i>, that is, if we have a cut that is defined by <span class="MathJax_Preview"><script type="math/tex">
+</span>, that is, the edge “touches” both parts of the graph. Now we can talk about the <i>weight of the cut</i>, that is, if we have a cut that is defined by <span class="MathJax_Preview"><script type="math/tex">
 S
 </script>
 </span> and a weight function <span class="MathJax_Preview"><script type="math/tex">
