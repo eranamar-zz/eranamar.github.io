@@ -18,7 +18,15 @@ div.page-content{
 
 
 div.post-content h1 {
-  font-size: 32px;
+  font-size: 30px;
+}
+
+div.post-content h2 {
+  font-size: 26px;
+}
+
+div.post-content h3 {
+  font-size: 22px;
 }
 
 div.sub-title {
