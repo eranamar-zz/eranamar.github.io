@@ -83,7 +83,7 @@ t
 </span>, and <span class="MathJax_Preview"><script type="math/tex">
 0
 </script>
-</span> otherwise. The <i>directed s-t connectivity</i> is the about the same but the input graph is connected (i.e its edges has directions) and the output should be <span class="MathJax_Preview"><script type="math/tex">
+</span> otherwise. The <i>directed s-t connectivity</i> is the about the same but the input graph is directed (i.e its edges has directions) and the output should be <span class="MathJax_Preview"><script type="math/tex">
 1
 </script>
 </span> whether there is a <i>directed</i> path from <span class="MathJax_Preview"><script type="math/tex">
