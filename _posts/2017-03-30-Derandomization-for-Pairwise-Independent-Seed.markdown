@@ -132,7 +132,7 @@ You probably already see the problem here. If <span class="MathJax_Preview"><scr
 t=\mathcal{O}\left(n\right)
 </script>
 </span> then the running time of the deterministic procedure is <span class="MathJax_Preview"><script type="math/tex">
-2^{\mathcal{O}\left(n\right)}poly\left(n\right)
+2^{\mathcal{O}\left(n\right)}\cdot poly\left(n\right)
 </script>
 </span>.
 </div>
@@ -161,19 +161,13 @@ n
 We start off with a definition.
 </div>
 <div class="Definition">
-<span class="MathJax_Preview"><script type="math/tex">
-k
-</script>
-</span>-wise Independent Family. Let <span class="MathJax_Preview"><script type="math/tex">
+<i>k</i>-wise Independent Family. Let <span class="MathJax_Preview"><script type="math/tex">
 \mathcal{X}
 </script>
 </span> be a set of random variables. We say that <span class="MathJax_Preview"><script type="math/tex">
 \mathcal{X}
 </script>
-</span> is a <span class="MathJax_Preview"><script type="math/tex">
-k
-</script>
-</span>-wise independent family if for any subset of <span class="MathJax_Preview"><script type="math/tex">
+</span> is a <i>k</i>-wise independent family if for any subset of <span class="MathJax_Preview"><script type="math/tex">
 k
 </script>
 </span> variables <span class="MathJax_Preview"><script type="math/tex">
@@ -213,10 +207,7 @@ s
 </span> as a series of Bernoulli r.vs then we actually required <span class="MathJax_Preview"><script type="math/tex">
 s
 </script>
-</span> to be <span class="MathJax_Preview"><script type="math/tex">
-t
-</script>
-</span>-wise independent family, which is much stronger property than pairwise independence. If we relax that requirement and assume that the algorithm only needs its coins to be pairwise independent, then there is a way (described in next section) to construct <span class="MathJax_Preview"><script type="math/tex">
+</span> to be <i>t</i>-wise independent family, which is much stronger property than pairwise independence. If we relax that requirement and assume that the algorithm only needs its coins to be pairwise independent, then there is a way (described in next section) to construct <span class="MathJax_Preview"><script type="math/tex">
 n
 </script>
 </span> <i>pairwise independent</i> bits using only <span class="MathJax_Preview"><script type="math/tex">
@@ -360,7 +351,13 @@ X_{2}=\left\langle \mathbf{s},\mathbf{x}_{2}\right\rangle \in\mathcal{S}
 </span>, and let <span class="MathJax_Preview"><script type="math/tex">
 b_{1},b_{2}\in\left\{ 0,1\right\} 
 </script>
-</span> (all the operations in the proof are <b>modulo 2</b>). Obviously, we only care about the set of indices which are non-zero in the vectors <span class="MathJax_Preview"><script type="math/tex">
+</span>, we want to show that <span class="MathJax_Preview"><script type="math/tex">
+X_{1}
+</script>
+</span> and <span class="MathJax_Preview"><script type="math/tex">
+X_{2}
+</script>
+</span> are independent. Obviously, we only care about the set of indices which are non-zero in the vectors <span class="MathJax_Preview"><script type="math/tex">
 \mathbf{x}_{1}
 </script>
 </span> and <span class="MathJax_Preview"><script type="math/tex">
@@ -381,7 +378,7 @@ M_{2}=\sum_{i\in I_{2}\backslash I_{1}}\mathbf{s}_{i}
 </span> where summation over empty set is defined as the constant <span class="MathJax_Preview"><script type="math/tex">
 0
 </script>
-</span>. Note that any pair of variables from <span class="MathJax_Preview"><script type="math/tex">
+</span> (all the operations in the proof are modulo 2). Note that any pair of variables from <span class="MathJax_Preview"><script type="math/tex">
 \left\{ M_{0},M_{1},M_{2}\right\} 
 </script>
 </span> are independent because they defined on mutually disjoint set of indices. Moreover, by the lemma from above, each of them if it is not a constant zero then it is distributed as <span class="MathJax_Preview"><script type="math/tex">

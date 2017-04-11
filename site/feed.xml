@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="http://jekyllrb.com" version="3.4.2">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-04-11T15:13:04+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">Theory Lunch</title><subtitle>Computer Science topics over lunch</subtitle><author><name>Eran Amar, Yosef Pogrow, Ron Shiff</name></author><entry><title type="html">Memory Efficient Algorithm for Finding Cycles in Graphs</title><link href="https://eranamar.github.io/site/2017/04/06/Memory-Efficient-Algorithm-for-Finding-Cycles-in-Graphs.html" rel="alternate" type="text/html" title="Memory Efficient Algorithm for Finding Cycles in Graphs" /><published>2017-04-06T00:00:00+03:00</published><updated>2017-04-06T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/04/06/Memory-Efficient-Algorithm-for-Finding-Cycles-in-Graphs</id><content type="html" xml:base="https://eranamar.github.io/site/2017/04/06/Memory-Efficient-Algorithm-for-Finding-Cycles-in-Graphs.html">&lt;script type=&quot;math/tex&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="http://jekyllrb.com" version="3.4.2">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-04-11T16:28:55+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">Theory Lunch</title><subtitle>Computer Science topics over lunch</subtitle><author><name>Eran Amar, Yosef Pogrow, Ron Shiff</name></author><entry><title type="html">Memory Efficient Algorithm for Finding Cycles in Graphs</title><link href="https://eranamar.github.io/site/2017/04/06/Memory-Efficient-Algorithm-for-Finding-Cycles-in-Graphs.html" rel="alternate" type="text/html" title="Memory Efficient Algorithm for Finding Cycles in Graphs" /><published>2017-04-06T00:00:00+03:00</published><updated>2017-04-06T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/04/06/Memory-Efficient-Algorithm-for-Finding-Cycles-in-Graphs</id><content type="html" xml:base="https://eranamar.github.io/site/2017/04/06/Memory-Efficient-Algorithm-for-Finding-Cycles-in-Graphs.html">&lt;script type=&quot;math/tex&quot;&gt;
 \newcommand{\lyxlock}{}
 &lt;/script&gt;
 
@@ -464,7 +464,7 @@ You probably already see the problem here. If &lt;span class=&quot;MathJax_Previ
 t=\mathcal{O}\left(n\right)
 &lt;/script&gt;
 &lt;/span&gt; then the running time of the deterministic procedure is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-2^{\mathcal{O}\left(n\right)}poly\left(n\right)
+2^{\mathcal{O}\left(n\right)}\cdot poly\left(n\right)
 &lt;/script&gt;
 &lt;/span&gt;.
 &lt;/div&gt;
@@ -493,19 +493,13 @@ n
 We start off with a definition.
 &lt;/div&gt;
 &lt;div class=&quot;Definition&quot;&gt;
-&lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-k
-&lt;/script&gt;
-&lt;/span&gt;-wise Independent Family. Let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;i&gt;k&lt;/i&gt;-wise Independent Family. Let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \mathcal{X}
 &lt;/script&gt;
 &lt;/span&gt; be a set of random variables. We say that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \mathcal{X}
 &lt;/script&gt;
-&lt;/span&gt; is a &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-k
-&lt;/script&gt;
-&lt;/span&gt;-wise independent family if for any subset of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt; is a &lt;i&gt;k&lt;/i&gt;-wise independent family if for any subset of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 k
 &lt;/script&gt;
 &lt;/span&gt; variables &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
@@ -545,10 +539,7 @@ s
 &lt;/span&gt; as a series of Bernoulli r.vs then we actually required &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 s
 &lt;/script&gt;
-&lt;/span&gt; to be &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-t
-&lt;/script&gt;
-&lt;/span&gt;-wise independent family, which is much stronger property than pairwise independence. If we relax that requirement and assume that the algorithm only needs its coins to be pairwise independent, then there is a way (described in next section) to construct &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt; to be &lt;i&gt;t&lt;/i&gt;-wise independent family, which is much stronger property than pairwise independence. If we relax that requirement and assume that the algorithm only needs its coins to be pairwise independent, then there is a way (described in next section) to construct &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 n
 &lt;/script&gt;
 &lt;/span&gt; &lt;i&gt;pairwise independent&lt;/i&gt; bits using only &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
@@ -692,7 +683,13 @@ X_{2}=\left\langle \mathbf{s},\mathbf{x}_{2}\right\rangle \in\mathcal{S}
 &lt;/span&gt;, and let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 b_{1},b_{2}\in\left\{ 0,1\right\} 
 &lt;/script&gt;
-&lt;/span&gt; (all the operations in the proof are &lt;b&gt;modulo 2&lt;/b&gt;). Obviously, we only care about the set of indices which are non-zero in the vectors &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt;, we want to show that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+X_{1}
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+X_{2}
+&lt;/script&gt;
+&lt;/span&gt; are independent. Obviously, we only care about the set of indices which are non-zero in the vectors &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \mathbf{x}_{1}
 &lt;/script&gt;
 &lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
@@ -713,7 +710,7 @@ M_{2}=\sum_{i\in I_{2}\backslash I_{1}}\mathbf{s}_{i}
 &lt;/span&gt; where summation over empty set is defined as the constant &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 0
 &lt;/script&gt;
-&lt;/span&gt;. Note that any pair of variables from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt; (all the operations in the proof are modulo 2). Note that any pair of variables from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \left\{ M_{0},M_{1},M_{2}\right\} 
 &lt;/script&gt;
 &lt;/span&gt; are independent because they defined on mutually disjoint set of indices. Moreover, by the lemma from above, each of them if it is not a constant zero then it is distributed as &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
