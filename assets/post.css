@@ -37,7 +37,8 @@ div.sub-title {
   color: black;
 }
 .MathJax_Preview {
-  margin-left: 4px;
+  margin-left: 2px;
+  margin-right: 2px;
 }
 div.hide-with-loader {
     display: none; 
