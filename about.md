@@ -15,7 +15,7 @@ We want to post short discussions that we found intresting about topics related 
 
 ### What with this name "Theory Lunch"?
 
-All the discussions in this blog was originated during our daily meeting for lunch, therefore the posts will be short and (hopefully) simple. 
+Most of the discussions in this blog was originated during our daily meeting for lunch, therefore the posts will be short and (hopefully) simple. 
 
 ### Who are the authors?
 

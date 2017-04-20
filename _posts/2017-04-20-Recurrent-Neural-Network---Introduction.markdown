@@ -532,3 +532,6 @@ U^{t}=V^{\top}\Sigma^{t}V
 <div class="Indented">
 Next post I will discuss two popular improvements to the recurrent neurons that helps avoid the limitations above: the LSTM and GRU cells.
 </div>
+<div class="Indented">
+<b>Acknowledgments:</b> I want to thank Ron Shiff for his useful comments.
+</div>
