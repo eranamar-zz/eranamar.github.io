@@ -29,6 +29,7 @@ github_username:  eranamar
 google_analytics: UA-85168990-2
 # Build settings
 markdown: kramdown
+future: true
 theme: minima
 gems: 
   - jekyll-feed

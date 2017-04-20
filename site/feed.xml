@@ -1,4 +1,880 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="http://jekyllrb.com" version="3.4.2">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-04-12T19:57:04+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">Theory Lunch</title><subtitle>Computer Science topics over lunch</subtitle><author><name>Eran Amar, Yosef Pogrow, Ron Shiff</name></author><entry><title type="html">Memory Efficient Algorithm for Finding Cycles in Graphs</title><link href="https://eranamar.github.io/site/2017/04/06/Memory-Efficient-Algorithm-for-Finding-Cycles-in-Graphs.html" rel="alternate" type="text/html" title="Memory Efficient Algorithm for Finding Cycles in Graphs" /><published>2017-04-06T00:00:00+03:00</published><updated>2017-04-06T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/04/06/Memory-Efficient-Algorithm-for-Finding-Cycles-in-Graphs</id><content type="html" xml:base="https://eranamar.github.io/site/2017/04/06/Memory-Efficient-Algorithm-for-Finding-Cycles-in-Graphs.html">&lt;script type=&quot;math/tex&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="http://jekyllrb.com" version="3.4.2">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-04-20T12:27:43+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">Theory Lunch</title><subtitle>Computer Science topics over lunch</subtitle><author><name>Eran Amar, Yosef Pogrow, Ron Shiff</name></author><entry><title type="html">Recurrent Neural Network - Introduction</title><link href="https://eranamar.github.io/site/2017/04/20/Recurrent-Neural-Network-Introduction.html" rel="alternate" type="text/html" title="Recurrent Neural Network - Introduction" /><published>2017-04-20T00:00:00+03:00</published><updated>2017-04-20T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/04/20/Recurrent-Neural-Network---Introduction</id><content type="html" xml:base="https://eranamar.github.io/site/2017/04/20/Recurrent-Neural-Network-Introduction.html">&lt;script type=&quot;math/tex&quot;&gt;
+
+\newcommand{\lyxlock}{}
+
+&lt;/script&gt;
+
+&lt;noscript&gt;
+&lt;div class=&quot;warning&quot;&gt;
+
+Warning: &lt;a href=&quot;http://www.mathjax.org/&quot;&gt;MathJax&lt;/a&gt; requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser.
+
+&lt;/div&gt;&lt;hr /&gt;
+&amp;lt;/hr&amp;gt;&lt;/noscript&gt;
+
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-1&quot;&gt;1&lt;/a&gt; The First Post in the Series
+
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+
+Recurrent Neural Networks (RNN) is a neural network architecture that lead to state of the art results in many tasks, such as machine translation, speech recognition, image to caption and many more. Because it is a rapidly evolving field, it is difficult to find all the information (both basic and advance material) in one place, so I decided to write a series of posts that will discuss Recurrent Neural Networks from their basic formulation to their most recent variations.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+This post, as the first in the series, will present the concept of recurrent neuron and its limitations. Next posts will discuss gated neurons like LSTM and GRU, the variants of dropout regularization specifically for RNN and some advance stuff that I found interesting (bi-directional RNN, Multiplicative LSTM and etc). 
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+The next section is dedicated to review the notations and basic terminology that will be used during the entire series. I will assume that the reader is familiar with the basics of neural network (fully connected architecture, back-propagation algorithm, etc). If you are not familiar with one of those concepts, I strongly recommend review them online before going further. &lt;a class=&quot;URL&quot; href=&quot;https://www.academia.edu/25708860/A_Concise_Introduction_to_Machine_Learning_with_Artificial_Neural_Networks&quot;&gt;Those notes &lt;/a&gt; provides concise introduction to the field. There is also an excellent &lt;a class=&quot;URL&quot; href=&quot;https://www.youtube.com/watch?v=3BkFq55IEN8&amp;amp;feature=youtu.be&quot;&gt;video-lecture&lt;/a&gt; (in Hebrew) by Prof. Shai Shalev-Shwartz from 2016. If you really want to dive deeper, you can find broad introduction in Chapter 6 in &lt;i&gt;Deep Learning&lt;/i&gt; book (legally free electronic version &lt;a class=&quot;URL&quot; href=&quot;http://www.deeplearningbook.org/&quot;&gt;here&lt;/a&gt;).
+
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-2&quot;&gt;2&lt;/a&gt; Notations and Basic Terminology
+
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+
+Artificial Neural Network (ANN) is a mathematical hierarchal model inspired from neuroscience. The basic computation unit is a &lt;i&gt;neuron,&lt;/i&gt; which is a function from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbb{R}^{d}
+
+&lt;/script&gt;
+&lt;/span&gt; to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbb{R}
+
+&lt;/script&gt;
+&lt;/span&gt;, &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+
+
+g:\mathbf{x}\mapsto\sigma\left(\left\langle \mathbf{x},\mathbf{w}\right\rangle +b\right)
+
+
+
+&lt;/script&gt;
+&lt;/span&gt;
+
+ where &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbf{x},\mathbf{w}\in\mathbb{R}^{d}
+
+&lt;/script&gt;
+&lt;/span&gt; are the &lt;i&gt;input&lt;/i&gt; and &lt;i&gt;weight&lt;/i&gt; vectors respectively, and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+b\in\mathbb{R}
+
+&lt;/script&gt;
+&lt;/span&gt; is the &lt;i&gt;bias&lt;/i&gt;. The function &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\sigma
+
+&lt;/script&gt;
+&lt;/span&gt; is a non-linear &lt;i&gt;activation&lt;/i&gt; function &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbb{R}\to\mathbb{R}
+
+&lt;/script&gt;
+&lt;/span&gt;, for example &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\sigma\left(z\right)=ReLU\left(z\right):=\max\left(z,0\right)
+
+&lt;/script&gt;
+&lt;/span&gt; or &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\sigma\left(z\right)=tanh\left(z\right):=\frac{e^{z}-e^{-z}}{e^{z}+e^{-z}}
+
+&lt;/script&gt;
+&lt;/span&gt;. Note that a neuron can ignore some of its input coordinates by setting their corresponding entries in its weight vector to zero.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Neurons are organized within &lt;i&gt;layers&lt;/i&gt;. In the very basic ANN architecture, called &lt;i&gt;fully connected (FC) neural network&lt;/i&gt;, a layer is just a collection of neurons that will be computed in parallel (meaning that they are not connected to each other). For any layer &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+i
+
+&lt;/script&gt;
+&lt;/span&gt;, each of its neurons accepts as inputs all neurons from layer &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+i-1
+
+&lt;/script&gt;
+&lt;/span&gt;. 
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+A layer in FC architecture can be formulate mathematically as a function from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbb{R}^{d}
+
+&lt;/script&gt;
+&lt;/span&gt; to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbb{R}^{n}
+
+&lt;/script&gt;
+&lt;/span&gt; such that &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+
+
+\mathbf{f}:\mathbf{x}\mapsto\left(\begin{array}{c}
+
+g_{1}\left(\mathbf{x}\right)\\
+
+\vdots\\
+
+g_{n}\left(\mathbf{x}\right)
+
+\end{array}\right)
+
+
+
+&lt;/script&gt;
+&lt;/span&gt;
+
+ where each &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+g_{i}
+
+&lt;/script&gt;
+&lt;/span&gt; is a function of a neuron as defined above, with its own weight vector and a bias scalar. The formulation can be simplified using matrix notations: &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+
+
+\mathbf{f}:\mathbf{x}\mapsto\sigma\left(W\mathbf{x}+\mathbf{b}\right)
+
+
+
+&lt;/script&gt;
+&lt;/span&gt;
+
+ where &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+W\in\mathbb{R}^{n\times d}
+
+&lt;/script&gt;
+&lt;/span&gt; contains in the &lt;i&gt;i&lt;/i&gt;-th row the weight vector of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+g_{i}
+
+&lt;/script&gt;
+&lt;/span&gt;, and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbf{b}_{i}
+
+&lt;/script&gt;
+&lt;/span&gt; is the bias of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+g_{i}
+
+&lt;/script&gt;
+&lt;/span&gt;. The function &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\sigma
+
+&lt;/script&gt;
+&lt;/span&gt; is the same as before but since its input is now a vector, it apply element-wise on each coordinate of the input, producing an output vector of the same length.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+We denote the family of all possible FC functions based on some fixed activation function as &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+
+
+\mathcal{F}_{\sigma}=\left\{ \mathbf{x}\mapsto\sigma\left(W\mathbf{x}+\mathbf{b}\right)\mid\forall W,\mathbf{b}\right\} 
+
+
+
+&lt;/script&gt;
+&lt;/span&gt;
+
+that family contains all possible layers for any input\output dimension. For abbreviation, I will not mention the dimensions of layers or the specific activation function &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\sigma
+
+&lt;/script&gt;
+&lt;/span&gt; when they are not important for the discussion. 
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Applying several layers sequentially yield a feedforward FC neural network. That is, given &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbf{x}\in\mathbb{R}^{d}
+
+&lt;/script&gt;
+&lt;/span&gt;, a FC network with &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+t
+
+&lt;/script&gt;
+&lt;/span&gt; layers is &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+
+
+\mathcal{N}\left(\mathbf{x}\right)=\mathbf{f}_{t}\left(...\mathbf{f}_{2}\left(\mathbf{f}_{1}\left(\mathbf{x}\right)\right)\right)
+
+
+
+&lt;/script&gt;
+&lt;/span&gt;
+
+ where &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\forall i:\:\mathbf{f}_{i}\in\mathcal{F}_{\sigma}
+
+&lt;/script&gt;
+&lt;/span&gt; for some fixed &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\sigma
+
+&lt;/script&gt;
+&lt;/span&gt;.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+The number of layers in the network is its &lt;i&gt;depth&lt;/i&gt;, and the size of the layers is its &lt;i&gt;width&lt;/i&gt; (assuming all the layers are of the same dimension). &lt;i&gt;Training&lt;/i&gt; the network is optimizing all the weight matrices and bias vectors such that the network will approximate some target (usually unknown) function. We can think of the optimization process as a process of iteratively updating the choice of layer functions &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbf{f}_{1},\mathbf{f}_{2},..
+
+&lt;/script&gt;
+&lt;/span&gt; from the family &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{F}_{\sigma}
+
+&lt;/script&gt;
+&lt;/span&gt;.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+The FC architecture is simple, yet yield a very powerful model. When wide enough, even a single hidden layer network can approximate to arbitrary precision almost any continuous function (with some mild assumptions). However, for some tasks it is not the optimal model, and different architectures are being used, instead of the FC one. 
+
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-3&quot;&gt;3&lt;/a&gt; The Need for Context
+
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+
+There are tasks that require &lt;i&gt;context&lt;/i&gt; in order to make a prediction. For example, tasks that involved time-steps can consider the history until the current time step as a context (a.k.a time-series tasks). For concrete example, consider predicting the next word in a sentence. Each word have as a context all words preceding it in the sentence. Note that there are more ways to define the notion of a context, and it mostly depends on the task in hand. For didactic purposes we will focus on the example of next-word prediction. 
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+How can we build a model for next-word prediction using FC neural network? 
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+The obvious answer is to fix some window size &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+d
+
+&lt;/script&gt;
+&lt;/span&gt;, and build a network that gets the last &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+d
+
+&lt;/script&gt;
+&lt;/span&gt; words in the sentence as &lt;i&gt;features&lt;/i&gt;, in order to predict the next word. One immediate limitation of this approach is that the window size is the same for &lt;b&gt;all &lt;/b&gt;the examples in the training set, and it is not simple to find a suitable window size. On the one hand, choosing small window may cause the model to miss some important long term relations between words that are more than &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+d
+
+&lt;/script&gt;
+&lt;/span&gt; steps apart (for sentences longer than &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+d
+
+&lt;/script&gt;
+&lt;/span&gt;). On the other hand, choosing very large &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+d
+
+&lt;/script&gt;
+&lt;/span&gt; increases the number of parameters in the model, which make the optimization harder, and increase the computation time per example, which affect both training-time and prediction-time.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Another limitation is that FC layers regards their input as ordered information. That is, FC layer assign specific weight for each coordinate in its input vector, causing the order of the features to be meaningful. But in some tasks the order of the features may vary, for example, the subject of a sentence doesn’t limit to specific location inside an English sentence. If we want FC layer to account for that, we have to get a lot of examples (and they need to cover all different cases). 
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+What we would like to have here is called &lt;i&gt;parameter sharing&lt;/i&gt;. We will come back to that term later in this post.
+
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-4&quot;&gt;4&lt;/a&gt; Recurrent Cell - Learning to Remember
+
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+
+We want our network to be able to &lt;b&gt;remember&lt;/b&gt; information about previous invocations (i.e. the past inputs). In order to do that, our network have to maintain a state. So we need to extend our neuron formulation to include another variable, &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+h\in\mathbb{R}
+
+&lt;/script&gt;
+&lt;/span&gt;, that will be its state and be kept during consecutive invocations. As regard to the first computation of the neuron, we initialize the state variable to be zero so it will not affect the first computation.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+We adding an upper-script to all previous notations to denote the time step index starting from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+1
+
+&lt;/script&gt;
+&lt;/span&gt; up to current time-step &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+t
+
+&lt;/script&gt;
+&lt;/span&gt;. So &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+h^{\left(t\right)}
+
+&lt;/script&gt;
+&lt;/span&gt; is the state of a neuron at time &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+t
+
+&lt;/script&gt;
+&lt;/span&gt;. Since the neurons need to pass information to themselves (i.e. their state from previous invocation) they become &lt;i&gt;recurrent neuron,&lt;/i&gt; a.k.a &lt;i&gt;recurrent cell&lt;/i&gt;. 
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Now the formulation of a neuron composed of two functions. First function updates the inner state based on &lt;b&gt;current input&lt;/b&gt; and &lt;b&gt;previous state&lt;/b&gt;, which is the transition from time &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+t-1
+
+&lt;/script&gt;
+&lt;/span&gt; to time &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+t
+
+&lt;/script&gt;
+&lt;/span&gt;, &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+
+
+s:\mathbf{x},h^{\left(t-1\right)}\mapsto tanh\left(\left\langle \mathbf{x},\mathbf{w}\right\rangle +b+h^{\left(t-1\right)}\cdot u\right)
+
+
+
+&lt;/script&gt;
+&lt;/span&gt;
+&lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+u\in\mathbb{R}
+
+&lt;/script&gt;
+&lt;/span&gt; is a new parameter denoting the weight for the previous state.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+And the second function is for computing the output of the neuron at current time &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+t
+
+&lt;/script&gt;
+&lt;/span&gt;, based on its &lt;b&gt;new state&lt;/b&gt;&lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+
+
+g^{\left(t\right)}:h^{\left(t\right)}\mapsto\sigma\left(h^{\left(t\right)}\cdot v+c\right)
+
+
+
+&lt;/script&gt;
+&lt;/span&gt;
+
+with &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+v,c\in\mathbb{R}
+
+&lt;/script&gt;
+&lt;/span&gt; as the weight and bias of the computation respectively. 
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+We can move again to matrix notations to denote several parallel recurrent cells that forms a &lt;i&gt;recurrent layer&lt;/i&gt;. The first function updates the vector of states for the entire layer &lt;i&gt;&lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+
+
+\mathbf{s}:\mathbf{x},\mathbf{h}^{\left(t-1\right)}\mapsto tanh\left(W\mathbf{x}+\mathbf{b}+U\mathbf{h}^{\left(t-1\right)}\right)
+
+
+
+&lt;/script&gt;
+&lt;/span&gt;
+&lt;/i&gt; and the second function for computing the output of the layer based on the current state&lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+
+
+\mathbf{f}:\mathbf{h}^{\left(t\right)}\mapsto\sigma\left(V\mathbf{h}^{\left(t\right)}+\mathbf{c}\right)
+
+
+
+&lt;/script&gt;
+&lt;/span&gt;
+
+When we come to compare that to the FC formulation, we sees that actually the function &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbf{f}
+
+&lt;/script&gt;
+&lt;/span&gt; itself did not change, but now it accepts as input the state of the layer &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbf{h}
+
+&lt;/script&gt;
+&lt;/span&gt;, rather than the input to the layer &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbf{x}
+
+&lt;/script&gt;
+&lt;/span&gt;. Another change is that before the layer computes its output, it first update its hidden state.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Note that we can extend the definition of the family &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{F}_{tanh}
+
+&lt;/script&gt;
+&lt;/span&gt; to contains functions like the state-transforming function &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbf{s}
+
+&lt;/script&gt;
+&lt;/span&gt;, by making each &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbf{f}\in\mathcal{F}_{tanh}
+
+&lt;/script&gt;
+&lt;/span&gt; accepts two vectors as input instead of one (and we also need another weight matrix for the second input). So denote the family of all hidden-state transition functions as &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+
+
+\mathcal{S}_{\sigma}=\left\{ \mathbf{x},\mathbf{h}^{\left(t-1\right)}\mapsto\sigma\left(W\mathbf{x}+\mathbf{b}+U\mathbf{h}^{\left(t-1\right)}\right)\mid\forall W,U,\mathbf{b}\right\} 
+
+
+
+&lt;/script&gt;
+&lt;/span&gt;
+
+usually the activation function is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\sigma=tanh
+
+&lt;/script&gt;
+&lt;/span&gt;. We will use that family later on, when discuss gated units as LSTM and GRU.
+
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-5&quot;&gt;5&lt;/a&gt; Comparing the Architectures - an Example
+
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+
+Consider again the next-word prediction problem. Suppose we have an ordered dictionary that contains the entire vocabulary we will ever need. We will represent any word by an integer indicating its index in the dictionary. In this section we will construct two single-neuron networks, once using the FC architecture and once using the Recurrent architecture.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+FC network for next-word prediction: Let the window size be &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+d=3
+
+&lt;/script&gt;
+&lt;/span&gt;. The input to the network can be represent as a vector &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbf{x}\in\mathbb{N}^{3}
+
+&lt;/script&gt;
+&lt;/span&gt; and the output as &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+y\in\mathbb{N}
+
+&lt;/script&gt;
+&lt;/span&gt;. The FC network amounts to &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+
+
+\mathcal{N}_{FC}\left(\mathbf{x}\right)=f\left(x\right)
+
+
+
+&lt;/script&gt;
+&lt;/span&gt;
+
+ for some &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+f\in\mathcal{F}_{\sigma}
+
+&lt;/script&gt;
+&lt;/span&gt; that maps from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbb{R}^{3}
+
+&lt;/script&gt;
+&lt;/span&gt; to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbb{R}
+
+&lt;/script&gt;
+&lt;/span&gt;. 
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Recurrent neural network (RNN), however, leads to different representation: the input and the output both integers &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+x,y\in\mathbb{N},
+
+&lt;/script&gt;
+&lt;/span&gt; so the state transition function &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+s\in\mathcal{S}
+
+&lt;/script&gt;
+&lt;/span&gt; and the output function &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+f\in\mathcal{F}_{\sigma}
+
+&lt;/script&gt;
+&lt;/span&gt; are both from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbb{R}
+
+&lt;/script&gt;
+&lt;/span&gt; to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbb{R}
+
+&lt;/script&gt;
+&lt;/span&gt;. The idea of the recurrent architecture is to apply the &lt;b&gt;same recurrent layer&lt;/b&gt; several times on &lt;b&gt;different inputs &lt;/b&gt;(each input from different time-step) in order to get a prediction. 
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Here is a detailed description of how to do that: we take a series of three consecutive words from the beginning of a sentence: &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+x^{\left(1\right)},x^{\left(2\right)},x^{\left(3\right)}
+
+&lt;/script&gt;
+&lt;/span&gt; and a target next word: &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+y
+
+&lt;/script&gt;
+&lt;/span&gt;. First, feed the network with &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+x^{\left(1\right)}
+
+&lt;/script&gt;
+&lt;/span&gt;, it updates the inner state from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+h^{\left(0\right)}=0
+
+&lt;/script&gt;
+&lt;/span&gt; to some hidden state &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+h^{\left(1\right)}
+
+&lt;/script&gt;
+&lt;/span&gt; and outputs &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\hat{y}^{\left(1\right)}
+
+&lt;/script&gt;
+&lt;/span&gt;. We ignore that output and feed the next word &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+x^{\left(2\right)}
+
+&lt;/script&gt;
+&lt;/span&gt;, the networks update its state to &lt;b&gt;&lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+h^{\left(2\right)}
+
+&lt;/script&gt;
+&lt;/span&gt; &lt;/b&gt;and produce &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\hat{y}^{\left(2\right)}
+
+&lt;/script&gt;
+&lt;/span&gt; that is also being ignored. Lastly, we feed &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+x^{\left(3\right)}
+
+&lt;/script&gt;
+&lt;/span&gt; to the network, the inner state being updated to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+h^{\left(3\right)}
+
+&lt;/script&gt;
+&lt;/span&gt; and another output is produced &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\hat{y}^{\left(3\right)}
+
+&lt;/script&gt;
+&lt;/span&gt; which is now considered as the prediction of the network. Observed that in each invocation of the network, its output depends on both the current input and the previous state, therefore &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\hat{y}^{\left(3\right)}
+
+&lt;/script&gt;
+&lt;/span&gt; is the result of the entire history &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+x^{\left(1\right)},x^{\left(2\right)},x^{\left(3\right)}
+
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+h^{\left(0\right)}
+
+&lt;/script&gt;
+&lt;/span&gt; (which was initialized to zero).
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+At first glance it looks like there is no meaningful differences between the architectures. We have an implicit sliding window over the words in the sentence for the recurrent neuron rather than explicit sliding window as with the FC neuron. Moreover, the output &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+y
+
+&lt;/script&gt;
+&lt;/span&gt; of FC neuron also depends on all previous time steps because the input &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbf{x}
+
+&lt;/script&gt;
+&lt;/span&gt; is just the values of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\left(x^{\left(1\right)},x^{\left(2\right)},x^{\left(3\right)}\right)
+
+&lt;/script&gt;
+&lt;/span&gt;. 
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+However, observe that in FC architecture, each word in the input vector has its own weight and bias whereas in recurrent architecture we use the same weights over and over again (by applying the same function). In other words, in recurrent layers we &lt;i&gt;share the parameters across time&lt;/i&gt;. The formula below demonstrate how we applied the same function &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+s\in\mathcal{S}
+
+&lt;/script&gt;
+&lt;/span&gt; to updates the hidden-state across different time steps &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+
+
+h^{\left(t\right)}=s\left(x^{\left(t\right)},h^{\left(t-1\right)}\right)\implies h^{\left(3\right)}=s\left(x^{\left(3\right)},s\left(x^{\left(2\right)},s\left(x^{\left(1\right)},0\right)\right)\right)
+
+
+
+&lt;/script&gt;
+&lt;/span&gt;
+
+then making a prediction using some &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+f\in\mathcal{F}_{\sigma}
+
+&lt;/script&gt;
+&lt;/span&gt; on the current state&lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+
+
+\hat{y}^{\left(3\right)}=f\left(h^{\left(3\right)}\right)
+
+
+
+&lt;/script&gt;
+&lt;/span&gt;
+
+Parameter sharing have a very powerful effect on the learnability of the networks both because it reduce the number of parameters that needed to be optimize and it make the network robust to small changes in the context (recall the example about the order of features in the input). In addition, the recurrent layer practically have &lt;i&gt;dynamic&lt;/i&gt; window size. Going back to our next-word prediction network, we can continue to apply the network on consecutive inputs, teaching it dependencies between words that are farer than 3 time steps. 
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Note that in our example, we ignored the “intermediate” predictions of the network: &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\hat{y}^{\left(1\right)}
+
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\hat{y}^{\left(2\right)}
+
+&lt;/script&gt;
+&lt;/span&gt;, but we could keep them and feed them as inputs to another recurrent layer making our RNN network deeper. We will discuss it in a later post.
+
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-6&quot;&gt;6&lt;/a&gt; Limitations of Recurrent Cells
+
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+
+Unfortunately, RNN are not perfect and learning to remember is not enough, sometimes the networks needs to be able to &lt;i&gt;forget&lt;/i&gt;, for instance, when predicting next-word in a sentence the network needs to reset its state once it reach the end of the sentence. 
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Furthermore, parameter sharing has a serious drawback. Recall that applying the network for multiple time steps leads to composition of the same &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbf{s}\in\mathcal{S}
+
+&lt;/script&gt;
+&lt;/span&gt; on itself &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+t
+
+&lt;/script&gt;
+&lt;/span&gt; times, something like this&lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+
+
+\mathbf{h}^{\left(t\right)}=\mathbf{s}\left(\mathbf{x}^{\left(t\right)},\mathbf{s}\left(\mathbf{x}^{\left(t-1\right)},\mathbf{s}\left(\mathbf{x}^{\left(t-2\right)},...\right)\right)\right)
+
+
+
+&lt;/script&gt;
+&lt;/span&gt;
+
+ in order to analyze that more easily, we make the following simplifications: assume that the activation function inside &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbf{s}
+
+&lt;/script&gt;
+&lt;/span&gt; is the identity instead of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+tanh
+
+&lt;/script&gt;
+&lt;/span&gt;, and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbf{x}^{\left(t\right)}=\mathbf{0}
+
+&lt;/script&gt;
+&lt;/span&gt; for all &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+t
+
+&lt;/script&gt;
+&lt;/span&gt;. Suppose that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbf{h}^{\left(0\right)}
+
+&lt;/script&gt;
+&lt;/span&gt; is given to us and it is not all zeros (that is, it encodes some information about the past). We now analyze how the recurrent connection behave over time.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+We have that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbf{h}^{\left(t\right)}=U\mathbf{h}^{\left(t-1\right)}
+
+&lt;/script&gt;
+&lt;/span&gt; so applying the recurrent neuron for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+t
+
+&lt;/script&gt;
+&lt;/span&gt; time steps amounts to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbf{h}^{\left(t\right)}=U^{t}\mathbf{h}^{\left(0\right)}
+
+&lt;/script&gt;
+&lt;/span&gt;. Why it is bad? it easier to see the problem when considering the scalar case. If &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+U
+
+&lt;/script&gt;
+&lt;/span&gt; was a real positive number, then either &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+U^{t}\to0
+
+&lt;/script&gt;
+&lt;/span&gt; when &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+U&lt;1
+
+&lt;/script&gt;
+&lt;/span&gt;, or &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+U^{t}\to\infty
+
+&lt;/script&gt;
+&lt;/span&gt; when &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+U&gt;1
+
+&lt;/script&gt;
+&lt;/span&gt;. The same goes with matrices, suppose &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+U
+
+&lt;/script&gt;
+&lt;/span&gt; has an eigenvalue decomposition such that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+U=V^{\top}\Sigma V
+
+&lt;/script&gt;
+&lt;/span&gt; for orthogonal &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+V
+
+&lt;/script&gt;
+&lt;/span&gt;, so &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+U^{t}=V^{\top}\Sigma^{t}V
+
+&lt;/script&gt;
+&lt;/span&gt; causing the small entries on the diagonal of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\Sigma
+
+&lt;/script&gt;
+&lt;/span&gt; to vanish, and the large entries to explode. Therefore, some coordinates of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbf{h}^{\left(0\right)}
+
+&lt;/script&gt;
+&lt;/span&gt; will eventually become zero while the others increase to infinity, resulting in a distorted state vector that will impair the learnability of the network. That is describe much more formally and rigorously &lt;a class=&quot;URL&quot; href=&quot;https://arxiv.org/abs/1211.5063&quot;&gt;here&lt;/a&gt;.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Next post I will discuss two popular improvements to the recurrent neurons that helps avoid the limitations above: the LSTM and GRU cells.
+
+&lt;/div&gt;</content><author><name>Eran Amar</name></author><category term="neural_networks" /><summary type="html"></summary></entry><entry><title type="html">Memory Efficient Algorithm for Finding Cycles in Graphs</title><link href="https://eranamar.github.io/site/2017/04/06/Memory-Efficient-Algorithm-for-Finding-Cycles-in-Graphs.html" rel="alternate" type="text/html" title="Memory Efficient Algorithm for Finding Cycles in Graphs" /><published>2017-04-06T00:00:00+03:00</published><updated>2017-04-06T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/04/06/Memory-Efficient-Algorithm-for-Finding-Cycles-in-Graphs</id><content type="html" xml:base="https://eranamar.github.io/site/2017/04/06/Memory-Efficient-Algorithm-for-Finding-Cycles-in-Graphs.html">&lt;script type=&quot;math/tex&quot;&gt;
 \newcommand{\lyxlock}{}
 &lt;/script&gt;
 
