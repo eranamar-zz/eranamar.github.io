@@ -136,17 +136,17 @@ Warning: <a href="http://www.mathjax.org/">MathJax</a> requires JavaScript to co
 </h1>
 <div class="Unindented">
 
-Recurrent Neural Networks (RNN) is a neural network architecture that lead to state of the art results in many tasks, such as machine translation, speech recognition, image to caption and many more. Because it is a rapidly evolving field, it is difficult to find all the information (both basic and advance material) in one place, so I decided to write a series of posts that will discuss Recurrent Neural Networks from their basic formulation to their most recent variations.
+Recurrent Neural Network (RNN) is a neural network architecture that leads to state of the art results in many tasks, such as machine translation, speech recognition, image captioning and many more. Because it is a rapidly evolving field, it is difficult to find all the information (both basic and advanced material) in one place, so I decided to write a series of posts that will discuss Recurrent Neural Networks from their basic formulation to their most recent variations.
 
 </div>
 <div class="Indented">
 
-This post, as the first in the series, will present the concept of recurrent neuron and its limitations. Next posts will discuss gated neurons like LSTM and GRU, the variants of dropout regularization specifically for RNN and some advance stuff that I found interesting (bi-directional RNN, Multiplicative LSTM and etc). 
+This post, as the first in the series, will present the concept of a recurrent neuron and its limitations. Next posts will discuss gated neurons like LSTM and GRU, variants of dropout regularization for RNNs and some advanced stuff that I found interesting (bi-directional RNN, Multiplicative LSTM and etc). 
 
 </div>
 <div class="Indented">
 
-The next section is dedicated to review the notations and basic terminology that will be used during the entire series. I will assume that the reader is familiar with the basics of neural network (fully connected architecture, back-propagation algorithm, etc). If you are not familiar with one of those concepts, I strongly recommend review them online before going further. <a class="URL" href="https://www.academia.edu/25708860/A_Concise_Introduction_to_Machine_Learning_with_Artificial_Neural_Networks">Those notes </a> provides concise introduction to the field. There is also an excellent <a class="URL" href="https://www.youtube.com/watch?v=3BkFq55IEN8&amp;feature=youtu.be">video-lecture</a> (in Hebrew) by Prof. Shai Shalev-Shwartz from 2016. If you really want to dive deeper, you can find broad introduction in Chapter 6 in <i>Deep Learning</i> book (legally free electronic version <a class="URL" href="http://www.deeplearningbook.org/">here</a>).
+The next section is dedicated to review the notations and basic terminology that will be used during the entire series. I will assume that the reader is familiar with the basics of neural network (fully connected architecture, back-propagation algorithm, etc). If you are not familiar with one of those concepts, I strongly recommend to review them online before going further. <a class="URL" href="https://www.academia.edu/25708860/A_Concise_Introduction_to_Machine_Learning_with_Artificial_Neural_Networks">Those notes </a> provides concise introduction to the field. There is also an excellent <a class="URL" href="https://www.youtube.com/watch?v=3BkFq55IEN8&amp;feature=youtu.be">video-lecture</a> (in Hebrew) by Prof. Shai Shalev-Shwartz from 2016. If you really want to dive deeper, you can find broad introduction in Chapter 6 in <i>Deep Learning</i> book (legally free electronic version <a class="URL" href="http://www.deeplearningbook.org/">here</a>).
 
 </div>
 <h1 class="Section">
@@ -212,7 +212,7 @@ b\in\mathbb{R}
 </div>
 <div class="Indented">
 
-Neurons are organized within <i>layers</i>. In the very basic ANN architecture, called <i>fully connected (FC) neural network</i>, a layer is just a collection of neurons that will be computed in parallel (meaning that they are not connected to each other). For any layer <span class="MathJax_Preview"><script type="math/tex">
+Neurons are organized within <i>layers</i>. In the very basic ANN architecture, called a<i> fully connected (FC) neural network</i>, a layer is just a collection of neurons that will be computed in parallel (meaning that they are not connected to each other). For any layer <span class="MathJax_Preview"><script type="math/tex">
 
 i
 
@@ -378,7 +378,7 @@ The number of layers in the network is its <i>depth</i>, and the size of the lay
 </div>
 <div class="Indented">
 
-The FC architecture is simple, yet yield a very powerful model. When wide enough, even a single hidden layer network can approximate to arbitrary precision almost any continuous function (with some mild assumptions). However, for some tasks it is not the optimal model, and different architectures are being used, instead of the FC one. 
+The FC architecture is simple, yet yields a very powerful model. When wide enough, even a single hidden layer network can approximate to any arbitrary precision almost any continuous function (under some mild assumptions). However, for some tasks it might not be optimal, and different architectures are being used, instead of the FC one. 
 
 </div>
 <h1 class="Section">
@@ -387,7 +387,7 @@ The FC architecture is simple, yet yield a very powerful model. When wide enough
 </h1>
 <div class="Unindented">
 
-There are tasks that require <i>context</i> in order to make a prediction. For example, tasks that involved time-steps can consider the history until the current time step as a context (a.k.a time-series tasks). For concrete example, consider predicting the next word in a sentence. Each word have as a context all words preceding it in the sentence. Note that there are more ways to define the notion of a context, and it mostly depends on the task in hand. For didactic purposes we will focus on the example of next-word prediction. 
+There are tasks that require some notion of <i>context</i> in order to make a decent prediction. For example, tasks that involve time-steps can consider the history until the current time step as a context (a.k.a time-series tasks). For concrete example, consider predicting the next word in a given sequence. Each word has as a context all words preceding it. Note that there are more ways to define the notion of a context, and it mostly depends on the task in hand. For didactic purposes we will focus on the example of next-word prediction. 
 
 </div>
 <div class="Indented">
@@ -427,7 +427,7 @@ d
 </div>
 <div class="Indented">
 
-Another limitation is that FC layers regards their input as ordered information. That is, FC layer assign specific weight for each coordinate in its input vector, causing the order of the features to be meaningful. But in some tasks the order of the features may vary, for example, the subject of a sentence doesn’t limit to specific location inside an English sentence. If we want FC layer to account for that, we have to get a lot of examples (and they need to cover all different cases). 
+Another limitation is that FC layers regards their inputs as ordered information. That is, a FC layer assigns a specific weight for each coordinate in its input vector, causing the order of the features to be meaningful. But in some tasks the order of the features may vary, for example, the subject of a sentence doesn’t limit to specific location inside an English sentence. If we want FC layer to account for that, we have to get a lot of examples (and they need to cover all different cases). 
 
 </div>
 <div class="Indented">
@@ -446,22 +446,12 @@ We want our network to be able to <b>remember</b> information about previous inv
 h\in\mathbb{R}
 
 </script>
-</span>, that will be its state and be kept during consecutive invocations. As regard to the first computation of the neuron, we initialize the state variable to be zero so it will not affect the first computation.
+</span>, that will be its state and be kept during consecutive invocations.That state variable is usually initialized to be zero so that it doesn’t affect the first computation.
 
 </div>
 <div class="Indented">
 
-We adding an upper-script to all previous notations to denote the time step index starting from <span class="MathJax_Preview"><script type="math/tex">
-
-1
-
-</script>
-</span> up to current time-step <span class="MathJax_Preview"><script type="math/tex">
-
-t
-
-</script>
-</span>. So <span class="MathJax_Preview"><script type="math/tex">
+We will use an upper-script to denote the time step, so <span class="MathJax_Preview"><script type="math/tex">
 
 h^{\left(t\right)}
 
@@ -471,12 +461,12 @@ h^{\left(t\right)}
 t
 
 </script>
-</span>. Since the neurons need to pass information to themselves (i.e. their state from previous invocation) they become <i>recurrent neuron,</i> a.k.a <i>recurrent cell</i>. 
+</span>. Since the neurons need to pass information to themselves (i.e. their state from previous invocation) they become <i>recurrent neurons,</i> a.k.a <i>recurrent cell</i>s. 
 
 </div>
 <div class="Indented">
 
-Now the formulation of a neuron composed of two functions. First function updates the inner state based on <b>current input</b> and <b>previous state</b>, which is the transition from time <span class="MathJax_Preview"><script type="math/tex">
+Recurrent neuron uses internally two functions. The first function updates the inner state based on <b>current input</b> and <b>previous state</b>, which is the transition from time <span class="MathJax_Preview"><script type="math/tex">
 
 t-1
 
@@ -557,12 +547,12 @@ We can move again to matrix notations to denote several parallel recurrent cells
 </script>
 </span>
 
-When we come to compare that to the FC formulation, we sees that actually the function <span class="MathJax_Preview"><script type="math/tex">
+When we come to compare that to the FC formulation, we see that actually the function <span class="MathJax_Preview"><script type="math/tex">
 
 \mathbf{f}
 
 </script>
-</span> itself did not change, but now it accepts as input the state of the layer <span class="MathJax_Preview"><script type="math/tex">
+</span> itself hasn’t changed, but now it accepts as input the state of the layer <span class="MathJax_Preview"><script type="math/tex">
 
 \mathbf{h}
 
@@ -735,22 +725,22 @@ h^{\left(1\right)}
 x^{\left(2\right)}
 
 </script>
-</span>, the networks update its state to <b><span class="MathJax_Preview"><script type="math/tex">
+</span>, the network updates its state to <b><span class="MathJax_Preview"><script type="math/tex">
 
 h^{\left(2\right)}
 
 </script>
-</span> </b>and produce <span class="MathJax_Preview"><script type="math/tex">
+</span> </b>and produces <span class="MathJax_Preview"><script type="math/tex">
 
 \hat{y}^{\left(2\right)}
 
 </script>
-</span> that is also being ignored. Lastly, we feed <span class="MathJax_Preview"><script type="math/tex">
+</span> that is also ignored. Lastly, we feed <span class="MathJax_Preview"><script type="math/tex">
 
 x^{\left(3\right)}
 
 </script>
-</span> to the network, the inner state being updated to <span class="MathJax_Preview"><script type="math/tex">
+</span> to the network, the inner state is being updated to <span class="MathJax_Preview"><script type="math/tex">
 
 h^{\left(3\right)}
 
@@ -760,7 +750,7 @@ h^{\left(3\right)}
 \hat{y}^{\left(3\right)}
 
 </script>
-</span> which is now considered as the prediction of the network. Observed that in each invocation of the network, its output depends on both the current input and the previous state, therefore <span class="MathJax_Preview"><script type="math/tex">
+</span> which is now considered as the prediction of the network. Note that in each invocation of the network, the output depends on both the current input and the previous state, therefore <span class="MathJax_Preview"><script type="math/tex">
 
 \hat{y}^{\left(3\right)}
 
@@ -800,7 +790,7 @@ y
 </div>
 <div class="Indented">
 
-However, observe that in FC architecture, each word in the input vector has its own weight and bias whereas in recurrent architecture we use the same weights over and over again (by applying the same function). In other words, in recurrent layers we <i>share the parameters across time</i>. The formula below demonstrate how we applied the same function <span class="MathJax_Preview"><script type="math/tex">
+However, note that in the FC architecture, each word in the input vector has its own weight and bias whereas in recurrent architecture we use the same weights over and over again (by applying the same function). In other words, in recurrent layers we <i>share the parameters across time</i>. The formula below demonstrate how we applied the same function <span class="MathJax_Preview"><script type="math/tex">
 
 s\in\mathcal{S}
 
@@ -834,7 +824,7 @@ f\in\mathcal{F}_{\sigma}
 </script>
 </span>
 
-Parameter sharing have a very powerful effect on the learnability of the networks both because it reduce the number of parameters that needed to be optimize and it make the network robust to small changes in the context (recall the example about the order of features in the input). In addition, the recurrent layer practically have <i>dynamic</i> window size. Going back to our next-word prediction network, we can continue to apply the network on consecutive inputs, teaching it dependencies between words that are farer than 3 time steps. 
+Parameter sharing has a very powerful effect on the learnability of the network both because it reduces the number of parameters that needed to be optimized and it make the network robust to small changes in the context (recall the example about the order of features in the input). In addition, the recurrent layer practically has a<i> dynamic</i> window size. Going back to our next-word prediction network, we can continue to apply the network on consecutive inputs, teaching it dependencies between words that are further than 3 time steps. 
 
 </div>
 <div class="Indented">
@@ -858,17 +848,17 @@ Note that in our example, we ignored the “intermediate” predictions of the n
 </h1>
 <div class="Unindented">
 
-Unfortunately, RNN are not perfect and learning to remember is not enough, sometimes the networks needs to be able to <i>forget</i>, for instance, when predicting next-word in a sentence the network needs to reset its state once it reach the end of the sentence. 
+Unfortunately, RNNs are not perfect and maintaining memory is not enough, sometimes the networks needs to be able to <i>forget</i>, for instance, when predicting next-word in a sentence the network needs to reset its state once it reach the end of the sentence. 
 
 </div>
 <div class="Indented">
 
-Furthermore, parameter sharing has a serious drawback. Recall that applying the network for multiple time steps leads to composition of the same <span class="MathJax_Preview"><script type="math/tex">
+Furthermore, parameter sharing has a serious drawback. Recall that applying the network for multiple time steps leads to a composition of the same <span class="MathJax_Preview"><script type="math/tex">
 
 \mathbf{s}\in\mathcal{S}
 
 </script>
-</span> on itself <span class="MathJax_Preview"><script type="math/tex">
+</span> upon itself <span class="MathJax_Preview"><script type="math/tex">
 
 t
 
