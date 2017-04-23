@@ -13,7 +13,7 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-author: Eran Amar, Yosef Pogrow, Ron Shiff
+author: Eran Amar
 repository: eranamar/eranamar.github.io
 title: Theory Lunch
 email: eran.amar@weizmann.ac.il
@@ -21,7 +21,7 @@ destination: site/
 disqus: 
   shortname: theorylunch
 description:  
-  Computer Science topics over lunch
+  Computer science topics over lunch
 baseurl: "/site" # the subpath of your site, e.g. /blog
 url: https://eranamar.github.io # the base hostname & protocol for your site, e.g. http://example.com
 url_production: https://eranamar.github.io
