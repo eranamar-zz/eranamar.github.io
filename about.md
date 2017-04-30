@@ -6,7 +6,7 @@ permalink: /about/
 
 ### Which topics will be discussed in this blog?
 
-I will discuss most of the times topics related to Complexity, Probability theory and Deep Learning. Sometimes I will talk about Hypergraphs, cut-sparsifiers and other computer science stuff. I am assuming that the reader has background in math & computer science of an undergraduate level.
+I will discuss most of the times topics related to Complexity, Probability theory, and Deep Learning. Sometimes I will talk about Hypergraphs, cut-sparsifiers and other computer science stuff. I am assuming that the reader has a background in math & computer science at an undergraduate level.
 
 
 ### What with this name "Theory Lunch"?
