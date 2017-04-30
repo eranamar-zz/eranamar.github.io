@@ -1,4 +1,238 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-04-23T20:59:55+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">Theory Lunch</title><subtitle>Computer science topics over lunch</subtitle><author><name>Eran Amar</name></author><entry><title type="html">Recurrent Neural Network - Introduction</title><link href="https://eranamar.github.io/site/2017/04/20/Recurrent-Neural-Network-Introduction.html" rel="alternate" type="text/html" title="Recurrent Neural Network - Introduction" /><published>2017-04-20T00:00:00+03:00</published><updated>2017-04-20T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/04/20/Recurrent-Neural-Network---Introduction</id><content type="html" xml:base="https://eranamar.github.io/site/2017/04/20/Recurrent-Neural-Network-Introduction.html">&lt;script type=&quot;math/tex&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-04-30T09:42:12+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">Theory Lunch</title><subtitle>Computer science topics over lunch</subtitle><author><name>Eran Amar</name></author><entry><title type="html">Recurrent Neural Network - LSTM and GRU</title><link href="https://eranamar.github.io/site/2017/04/30/Recurrent-Neural-Network-LSTM-and-GRU.html" rel="alternate" type="text/html" title="Recurrent Neural Network - LSTM and GRU" /><published>2017-04-30T00:00:00+03:00</published><updated>2017-04-30T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/04/30/Recurrent-Neural-Network---LSTM-and-GRU</id><content type="html" xml:base="https://eranamar.github.io/site/2017/04/30/Recurrent-Neural-Network-LSTM-and-GRU.html">&lt;script type=&quot;math/tex&quot;&gt;
+\newcommand{\lyxlock}{}
+&lt;/script&gt;
+
+&lt;noscript&gt;
+&lt;div class=&quot;warning&quot;&gt;
+Warning: &lt;a href=&quot;http://www.mathjax.org/&quot;&gt;MathJax&lt;/a&gt; requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser.
+&lt;/div&gt;&lt;hr /&gt;
+&amp;lt;/hr&amp;gt;&lt;/noscript&gt;
+
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-1&quot;&gt;1&lt;/a&gt; Recap
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+The first post in the series discussed the basic structure of recurrent cells and their limitations. We defined two families of functions, the first is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{F}_{\sigma}
+&lt;/script&gt;
+&lt;/span&gt; which contains all the affine transformations &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbb{R}^{n}\to\mathbb{R}^{m}
+&lt;/script&gt;
+&lt;/span&gt; for any &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+n
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+m,
+&lt;/script&gt;
+&lt;/span&gt; followed by an element-wise activation function &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\sigma.
+&lt;/script&gt;
+&lt;/span&gt; And another family &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{S}_{\sigma}
+&lt;/script&gt;
+&lt;/span&gt; which is some kind of extension of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{F}_{\sigma}
+&lt;/script&gt;
+&lt;/span&gt; in the sense that the input space is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbb{R}^{n}\times\mathbb{R}^{n}
+&lt;/script&gt;
+&lt;/span&gt; rather than &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbb{R}^{n}.
+&lt;/script&gt;
+&lt;/span&gt; Formally, the definition of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{S}_{\sigma}
+&lt;/script&gt;
+&lt;/span&gt; is&lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\mathcal{S}_{\sigma}=\left\{ \mathbf{x},\mathbf{h}\mapsto\sigma\left(W\mathbf{x}+U\mathbf{h}+\mathbf{b}\right)\mid\forall W,U,\mathbf{b}\right\} 
+
+&lt;/script&gt;
+&lt;/span&gt;
+In this post we will focus on two activation functions: &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+tanh\left(x\right)=\frac{e^{x}-e^{-x}}{e^{x}+e^{-x}}
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+sig\left(x\right)=\left(1+e^{-x}\right)^{-1}.
+&lt;/script&gt;
+&lt;/span&gt; Next section describe what are &lt;i&gt;gate&lt;/i&gt; functions, then we move to review two common improvements to the basic recurrent cell: the LSTM and GRU cells. 
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-2&quot;&gt;2&lt;/a&gt; Gate Functions
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+Recall that recurrent layer has two steps. The first is updating its inner state based on both the current input and the previous state vector, then producing an output by applying some other function to the new state. So the &lt;b&gt;input&lt;/b&gt; to the layer at each time step &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+t
+&lt;/script&gt;
+&lt;/span&gt; is actually the tuple &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)
+&lt;/script&gt;
+&lt;/span&gt;.
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+A &lt;i&gt;gate&lt;/i&gt; is a function that takes such a tuple and produces a vector of values between zero and one. Note that any function in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{S}_{sig}
+&lt;/script&gt;
+&lt;/span&gt; and in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{S}_{tanh}
+&lt;/script&gt;
+&lt;/span&gt; is actually a gate because of the properties of the &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+tanh
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+sig
+&lt;/script&gt;
+&lt;/span&gt; functions. We add gates into a recurrent neuron in order to control how much information will flow on the recurrent connection. That is, suppose that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{h}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt; is the layer’s current computed state that should be used on the next time step, a gated layer will use the vector &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\hat{\mathbf{h}}^{\left(t\right)}=\mathbf{h}^{\left(t\right)}\circ\mathbf{s}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right),
+&lt;/script&gt;
+&lt;/span&gt; instead of using &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{h}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt; (when the symbol &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\circ
+&lt;/script&gt;
+&lt;/span&gt; denotes element-wise multiplication). Note that any coordinate in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\hat{\mathbf{h}}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt; is a “moderated” version of the corresponding coordinate in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{h}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt; because each entry in the gate’s output is in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\left(0,1\right).
+&lt;/script&gt;
+&lt;/span&gt; We will see a concrete example in the next section. 
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-3&quot;&gt;3&lt;/a&gt; LSTM Cell
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+Long Short Term Memory Cell (LSTM cell) is an improved version of the recurrent neuron that was proposed on 1997. It went through minor modifications until the version presented below (which is from 2013). LSTM cells solve both limitations of the basic recurrent neuron; it prevents the exploding and vanishing gradients problem, and it can &lt;i&gt;remember&lt;/i&gt; as well to &lt;i&gt;forget&lt;/i&gt;. 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+The main addition to the recurrent layer structure is the use of gates and a memory vector for each time step, denoted by &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{c}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt;. The LSTM layer gets as inputs the tuple &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)
+&lt;/script&gt;
+&lt;/span&gt; and the previous memory vector &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{c}^{\left(t-1\right)},
+&lt;/script&gt;
+&lt;/span&gt; then outputs &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{h}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt; and an updated memory vector &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{c}^{\left(t\right)}.
+&lt;/script&gt;
+&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+Here is how an LSTM layer computes its outputs: it have the following gates &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{f},\mathbf{i},\mathbf{o}\in\mathcal{S}_{sig}
+&lt;/script&gt;
+&lt;/span&gt; named the &lt;i&gt;forget&lt;/i&gt;, &lt;i&gt;input&lt;/i&gt; and &lt;i&gt;output&lt;/i&gt; gate respectively, and a state-transition function &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{s}\in\mathcal{S}_{tanh}
+&lt;/script&gt;
+&lt;/span&gt;. It first updates the memory vector &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\mathbf{c}^{\left(t\right)}=\mathbf{f}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)\circ\mathbf{c}^{\left(t-1\right)}+\mathbf{i}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)\circ\mathbf{s}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)
+
+&lt;/script&gt;
+&lt;/span&gt;
+and then computes&lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\mathbf{h}^{\left(t\right)}=\mathbf{o}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)\circ tanh\left(\mathbf{c}^{\left(t\right)}\right)
+
+&lt;/script&gt;
+&lt;/span&gt;
+ Those equations can be explained as follows: the first equation is an element-wise summation of two terms. The first term is the previous memory vector &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{c}^{\left(t-1\right)}
+&lt;/script&gt;
+&lt;/span&gt; moderated by the &lt;i&gt;forget gate&lt;/i&gt;. That is, the layer uses the current input &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{x}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt; and previous output &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{h}^{\left(t-1\right)}
+&lt;/script&gt;
+&lt;/span&gt; to determine how much to shrink each coordinate of the previous memory vector. The second term is the candidate for the new state, i.e. &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{s}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right),
+&lt;/script&gt;
+&lt;/span&gt; moderated by the &lt;i&gt;input gate&lt;/i&gt;. Note that all the gates operate on the same input tuple &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right).
+&lt;/script&gt;
+&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+The &lt;i&gt;input&lt;/i&gt; and &lt;i&gt;forget&lt;/i&gt; gates control the long-short term dependencies (i.e. the recurrent connection), and allow the LSTM layer to adaptively control the balance between new information that come from the state-transition function and the history information that come from the memory vector, hence the names for the gates: &lt;i&gt;input&lt;/i&gt; and &lt;i&gt;forget&lt;/i&gt;.
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+Another difference from basic recurrent layer is that LSTM layer controls how much of its inner-memory to expose by using the &lt;i&gt;output&lt;/i&gt; gate. That is being formulated in the second equation. 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+The addition of gates is what preventing the exploding and vanishing gradients problem. It makes the LSTM layer able to learn long and short term dependencies at the cost of increasing the number of parameters that are needed to be trained, and that makes the network harder to optimized.
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-4&quot;&gt;4&lt;/a&gt; GRU 
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+Another gated cell proposed on 2014 is the Gated Recurrent Unit (GRU). It has similar advantages as the LSTM cell, but fewer parameters to train, because the memory vector was removed and one of the gates. 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+GRU has two gate functions &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{z},\mathbf{r}\in\mathcal{S}_{sig}
+&lt;/script&gt;
+&lt;/span&gt; named the &lt;i&gt;update&lt;/i&gt; and &lt;i&gt;reset&lt;/i&gt; gate respectively, and a state transition &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{s}\in\mathcal{S}_{tanh}.
+&lt;/script&gt;
+&lt;/span&gt; The input to GRU layer is only the tuple &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)
+&lt;/script&gt;
+&lt;/span&gt; and the output is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{h}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt; which is being computed as follows: first the layer computes its gates for the current time step, denoted by &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\mathbf{z}^{\left(t\right)}:=\mathbf{z}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)
+
+&lt;/script&gt;
+&lt;/span&gt;
+ for the &lt;i&gt;update gate&lt;/i&gt; and by &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\mathbf{r}^{\left(t\right)}:=\mathbf{r}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)
+
+&lt;/script&gt;
+&lt;/span&gt;
+for the &lt;i&gt;reset gate&lt;/i&gt;. Then the output of the layer is computed by&lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\mathbf{h}^{\left(t\right)}=\left(1-\mathbf{z}^{\left(t\right)}\right)\circ\mathbf{h}^{\left(t-1\right)}+\mathbf{z}^{\left(t\right)}\circ\mathbf{s}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\circ\mathbf{r}^{\left(t\right)}\right)
+
+&lt;/script&gt;
+&lt;/span&gt;
+with all the arithmetic operations being done element wise. 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+The term &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{s}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\circ\mathbf{r}^{\left(t\right)}\right)
+&lt;/script&gt;
+&lt;/span&gt; is a candidate for the next state. Note that the state-transition function accepts the previous state &lt;i&gt;moderated&lt;/i&gt; by the reset gate, allowing it to forget past states (therefore the name of the gate: reset). Then the output of the layer is a linear interpolation between the previous state and the candidate state, controlled by the update gate.
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+As oppose to the LSTM cell, the GRU doesn’t has an output gate to control how much of its inner state to expose therefore the entire state is being exposed at each time step. 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+Both LSTM and GRU are very common in many recurrent network architectures and achieved great results in many tasks. LSTMs and GRUs can learn dependencies of various lengths which make the network very expressive. However, too expressive network can leads sometimes to overfitting, to prevent that it is common to use some type of regularization, such as Dropout. 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+Next post I will discuss the dropout variations that are specific for RNNs.
+&lt;/div&gt;</content><author><name>Eran Amar</name></author><category term="neural_networks" /><summary type="html">Warning: MathJax requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser. &amp;lt;/hr&amp;gt;</summary></entry><entry><title type="html">Recurrent Neural Network - Introduction</title><link href="https://eranamar.github.io/site/2017/04/20/Recurrent-Neural-Network-Introduction.html" rel="alternate" type="text/html" title="Recurrent Neural Network - Introduction" /><published>2017-04-20T00:00:00+03:00</published><updated>2017-04-20T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/04/20/Recurrent-Neural-Network---Introduction</id><content type="html" xml:base="https://eranamar.github.io/site/2017/04/20/Recurrent-Neural-Network-Introduction.html">&lt;script type=&quot;math/tex&quot;&gt;
 \newcommand{\lyxlock}{}
 &lt;/script&gt;
 
