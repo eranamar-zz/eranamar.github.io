@@ -142,13 +142,13 @@ Y_{i}
 <div class="Indented">
 <span class="MathJax_Preview">
 <script type="math/tex;mode=display">
-\begin{align*}
+\begin{aligned}
 \mathbf{P}\left[\left|X-\mu\right|>t\right] & =\mathbf{P}\left[\left|\frac{X}{b-a}-na-\frac{\mu}{b-a}+na\right|>\frac{t}{b-a}\right]\\
  & =\mathbf{P}\left[\left|Y-\mathbb{E}\left[Y\right]\right|>\frac{t}{b-a}\cdot\frac{\mathbb{E}\left[Y\right]}{\mathbb{E}\left[Y\right]}\right]\\
  & \le2\exp\left(\frac{-t^{2}}{\left(b-a\right)^{2}\mathbb{E}\left[Y\right]^{2}}\cdot\frac{\mathbb{E}\left[Y\right]}{3}\right)\\
  & =2\exp\left(\frac{-t^{2}}{3\left(b-a\right)^{2}}\left(\frac{\mu}{b-a}-na\right)^{-1}\right)\\
  & =2\exp\left(\frac{-t^{2}}{3\mu\left(b-a\right)-3a\cdot n\left(b-a\right)^{2}}\right)
-\end{align*}
+\end{aligned}
 </script>
 </span>
 </div>

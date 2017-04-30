@@ -290,12 +290,12 @@ b\in\left\{ 0,1\right\}
 </script>
 </span><span class="MathJax_Preview">
 <script type="math/tex;mode=display">
-\begin{align*}
+\begin{aligned}
 \mathbf{P}\left[X+Y=b\right] & =\mathbf{P}\left[X=1,Y=1-b\right]+\mathbf{P}\left[X=0,Y=b\right]\\
  & =\mathbf{P}\left[X=1\right]\mathbf{P}\left[Y=1-b\right]+\mathbf{P}\left[X=0\right]\mathbf{P}\left[Y=b\right]\\
  & =\frac{1}{2}\left(\mathbf{P}\left[Y=1-b\right]+\mathbf{P}\left[Y=1-b\right]\right)\\
  & =\frac{1}{2}
-\end{align*}
+\end{aligned}
 </script>
 </span>
 thus <span class="MathJax_Preview"><script type="math/tex">
@@ -315,13 +315,13 @@ b_{1}=b_{2}
 </script>
 </span> then <span class="MathJax_Preview">
 <script type="math/tex;mode=display">
-\begin{align*}
+\begin{aligned}
 \mathbf{P}\left[X=b_{1},Z=b_{2}\right] & =\mathbf{P}\left[X=b_{1},X+Y=b_{1}\right]\\
  & =\mathbf{P}\left[X=b_{1},Y=0\right]\\
  & =\mathbf{P}\left[X=b_{1}\right]\mathbf{P}\left[Y=0\right]\\
  & =\mathbf{P}\left[X=b_{1}\right]\cdot\frac{1}{2}\\
  & =\mathbf{P}\left[X=b_{1}\right]\mathbf{P}\left[Z=b_{1}\right]
-\end{align*}
+\end{aligned}
 </script>
 </span>
 and we done. And if <span class="MathJax_Preview"><script type="math/tex">
@@ -329,11 +329,11 @@ b_{2}=1-b_{1}
 </script>
 </span> then very similarly we get<span class="MathJax_Preview">
 <script type="math/tex;mode=display">
-\begin{align*}
+\begin{aligned}
 \mathbf{P}\left[X=b_{1},Z=b_{2}\right] & =\mathbf{P}\left[X=b_{1},X+Y=1-b_{1}\right]\\
  & =\mathbf{P}\left[X=b_{1},Y=1\right]\\
  & =\mathbf{P}\left[X=b_{1}\right]\mathbf{P}\left[Z=b_{1}\right]
-\end{align*}
+\end{aligned}
 </script>
 </span>
 which conclude the proof.
@@ -386,9 +386,9 @@ Bernoulli\left(0.5\right)
 </script>
 </span>. When plugging in the new notations we get<span class="MathJax_Preview">
 <script type="math/tex;mode=display">
-\begin{align*}
+\begin{aligned}
 \mathbf{P}\left[X_{1}=b_{1},\:X_{2}=b_{2}\right] & =\mathbf{P}\left[M_{0}+M_{1}=b_{1},\:M_{0}+M_{2}=b_{2}\right]
-\end{align*}
+\end{aligned}
 </script>
 </span>
 Because <span class="MathJax_Preview"><script type="math/tex">
