@@ -91,18 +91,7 @@
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <script type="text/x-mathjax-config">
-	MathJax.Hub.Config({
-		showMathMenu: false,
-		showMathMenuMSIE: false,
-		showProcessingMessages: true,
-		messageStyle: "normal"
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
     <h1 class="post-title" itemprop="name headline">Comparing Chernoff - Hoeffding bounds</h1>
@@ -111,11 +100,8 @@
 	 tags: <a href="/site/tag/probability_theory.html" rel="tag">probability_theory</a>
 	</div>
   </header>
-  <div id="loader" >
-    Loading content and comments...
-  </div>
   <div class="">
-    <div class="post-content hide-with-loader" itemprop="articleBody">
+    <div class="post-content" itemprop="articleBody">
       <script type="math/tex">
 \newcommand{\lyxlock}{}
 </script>
@@ -249,13 +235,13 @@ Y_{i}
 <div class="Indented">
 <span class="MathJax_Preview">
 <script type="math/tex;mode=display">
-\begin{align*}
+\begin{aligned}
 \mathbf{P}\left[\left|X-\mu\right|>t\right] & =\mathbf{P}\left[\left|\frac{X}{b-a}-na-\frac{\mu}{b-a}+na\right|>\frac{t}{b-a}\right]\\
  & =\mathbf{P}\left[\left|Y-\mathbb{E}\left[Y\right]\right|>\frac{t}{b-a}\cdot\frac{\mathbb{E}\left[Y\right]}{\mathbb{E}\left[Y\right]}\right]\\
  & \le2\exp\left(\frac{-t^{2}}{\left(b-a\right)^{2}\mathbb{E}\left[Y\right]^{2}}\cdot\frac{\mathbb{E}\left[Y\right]}{3}\right)\\
  & =2\exp\left(\frac{-t^{2}}{3\left(b-a\right)^{2}}\left(\frac{\mu}{b-a}-na\right)^{-1}\right)\\
  & =2\exp\left(\frac{-t^{2}}{3\mu\left(b-a\right)-3a\cdot n\left(b-a\right)^{2}}\right)
-\end{align*}
+\end{aligned}
 </script>
 </span>
 </div>
@@ -373,8 +359,7 @@ t\in\left[0,n\left(1-2p\right)\right]
 <div class="Indented">
 Note the differences between that regime and the one from the definition at the beginning of the post: in this theorem the variables are i.i.d (rather than only independent) and they are discrete.
 </div>
-
-    
+  
     </div>
 
     
@@ -407,25 +392,27 @@ Note the differences between that regime and the one from the definition at the 
   </div>
 </article>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+
 <script type="text/javascript">
   'use strict';
+  $(".MathJax_Preview > script").each(function() {
+    var self = $(this);
+    var texTxt = self.text();
+    var el = self.get(0);
+    var isCenter = (el.type.indexOf('mode=display') !== -1);
     
-    $(document).ready(function(){
-      var post = $('div.hide-with-loader');
-      var loader = $('#loader');
+    katex.render(texTxt, el.parentElement, {throwOnError: false, displayMode: isCenter});
+  });
 
-      var show_post = function () {
-          loader.hide();
-          post.show();
-          if(window.activate_disqus_comments){
-            window.activate_disqus_comments();
-          }
-      };
-
-      if(post.length){        
-        MathJax.Hub.Register.StartupHook("End", show_post);
-      }
-    });
+  $(document).ready(function(){
+    if(window.activate_disqus_comments){
+          window.activate_disqus_comments();
+    } 
+  });
 </script>
 
       </div>

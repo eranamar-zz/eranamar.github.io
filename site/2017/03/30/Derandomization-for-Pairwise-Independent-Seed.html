@@ -91,18 +91,7 @@
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <script type="text/x-mathjax-config">
-	MathJax.Hub.Config({
-		showMathMenu: false,
-		showMathMenuMSIE: false,
-		showProcessingMessages: true,
-		messageStyle: "normal"
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
     <h1 class="post-title" itemprop="name headline">Derandomization for Pairwise Independent Seed</h1>
@@ -111,11 +100,8 @@
 	 tags: <a href="/site/tag/probability_theory.html" rel="tag">probability_theory</a>, <a href="/site/tag/algorithms.html" rel="tag">algorithms</a>
 	</div>
   </header>
-  <div id="loader" >
-    Loading content and comments...
-  </div>
   <div class="">
-    <div class="post-content hide-with-loader" itemprop="articleBody">
+    <div class="post-content" itemprop="articleBody">
       <script type="math/tex">
 \newcommand{\lyxlock}{}
 </script>
@@ -397,12 +383,12 @@ b\in\left\{ 0,1\right\}
 </script>
 </span><span class="MathJax_Preview">
 <script type="math/tex;mode=display">
-\begin{align*}
+\begin{aligned}
 \mathbf{P}\left[X+Y=b\right] & =\mathbf{P}\left[X=1,Y=1-b\right]+\mathbf{P}\left[X=0,Y=b\right]\\
  & =\mathbf{P}\left[X=1\right]\mathbf{P}\left[Y=1-b\right]+\mathbf{P}\left[X=0\right]\mathbf{P}\left[Y=b\right]\\
  & =\frac{1}{2}\left(\mathbf{P}\left[Y=1-b\right]+\mathbf{P}\left[Y=1-b\right]\right)\\
  & =\frac{1}{2}
-\end{align*}
+\end{aligned}
 </script>
 </span>
 thus <span class="MathJax_Preview"><script type="math/tex">
@@ -422,13 +408,13 @@ b_{1}=b_{2}
 </script>
 </span> then <span class="MathJax_Preview">
 <script type="math/tex;mode=display">
-\begin{align*}
+\begin{aligned}
 \mathbf{P}\left[X=b_{1},Z=b_{2}\right] & =\mathbf{P}\left[X=b_{1},X+Y=b_{1}\right]\\
  & =\mathbf{P}\left[X=b_{1},Y=0\right]\\
  & =\mathbf{P}\left[X=b_{1}\right]\mathbf{P}\left[Y=0\right]\\
  & =\mathbf{P}\left[X=b_{1}\right]\cdot\frac{1}{2}\\
  & =\mathbf{P}\left[X=b_{1}\right]\mathbf{P}\left[Z=b_{1}\right]
-\end{align*}
+\end{aligned}
 </script>
 </span>
 and we done. And if <span class="MathJax_Preview"><script type="math/tex">
@@ -436,11 +422,11 @@ b_{2}=1-b_{1}
 </script>
 </span> then very similarly we get<span class="MathJax_Preview">
 <script type="math/tex;mode=display">
-\begin{align*}
+\begin{aligned}
 \mathbf{P}\left[X=b_{1},Z=b_{2}\right] & =\mathbf{P}\left[X=b_{1},X+Y=1-b_{1}\right]\\
  & =\mathbf{P}\left[X=b_{1},Y=1\right]\\
  & =\mathbf{P}\left[X=b_{1}\right]\mathbf{P}\left[Z=b_{1}\right]
-\end{align*}
+\end{aligned}
 </script>
 </span>
 which conclude the proof.
@@ -493,9 +479,9 @@ Bernoulli\left(0.5\right)
 </script>
 </span>. When plugging in the new notations we get<span class="MathJax_Preview">
 <script type="math/tex;mode=display">
-\begin{align*}
+\begin{aligned}
 \mathbf{P}\left[X_{1}=b_{1},\:X_{2}=b_{2}\right] & =\mathbf{P}\left[M_{0}+M_{1}=b_{1},\:M_{0}+M_{2}=b_{2}\right]
-\end{align*}
+\end{aligned}
 </script>
 </span>
 Because <span class="MathJax_Preview"><script type="math/tex">
@@ -539,8 +525,7 @@ X_{2}
 <div class="Indented">
 Last one remark. In our settings the randomized algorithm either return a solution or says “failed”, if we have a polynomial procedure to validate a solution we can generalize the settings to the case when the algorithm always output a solution, and then we verify it to determine if it is “succeeds” case of “failed” case.
 </div>
-
-    
+  
     </div>
 
     
@@ -573,25 +558,27 @@ Last one remark. In our settings the randomized algorithm either return a soluti
   </div>
 </article>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+
 <script type="text/javascript">
   'use strict';
+  $(".MathJax_Preview > script").each(function() {
+    var self = $(this);
+    var texTxt = self.text();
+    var el = self.get(0);
+    var isCenter = (el.type.indexOf('mode=display') !== -1);
     
-    $(document).ready(function(){
-      var post = $('div.hide-with-loader');
-      var loader = $('#loader');
+    katex.render(texTxt, el.parentElement, {throwOnError: false, displayMode: isCenter});
+  });
 
-      var show_post = function () {
-          loader.hide();
-          post.show();
-          if(window.activate_disqus_comments){
-            window.activate_disqus_comments();
-          }
-      };
-
-      if(post.length){        
-        MathJax.Hub.Register.StartupHook("End", show_post);
-      }
-    });
+  $(document).ready(function(){
+    if(window.activate_disqus_comments){
+          window.activate_disqus_comments();
+    } 
+  });
 </script>
 
       </div>
