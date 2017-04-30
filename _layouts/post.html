@@ -1,16 +1,6 @@
 ---
 layout: default
 ---
-<script type="text/x-mathjax-config">
-	MathJax.Hub.Config({
-		showMathMenu: false,
-		showMathMenuMSIE: false,
-		showProcessingMessages: true,
-		messageStyle: "normal"
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
@@ -21,13 +11,9 @@ layout: default
 	 tags: {{ page | tags }}
 	</div>
   </header>
-  <div id="loader" >
-    Loading content and comments...
-  </div>
   <div class="">
-    <div class="post-content hide-with-loader" itemprop="articleBody">
-      {{ content }}
-    
+    <div class="post-content" itemprop="articleBody">
+      {{ content }}  
     </div>
 
     {% if site.disqus.shortname %}
@@ -36,23 +22,25 @@ layout: default
   </div>
 </article>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+
 <script type="text/javascript">
   'use strict';
+  $(".MathJax_Preview > script").each(function() {
+    var self = $(this);
+    var texTxt = self.text();
+    var el = self.get(0);
+    var isCenter = (el.type.indexOf('mode=display') !== -1);
     
-    $(document).ready(function(){
-      var post = $('div.hide-with-loader');
-      var loader = $('#loader');
+    katex.render(texTxt, el.parentElement, {throwOnError: false, displayMode: isCenter});
+  });
 
-      var show_post = function () {
-          loader.hide();
-          post.show();
-          if(window.activate_disqus_comments){
-            window.activate_disqus_comments();
-          }
-      };
-
-      if(post.length){        
-        MathJax.Hub.Register.StartupHook("End", show_post);
-      }
-    });
+  $(document).ready(function(){
+    if(window.activate_disqus_comments){
+          window.activate_disqus_comments();
+    } 
+  });
 </script>
