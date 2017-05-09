@@ -11,7 +11,7 @@ I will discuss most of the times topics related to Complexity, Probability theor
 
 ### What with this name "Theory Lunch"?
  
-The idea to start with this blog came to me during one of my daily lunch meetings. I figured that some of our discussions can be easily written as posts in a blog, so I started one :)
+The idea to start with this blog came to me during one of my daily lunch meetings with friends. I figured that some of our discussions can be easily written as posts in a blog, so I started one :)
 
 
 ### About the Author
