@@ -1,3 +1,7 @@
+.archive_list a {
+  font-size: 20px;
+}
+
 .page-content, .sub-title, .page-link {
     --x-height-multiplier: 0.35;
     --baseline-multiplier: 0.179;
