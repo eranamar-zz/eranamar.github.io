@@ -14,7 +14,7 @@
 }
 
 div.page-content{
-  font-size: 18px;
+  font-size: 20px;
 }
 
 
@@ -23,15 +23,15 @@ div.post-content h1 {
 }
 
 div.post-content h2 {
-  font-size: 26px;
+  font-size: 28px;
 }
 
 div.post-content h3 {
-  font-size: 22px;
+  font-size: 24px;
 }
 
 div.sub-title {
-  font-size: 16px;
+  font-size: 18px;
 }
 /*
 .MathJax * {
@@ -49,7 +49,7 @@ div.sub-title {
     margin-top: 15px;
 }
 .Indented, .Unindented, .Theorem, .Lemma, .Claim, .Proof, .Definition {
-    font-size: 18px;
+    font-size: 20px;
     margin-bottom: 10px;
     text-align: justify;
 }
