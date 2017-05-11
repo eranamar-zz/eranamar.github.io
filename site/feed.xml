@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-05-09T14:44:50+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">Theory Lunch</title><subtitle>Computer science topics over lunch</subtitle><author><name>Eran Amar</name></author><entry><title type="html">Recurrent Neural Network - LSTM and GRU</title><link href="https://eranamar.github.io/site/2017/04/30/Recurrent-Neural-Network-LSTM-and-GRU.html" rel="alternate" type="text/html" title="Recurrent Neural Network - LSTM and GRU" /><published>2017-04-30T00:00:00+03:00</published><updated>2017-04-30T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/04/30/Recurrent-Neural-Network---LSTM-and-GRU</id><content type="html" xml:base="https://eranamar.github.io/site/2017/04/30/Recurrent-Neural-Network-LSTM-and-GRU.html">&lt;script type=&quot;math/tex&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-05-11T21:06:50+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">Theory Lunch</title><subtitle>Computer science topics over lunch</subtitle><author><name>Eran Amar</name></author><entry><title type="html">Recurrent Neural Network - Dropout for LSTMs</title><link href="https://eranamar.github.io/site/2017/05/12/Recurrent-Neural-Network-Dropout-for-LSTMs.html" rel="alternate" type="text/html" title="Recurrent Neural Network - Dropout for LSTMs" /><published>2017-05-12T00:00:00+03:00</published><updated>2017-05-12T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/05/12/Recurrent-Neural-Network---Dropout-for-LSTMs</id><content type="html" xml:base="https://eranamar.github.io/site/2017/05/12/Recurrent-Neural-Network-Dropout-for-LSTMs.html">&lt;script type=&quot;math/tex&quot;&gt;
 \newcommand{\lyxlock}{}
 &lt;/script&gt;
 
@@ -12,7 +12,285 @@ Warning: &lt;a href=&quot;http://www.mathjax.org/&quot;&gt;MathJax&lt;/a&gt; req
 &lt;a class=&quot;toc&quot; name=&quot;toc-Section-1&quot;&gt;1&lt;/a&gt; Recap
 &lt;/h1&gt;
 &lt;div class=&quot;Unindented&quot;&gt;
-The first post in the series discussed the basic structure of recurrent cells and their limitations. We defined two families of functions, the first is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+This is the third post in the series about Recurrent Neural Networks. The &lt;a class=&quot;URL&quot; href=&quot;https://eranamar.github.io/site/2017/04/20/Recurrent-Neural-Network-Introduction.html&quot;&gt;first post &lt;/a&gt;defined the basic notations and the formulation of a Recurrent Cell, the &lt;a class=&quot;URL&quot; href=&quot;https://eranamar.github.io/site/2017/04/30/Recurrent-Neural-Network-LSTM-and-GRU.html&quot;&gt;second post&lt;/a&gt; discussed its extensions such as LSTM and GRU. Recall that LSTM layer receives vector &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{x}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt; - the input for the current time step &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+t
+&lt;/script&gt;
+&lt;/span&gt;, and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{c}^{\left(t-1\right)},\mathbf{h}^{\left(t-1\right)}
+&lt;/script&gt;
+&lt;/span&gt; the memory-vector and the output-vector from previous time-step respectively, then the layer computes a new memory vector &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\mathbf{c}^{\left(t\right)}=\mathbf{f}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)\circ\mathbf{c}^{\left(t-1\right)}+\mathbf{i}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)\circ\mathbf{s}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)
+
+&lt;/script&gt;
+&lt;/span&gt;
+where &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\circ
+&lt;/script&gt;
+&lt;/span&gt; denotes element wise multiplication. Then the layer outputs &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\mathbf{h}^{\left(t\right)}=\mathbf{o}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)\circ tanh\left(\mathbf{c}^{\left(t\right)}\right)
+
+&lt;/script&gt;
+&lt;/span&gt;
+where &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{f},\mathbf{i},\mathbf{o}\in\mathcal{S}_{sigmoid}
+&lt;/script&gt;
+&lt;/span&gt; are the &lt;i&gt;forget&lt;/i&gt;, &lt;i&gt;input&lt;/i&gt; and &lt;i&gt;output&lt;/i&gt; gates respectively, and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{s}\in\mathcal{S}_{tanh}
+&lt;/script&gt;
+&lt;/span&gt; is the state transition function. &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{S}_{\sigma}
+&lt;/script&gt;
+&lt;/span&gt; denotes a family of all affine transformations &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbb{R}^{n}\times\mathbb{R}^{n}\to\mathbb{R}^{m}
+&lt;/script&gt;
+&lt;/span&gt; following by an element-wise activation function &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\sigma
+&lt;/script&gt;
+&lt;/span&gt;, for any input-dimension &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+n
+&lt;/script&gt;
+&lt;/span&gt; and output-dimension &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+m
+&lt;/script&gt;
+&lt;/span&gt;.
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+In this post, we will focus on the different variants of dropout regularization that are being used in LSTM networks. 
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-2&quot;&gt;2&lt;/a&gt; Dropout Regularization
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+Dropout is a very popular regularization mechanism that is being attached to layers of a neural network in order to reduce overfitting and improve generalization. Applying dropout to a layer starts by fixing some &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+p\in\left(0,1\right)
+&lt;/script&gt;
+&lt;/span&gt;. Then, any time that layer produces an output during training, each one of its neurons is being zeroed-out independently with probability &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+p
+&lt;/script&gt;
+&lt;/span&gt;, and with probability &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+1-p
+&lt;/script&gt;
+&lt;/span&gt; it is being scaled by &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\frac{1}{1-p}
+&lt;/script&gt;
+&lt;/span&gt;. Scaling the output is important because it keeps the expected output-value of the neuron unchanged. During test time, the dropout mechanism is being turned-off, that is, the output of each neuron is being passed as is. 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+For fully-connected layers, we can formulate dropout as follows: Suppose that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{h}
+&lt;/script&gt;
+&lt;/span&gt; should be the output of some layer that has dropout mechanism. Generate a mask &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{z}\in\left\{ 0,1\right\} ^{n}
+&lt;/script&gt;
+&lt;/span&gt;, by picking each coordinate i.i.d w.p. &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+p
+&lt;/script&gt;
+&lt;/span&gt; from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\left\{ 0,1\right\} 
+&lt;/script&gt;
+&lt;/span&gt;, and output &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{h}\circ\mathbf{z}
+&lt;/script&gt;
+&lt;/span&gt; instead of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{h}
+&lt;/script&gt;
+&lt;/span&gt;. Note that we hide here the output-scaling for simplicity, and that the mask &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{z}
+&lt;/script&gt;
+&lt;/span&gt; is being generated any time the layer required to produce an output. 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+At first glance it seems trivial to apply dropout to LSTM layers. However, when we come to implement the mechanism we encounter some technical issues that should be addressed. For instance, we need to decide whether to apply the given mask only to the input &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{x}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt; or also to the recurrent connection (i.e. to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{h}^{\left(t-1\right)}
+&lt;/script&gt;
+&lt;/span&gt;), and if we choose to apply on both, should it be the same mask or different masks? Should a mask be shared &lt;i&gt;across time&lt;/i&gt; or be generated for each time-step?
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+Several works tried to apply dropout to LSTM layers in several naive ways but without success. It seems that just dropping randomly some coordinates from the recurrent connections &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{h}^{\left(t-1\right)}
+&lt;/script&gt;
+&lt;/span&gt; impair the ability of the LSTM layer to learn long\short term dependencies. In the next section we will review some works that applied dropout to LSTMs in a way that successfully yields better generalization. 
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-3&quot;&gt;3&lt;/a&gt; Variants
+&lt;/h1&gt;
+&lt;h2 class=&quot;Subsection&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Subsection-3.1&quot;&gt;3.1&lt;/a&gt; Mask Only Inputs; Regenerate Masks
+&lt;/h2&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+Wojciech Zaremba, Ilya Sutskever and Oriol Vinyals published in 2014 a &lt;a class=&quot;URL&quot; href=&quot;https://arxiv.org/abs/1409.2329v5&quot;&gt;paper&lt;/a&gt; that describe a successful dropout variation for LSTM layers. Their idea was that dropout should be applied only to the inputs of the layer and not to the recurrent connections. Moreover, a new mask should be generated for each time step. 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+Formally, for each time-step &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+t
+&lt;/script&gt;
+&lt;/span&gt;, generate a mask &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{z}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt; and compute &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{\hat{x}}^{\left(t\right)}:=\mathbf{x}^{\left(t\right)}\circ\mathbf{z}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt;. Then continue to compute the LSTM layer as usual but use &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{\hat{x}}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt; as the input to the layer rather than &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{x}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt;. 
+&lt;/div&gt;
+&lt;h2 class=&quot;Subsection&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Subsection-3.2&quot;&gt;3.2&lt;/a&gt; rnnDrop: Mask Only the Memory; Fixed Mask
+&lt;/h2&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+On 2015, Taesup Moon, Heeyoul Choi, Hoshik Lee and Inchul Song &lt;a class=&quot;URL&quot; href=&quot;https://www.stat.berkeley.edu/~tsmoon/files/Conference/asru2015.pdf&quot;&gt;published&lt;/a&gt; a different dropout variation: &lt;i&gt;rnnDrop&lt;/i&gt;. 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+They suggested to generate a mask for each training sequence and fix it for all the time-steps in that sequence, that is, the mask is being &lt;i&gt;shared across time&lt;/i&gt;. The mask is then being applied to the &lt;i&gt;memory vector&lt;/i&gt; of the layer rather than the input. In their formulation, only the second formula of the LSTM changed: &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\mathbf{h}^{\left(t\right)}=\mathbf{o}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)\circ tanh\left(\mathbf{c}^{\left(t\right)}\circ\mathbf{z}\right)
+
+&lt;/script&gt;
+&lt;/span&gt;
+where &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{z}
+&lt;/script&gt;
+&lt;/span&gt; if the fixed mask to the entire current training sequence.
+&lt;/div&gt;
+&lt;h2 class=&quot;Subsection&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Subsection-3.3&quot;&gt;3.3&lt;/a&gt; Mask Input and Hidden; Fixed Mask
+&lt;/h2&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+A relatively &lt;a class=&quot;URL&quot; href=&quot;https://arxiv.org/abs/1512.05287&quot;&gt;recent work&lt;/a&gt; of Yarin Gal and Zoubin Ghahramani from 2016 also use a make that is shared across time, however it is being applied to the inputs as well on the &lt;i&gt;recurrent connections&lt;/i&gt;. This is one of the first successful dropout variants that actually apply the mask to the recurrent connection. 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+Formally, for each training sequence generate two masks &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{z}_{1},\mathbf{z}_{2}
+&lt;/script&gt;
+&lt;/span&gt; and compute &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{\hat{x}}^{\left(t\right)}:=\mathbf{x}^{\left(t\right)}\circ\mathbf{z}_{1}
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{\hat{h}}^{\left(t-1\right)}:=\mathbf{h}^{\left(t-1\right)}\circ\mathbf{z}_{2}
+&lt;/script&gt;
+&lt;/span&gt;. Then use &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{\hat{x}}^{\left(t\right)},\mathbf{\hat{h}}^{\left(t-1\right)}
+&lt;/script&gt;
+&lt;/span&gt; as the input to the “regular” LSTM layer.
+&lt;/div&gt;
+&lt;h2 class=&quot;Subsection&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Subsection-3.4&quot;&gt;3.4&lt;/a&gt; Mask Gates; Fixed Mask
+&lt;/h2&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+Another &lt;a class=&quot;URL&quot; href=&quot;https://arxiv.org/abs/1603.05118&quot;&gt;paper&lt;/a&gt; from 2016, of Stanislau Semeniuta, Aliaksei Severyn and Erhardt Barth demonstrate the mask being applied to some of the &lt;i&gt;gates&lt;/i&gt; rather than the input\hidden vectors. For any time-step, generate &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{z}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt; and then use it to mask the &lt;i&gt;input gate&lt;/i&gt;&lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\mathbf{c}^{\left(t\right)}=\mathbf{f}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)\circ\mathbf{c}^{\left(t-1\right)}+\mathbf{z}^{\left(t\right)}\circ\mathbf{i}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)\circ\mathbf{s}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)
+
+&lt;/script&gt;
+&lt;/span&gt;
+and the second LSTM equation left unchanged. 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+Small note, the authors also addressed in their paper some issues related to scaling the not-dropped coordinates, which won’t be covered here.
+&lt;/div&gt;
+&lt;h2 class=&quot;Subsection&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Subsection-3.5&quot;&gt;3.5&lt;/a&gt; Zoneout
+&lt;/h2&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+The very last dropout variation is by &lt;a class=&quot;URL&quot; href=&quot;https://arxiv.org/abs/1606.01305&quot;&gt;David Krueger et al&lt;/a&gt;, from 2017. They suggested to treat the memory vector &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{c}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt; and the output vector (a.k.a &lt;i&gt;hidden&lt;/i&gt; vector) &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{h}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt; as follows: each coordinate in each of the vectors either being updated as usual or &lt;i&gt;preserved its value&lt;/i&gt; from previous time-step. As opposed to regular dropout, where “dropping a coordinate” meaning to make it zero, in zoneout it just keeps its previous value - acting as a random identity map that allows better gradients propagation through more time steps. Note that preserving a coordinate in the memory vector should not affect the computation of the hidden vector. Therefore we have to rewrite the formulas for the LSTM layer: given &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{c}^{\left(t-1\right)}
+&lt;/script&gt;
+&lt;/span&gt;. Generate two masks &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{z}_{1}^{\left(t\right)},\mathbf{z}_{2}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt; for the current time-step &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+t
+&lt;/script&gt;
+&lt;/span&gt;. Start by computing a candidate memory-vector with the regular formula, &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\mathbf{\hat{c}}^{\left(t\right)}=\mathbf{f}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)\circ\mathbf{c}^{\left(t-1\right)}+\mathbf{i}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)\circ\mathbf{s}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)
+
+&lt;/script&gt;
+&lt;/span&gt;
+and then use only &lt;i&gt;some&lt;/i&gt; of its coordinates to update the memory-vector, that is, &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\mathbf{c}^{\left(t\right)}=\mathbf{z}_{1}^{\left(t\right)}\circ\mathbf{c}^{\left(t-1\right)}+\left(1-\mathbf{z}_{1}^{\left(t\right)}\right)\circ\mathbf{\hat{c}}^{\left(t\right)}
+
+&lt;/script&gt;
+&lt;/span&gt;
+Similarly, for the hidden-vector, compute a candidate &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\mathbf{\hat{h}}^{\left(t\right)}=\mathbf{o}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)\circ tanh\left(\mathbf{\hat{c}}^{\left(t\right)}\right)
+
+&lt;/script&gt;
+&lt;/span&gt;
+and selectively update &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\mathbf{h}^{\left(t\right)}=\mathbf{z}_{2}^{\left(t\right)}\circ\mathbf{h}^{\left(t-1\right)}+\left(1-\mathbf{z}_{2}^{\left(t\right)}\right)\circ\mathbf{\hat{h}}^{\left(t\right)}
+
+&lt;/script&gt;
+&lt;/span&gt;
+Observe again that the computation of the candidate hidden-vector is based on &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{\hat{c}}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt; therefore unaffected by the mask &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{z}_{1}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt;.
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-4&quot;&gt;4&lt;/a&gt; More and More and More
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+In the last year, dropout for LSTM networks gained more attention, and the list of different variants is growing quickly. This post tried to cover only &lt;i&gt;some&lt;/i&gt; fraction of all the variants available out there. It is left for the interested reader to search for the literature for more about this topic. 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+Note that some of the dropout variations discussed above can be applied to basic RNN and GRU cells without much modifications - we refer you to the papers themselves for more details. 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+Next post, will discuss recent advancement in the field of RNNs, such as Multiplicative LSTMs, Recurrent Batch Normalization and more.
+&lt;/div&gt;</content><author><name>Eran Amar</name></author><category term="neural_networks" /><summary type="html">Warning: MathJax requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser. &amp;lt;/hr&amp;gt;</summary></entry><entry><title type="html">Recurrent Neural Network - LSTM and GRU</title><link href="https://eranamar.github.io/site/2017/04/30/Recurrent-Neural-Network-LSTM-and-GRU.html" rel="alternate" type="text/html" title="Recurrent Neural Network - LSTM and GRU" /><published>2017-04-30T00:00:00+03:00</published><updated>2017-04-30T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/04/30/Recurrent-Neural-Network---LSTM-and-GRU</id><content type="html" xml:base="https://eranamar.github.io/site/2017/04/30/Recurrent-Neural-Network-LSTM-and-GRU.html">&lt;script type=&quot;math/tex&quot;&gt;
+\newcommand{\lyxlock}{}
+&lt;/script&gt;
+
+&lt;noscript&gt;
+&lt;div class=&quot;warning&quot;&gt;
+Warning: &lt;a href=&quot;http://www.mathjax.org/&quot;&gt;MathJax&lt;/a&gt; requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser.
+&lt;/div&gt;&lt;hr /&gt;
+&amp;lt;/hr&amp;gt;&lt;/noscript&gt;
+
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-1&quot;&gt;1&lt;/a&gt; Recap
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+The &lt;a class=&quot;URL&quot; href=&quot;https://eranamar.github.io/site/2017/04/20/Recurrent-Neural-Network-Introduction.html&quot;&gt;first post&lt;/a&gt; in the series discussed the basic structure of recurrent cells and their limitations. We defined two families of functions, the first is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \mathcal{F}_{\sigma}
 &lt;/script&gt;
 &lt;/span&gt; which contains all the affine transformations &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
@@ -49,7 +327,7 @@ m,
 
 &lt;/script&gt;
 &lt;/span&gt;
-In this post we will focus on two activation functions: &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+In this post, the second in the series,  we will focus on two activation functions: &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 tanh\left(x\right)=\frac{e^{x}-e^{-x}}{e^{x}+e^{-x}}
 &lt;/script&gt;
 &lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
