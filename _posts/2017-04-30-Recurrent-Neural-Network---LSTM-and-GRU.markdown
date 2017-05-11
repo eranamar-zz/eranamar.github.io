@@ -23,7 +23,7 @@ Warning: <a href="http://www.mathjax.org/">MathJax</a> requires JavaScript to co
 <a class="toc" name="toc-Section-1">1</a> Recap
 </h1>
 <div class="Unindented">
-The first post in the series discussed the basic structure of recurrent cells and their limitations. We defined two families of functions, the first is <span class="MathJax_Preview"><script type="math/tex">
+The <a class="URL" href="https://eranamar.github.io/site/2017/04/20/Recurrent-Neural-Network-Introduction.html">first post</a> in the series discussed the basic structure of recurrent cells and their limitations. We defined two families of functions, the first is <span class="MathJax_Preview"><script type="math/tex">
 \mathcal{F}_{\sigma}
 </script>
 </span> which contains all the affine transformations <span class="MathJax_Preview"><script type="math/tex">
@@ -60,7 +60,7 @@ m,
 
 </script>
 </span>
-In this post we will focus on two activation functions: <span class="MathJax_Preview"><script type="math/tex">
+In this post, the second in the series,  we will focus on two activation functions: <span class="MathJax_Preview"><script type="math/tex">
 tanh\left(x\right)=\frac{e^{x}-e^{-x}}{e^{x}+e^{-x}}
 </script>
 </span> and <span class="MathJax_Preview"><script type="math/tex">
