@@ -52,7 +52,7 @@ div.sub-title {
     margin-bottom: 15px;
     margin-top: 15px;
 }
-.Indented, .Unindented, .Theorem, .Lemma, .Claim, .Proof, .Definition {
+.Indented, .Unindented, .Theorem, .Lemma, .Claim, .Proof, .Definition, .post-content ol {
     font-size: 20px;
     margin-bottom: 10px;
     text-align: justify;
