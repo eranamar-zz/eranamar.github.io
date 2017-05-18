@@ -1,4 +1,404 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-05-17T13:40:32+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">TheoryLunch Blog</title><subtitle>Computer science topics over lunch</subtitle><author><name>Eran Amar</name></author><entry><title type="html">Recurrent Neural Network - Dropout for LSTMs</title><link href="https://eranamar.github.io/site/2017/05/12/Recurrent-Neural-Network-Dropout-for-LSTMs.html" rel="alternate" type="text/html" title="Recurrent Neural Network - Dropout for LSTMs" /><published>2017-05-12T00:00:00+03:00</published><updated>2017-05-12T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/05/12/Recurrent-Neural-Network---Dropout-for-LSTMs</id><content type="html" xml:base="https://eranamar.github.io/site/2017/05/12/Recurrent-Neural-Network-Dropout-for-LSTMs.html">&lt;script type=&quot;math/tex&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-05-18T16:28:38+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">TheoryLunch Blog</title><subtitle>Computer science topics over lunch</subtitle><author><name>Eran Amar</name></author><entry><title type="html">Recurrent Neural Network - Recent Advancements</title><link href="https://eranamar.github.io/site/2017/05/18/Recurrent-Neural-Network-Recent-Advancements.html" rel="alternate" type="text/html" title="Recurrent Neural Network - Recent Advancements" /><published>2017-05-18T00:00:00+03:00</published><updated>2017-05-18T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/05/18/Recurrent-Neural-Network---Recent-Advancements</id><content type="html" xml:base="https://eranamar.github.io/site/2017/05/18/Recurrent-Neural-Network-Recent-Advancements.html">&lt;script type=&quot;math/tex&quot;&gt;
+\newcommand{\lyxlock}{}
+&lt;/script&gt;
+
+&lt;noscript&gt;
+&lt;div class=&quot;warning&quot;&gt;
+Warning: &lt;a href=&quot;http://www.mathjax.org/&quot;&gt;MathJax&lt;/a&gt; requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser.
+&lt;/div&gt;&lt;hr /&gt;
+&amp;lt;/hr&amp;gt;&lt;/noscript&gt;
+
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-1&quot;&gt;1&lt;/a&gt; Last Post of the Series
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+This post is the last in the series that discussed Recurrent Neural Networks (RNNs). The first post introduced the &lt;a class=&quot;URL&quot; href=&quot;https://eranamar.github.io/site/2017/04/20/Recurrent-Neural-Network-Introduction.html&quot;&gt;basic recurrent cells and their limitations&lt;/a&gt;, the second post presented the formulation of &lt;a class=&quot;URL&quot; href=&quot;https://eranamar.github.io/site/2017/04/30/Recurrent-Neural-Network-LSTM-and-GRU.html&quot;&gt;gated cells as LSTMs and GRUs&lt;/a&gt;, and the third post overviewed &lt;a class=&quot;URL&quot; href=&quot;https://eranamar.github.io/site/2017/05/12/Recurrent-Neural-Network-Dropout-for-LSTMs.html&quot;&gt;dropout variants for LSTMs&lt;/a&gt;. This post will present some of the recent advancements in the filed of RNNs (mostly related to LSTM units). 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+We start by reviewing some of the notations that we used during the series. 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+We defined &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{S}_{\sigma}
+&lt;/script&gt;
+&lt;/span&gt; to be the family of all affine transformations &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbb{R}^{n}\times\mathbb{R}^{n}\to\mathbb{R}^{m}
+&lt;/script&gt;
+&lt;/span&gt; for any dimensions &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+n
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+m
+&lt;/script&gt;
+&lt;/span&gt;, followed by an element-wise activation function &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\sigma
+&lt;/script&gt;
+&lt;/span&gt;, that is,
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+&lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\mathcal{S}_{\sigma}=\left\{ \mathbf{x},\mathbf{h}\mapsto\sigma\left(W\mathbf{x}+U\mathbf{h}+\mathbf{b}\right)\mid\forall W,U,\mathbf{b}\right\} 
+
+&lt;/script&gt;
+&lt;/span&gt;
+and noted that with the &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+sigmoid\left(x\right)=\left(1+e^{-x}\right)^{-1}
+&lt;/script&gt;
+&lt;/span&gt; as the activation function, all the functions in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{S}_{sig}
+&lt;/script&gt;
+&lt;/span&gt; are &lt;i&gt;gate&lt;/i&gt; functions, that is, their output belongs to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\left[0,1\right]^{m}
+&lt;/script&gt;
+&lt;/span&gt;. 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+Usually we do not specify &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+n
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+m
+&lt;/script&gt;
+&lt;/span&gt;, we assume that whenever there is a matrix multiplication of element-wise operation the dimensions always match, as they are not important for the discussion. 
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-2&quot;&gt;2&lt;/a&gt; Variations of the Gate Functions for LSTMs
+&lt;/h1&gt;
+&lt;h2 class=&quot;Subsection&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Subsection-2.1&quot;&gt;2.1&lt;/a&gt; Recap: LSTM Formulation - The Use of Gates
+&lt;/h2&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+LSTM layer is a recurrent layer that keeps a memory vector &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{c}^{\text{\left(t\right)}}
+&lt;/script&gt;
+&lt;/span&gt; for any time step &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+t
+&lt;/script&gt;
+&lt;/span&gt;. Upon receiving the current time-step input &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{x}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt; and the output from previous time-step &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{h}^{\left(t-1\right)}
+&lt;/script&gt;
+&lt;/span&gt;, the layer computes gate activations &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+f^{\left(t\right)},i^{\left(t\right)},o^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt; by applying a the corresponding gate function &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{f},\mathbf{i},\mathbf{o}\in\mathcal{S}_{sig}
+&lt;/script&gt;
+&lt;/span&gt; on the tuple &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)
+&lt;/script&gt;
+&lt;/span&gt;, note that those activations are vectors in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\left[0,1\right]^{m}
+&lt;/script&gt;
+&lt;/span&gt;. 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+A new memory-vector is then being computed by &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\mathbf{c}^{\left(t\right)}=f^{\left(t\right)}\circ\mathbf{c}^{\left(t-1\right)}+i^{\left(t\right)}\circ\mathbf{s}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)
+
+&lt;/script&gt;
+&lt;/span&gt;
+ where &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\circ
+&lt;/script&gt;
+&lt;/span&gt; is element-wise multiplication and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{s}\in\mathcal{S}_{tanh}
+&lt;/script&gt;
+&lt;/span&gt; is the state-transition function. The layer then outputs &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{h}^{\left(t\right)}=o^{\left(t\right)}\circ tanh\left(\mathbf{c}^{\left(t\right)}\right)
+&lt;/script&gt;
+&lt;/span&gt;. 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+The gate functions are of great importance for LSTM layer, they are what allows the layer to learn short and long term dependencies, and they also help avoiding the &lt;i&gt;exploding and vanishing gradients problem&lt;/i&gt;.
+&lt;/div&gt;
+&lt;h2 class=&quot;Subsection&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Subsection-2.2&quot;&gt;2.2&lt;/a&gt; Simple Variations
+&lt;/h2&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+The more expressive power a gate function have, the better it can learn short \ long term dependencies. That is, if a gate function is very rich, it can account for subtle changes in the input &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{x}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt; as well to subtle changes in the “past”, i.e. in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{h}^{\left(t-1\right)}
+&lt;/script&gt;
+&lt;/span&gt;. One way to enrich a gate function is by making it depends on the previous memory vector &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{c}^{\left(t-1\right)}
+&lt;/script&gt;
+&lt;/span&gt; in addition to the regular tuple &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)
+&lt;/script&gt;
+&lt;/span&gt;. That will redefine our gate functions family to be &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\mathcal{S}_{\sigma}=\left\{ \mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)},\mathbf{c}^{\left(t-1\right)}\mapsto\sigma\left(W\mathbf{x}^{\left(t\right)}+U\mathbf{h}^{\left(t-1\right)}+V\mathbf{c}^{\left(t-1\right)}+\mathbf{b}\right)\right\} 
+
+&lt;/script&gt;
+&lt;/span&gt;
+for any &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+W,U
+&lt;/script&gt;
+&lt;/span&gt; and diagonal &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+V
+&lt;/script&gt;
+&lt;/span&gt;. Such construction can be found in &lt;a class=&quot;URL&quot; href=&quot;https://arxiv.org/abs/1308.0850&quot;&gt;here&lt;/a&gt;, note that we can think of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+V\mathbf{c}^{\left(t-1\right)}
+&lt;/script&gt;
+&lt;/span&gt; as a bias vector that is memory-dependent, thus there are formulation in which the vector &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{b}
+&lt;/script&gt;
+&lt;/span&gt; is omitted. 
+&lt;/div&gt;
+&lt;h2 class=&quot;Subsection&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Subsection-2.3&quot;&gt;2.3&lt;/a&gt; Multiplicative LSTMs
+&lt;/h2&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+In &lt;a class=&quot;URL&quot; href=&quot;https://arxiv.org/abs/1609.07959&quot;&gt;this paper&lt;/a&gt; from October 2016, the authors took that idea one step further. They wanted to make a unique gate function for each possible input. Recall that any function in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{S}_{\sigma}
+&lt;/script&gt;
+&lt;/span&gt; is of the form &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\mapsto W\mathbf{x}^{\left(t\right)}+U\mathbf{h}^{\left(t-1\right)}+\mathbf{b}
+&lt;/script&gt;
+&lt;/span&gt;. For simplicity, consider the case where &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{b}=\mathbf{0}
+&lt;/script&gt;
+&lt;/span&gt;. 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+We ends up with a sum of two components: one that depends on the current input and one that depends on the past (i.e. &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{h}^{\left(t-1\right)}
+&lt;/script&gt;
+&lt;/span&gt; which encodes information about previous time steps), and the component with larger magnitude will dominate the transition. If &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+W\mathbf{x}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt; is larger, the layer will not be sensitive enough to the past, and if &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+U\mathbf{h}^{\left(t-1\right)}
+&lt;/script&gt;
+&lt;/span&gt; is larger, then the layer will not be sensitive to subtle changes in the input.
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+The author noted that since in most cases the input &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{x}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt; is an 1-hot vector, then multiply by &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+W
+&lt;/script&gt;
+&lt;/span&gt; is just selecting a specific column. So we may think of any gate function &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{s}\in\mathcal{S}_{\sigma}
+&lt;/script&gt;
+&lt;/span&gt; as a &lt;b&gt;fixed&lt;/b&gt; base affine transformation &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{h}\mapsto U\mathbf{h}
+&lt;/script&gt;
+&lt;/span&gt; combined with input-dependent bias vector &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{b}_{\mathbf{x}^{\left(t\right)}}=W\mathbf{x}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt;. That is &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\mathbf{s}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)=U\mathbf{h}^{\left(t-1\right)}+\mathbf{b}_{\mathbf{x}^{\left(t\right)}}
+
+&lt;/script&gt;
+&lt;/span&gt;
+that formula emphasis the &lt;i&gt;additive&lt;/i&gt; effect of the current input-vector on the transition of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{h}^{\left(t-1\right)}
+&lt;/script&gt;
+&lt;/span&gt;. 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+The goal in multiplicative LSTM (mLSTM), is to have an &lt;b&gt;unique&lt;/b&gt; affine transformation (in our case, unique matrix &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+U
+&lt;/script&gt;
+&lt;/span&gt;) for each possible input. Obviously, if the number of possible inputs is very large, the number of the parameters will explode and it won’t be feasible to train the network. To overcome that, the authors of the paper suggested to learn &lt;i&gt;shared&lt;/i&gt; intermediate matrices that will be used to construct an unique &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+U
+&lt;/script&gt;
+&lt;/span&gt; for each input, and because the factorization is shared, there are less parameters to learn. 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+The factorization is defined as follow: the unique matrix &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+U_{\mathbf{x}^{\left(t\right)}}
+&lt;/script&gt;
+&lt;/span&gt; is constructed by &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+V_{1}diag\left(T\mathbf{x}^{\left(t\right)}\right)V_{2}
+&lt;/script&gt;
+&lt;/span&gt; where &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+V_{1},V_{2}
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+T
+&lt;/script&gt;
+&lt;/span&gt; are intermediate matrices which are shared across all the possible inputs, and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+diag\left(\mathbf{v}\right)
+&lt;/script&gt;
+&lt;/span&gt; is an operation that maps any vector &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{v}
+&lt;/script&gt;
+&lt;/span&gt; to a square diagonal matrix with the elements of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{v}
+&lt;/script&gt;
+&lt;/span&gt; on its diagonal.
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+Note that the target dimension of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+T
+&lt;/script&gt;
+&lt;/span&gt; can be set to be arbitrary large (in the paper they chose it to be the same as &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{h}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt;).
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+The difference between LSTM and mLSTM is only in the definition of the gate functions family, all the equations for updating the memory cell and the output are the same. In mLSTM the family &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{S}_{\sigma}
+&lt;/script&gt;
+&lt;/span&gt; is being replaced with &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+\begin{aligned}
+\mathcal{S}'_{\sigma} &amp; =\left\{ \mathbf{x},\mathbf{h}\mapsto\sigma\left(W\mathbf{x}+U_{\mathbf{x}}\mathbf{h}\right)\right\} \\
+ &amp; =\left\{ \mathbf{x},\mathbf{h}\mapsto\sigma\left(\mathbf{b}_{\mathbf{x}}+V_{1}diag\left(T\mathbf{x}\right)V_{2}\mathbf{h}\right)\mid\forall W,V_{1},V_{2},T\right\} 
+\end{aligned}
+&lt;/script&gt;
+&lt;/span&gt;
+Note that we can reduce the number of parameters even further by forcing all the gate functions to use the same &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+V_{2}
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+T
+&lt;/script&gt;
+&lt;/span&gt; matrices. That is, each gate will be parametrized only by &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+W
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+V_{1}
+&lt;/script&gt;
+&lt;/span&gt;. 
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+Formally, define the following transformation &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\tau:\mathbb{R}^{n}\times\mathbb{R}^{n}\to\mathbb{R}^{m}
+&lt;/script&gt;
+&lt;/span&gt; such that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\tau\left(\mathbf{x},\mathbf{h}\right)=T\mathbf{x}\circ V_{2}\mathbf{h}
+&lt;/script&gt;
+&lt;/span&gt; and then we can define &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{S}'_{\sigma}
+&lt;/script&gt;
+&lt;/span&gt; for some fixed learned transformation &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\tau
+&lt;/script&gt;
+&lt;/span&gt; as &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+\begin{aligned}
+\mathcal{S}'_{\sigma,\tau} &amp; =\left\{ \mathbf{x},\mathbf{h}\mapsto\sigma\left(W\mathbf{x}+V_{1}\tau\left(\mathbf{x},\mathbf{h}\right)\right)\mid\forall W,V_{1}\right\} \\
+ &amp; =\left\{ \mathbf{x},\mathbf{h}\mapsto\mathbf{s}\left(\mathbf{x},\tau\left(\mathbf{h}\right)\right)\mid\mathbf{s}\in\mathcal{S}_{\sigma}\right\} 
+\end{aligned}
+&lt;/script&gt;
+&lt;/span&gt;
+ in other words, mLSTM is an LSTM that apply its gates to the tuple &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\left(\mathbf{x}^{\left(t\right)},\tau\left(\mathbf{h}^{\left(t-1\right)}\right)\right)
+&lt;/script&gt;
+&lt;/span&gt; rather than &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)
+&lt;/script&gt;
+&lt;/span&gt;, and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\tau
+&lt;/script&gt;
+&lt;/span&gt; is another learned transformation. If you look again at the exact formula of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\tau
+&lt;/script&gt;
+&lt;/span&gt; to will see the &lt;i&gt;multiplicative&lt;/i&gt; effect of the input vector on the transformation of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{h}
+&lt;/script&gt;
+&lt;/span&gt;. That way, the author said, &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{S}'_{\sigma,\tau}
+&lt;/script&gt;
+&lt;/span&gt; can yield much richer family of input-dependent transformations for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{h}^{\left(t\right)}
+&lt;/script&gt;
+&lt;/span&gt;, which can be sensitive to the past as well as to subtle changes in the current input.
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-3&quot;&gt;3&lt;/a&gt; Recurrent Batch Normalization
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+Batch normalization is an operator applied to a layer before going through the non-linearity function in order to “normalize” the values before activation. That operator has two hyper-parameters for tuning and two statistics that it accumulates internally. Formally, given a vector of pre-activation values &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{x}
+&lt;/script&gt;
+&lt;/span&gt;, batch-normalization is &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+BN\left(\mathbf{x};\gamma,\beta\right)=\beta+\gamma\circ\frac{\mathbf{x}-\mathbb{\hat{E}\left[\mathbf{x}\right]}}{\sqrt{\hat{\mathbb{V}}\left[\mathbf{x}\right]+\epsilon}}
+
+&lt;/script&gt;
+&lt;/span&gt;
+where &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\hat{\mathbb{E}}
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\hat{\mathbb{V}}
+&lt;/script&gt;
+&lt;/span&gt; are the empirical mean and variance of the current batch respectively. &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\gamma,\beta
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\epsilon
+&lt;/script&gt;
+&lt;/span&gt; are vectors, and the division in the operator is being computed element-wise. Note that at inference time, the population statistics are estimated by averaging the empirical statistics across all the batches.
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+&lt;a class=&quot;URL&quot; href=&quot;https://arxiv.org/abs/1603.09025&quot;&gt;That paper&lt;/a&gt; from February 2017, applied batch normalization also to the &lt;i&gt;recurrent connections&lt;/i&gt; in LSTM layers, and they showed empirically that it helped the network to converge faster. The usage is simple, each gate function &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{i},\mathbf{f},\mathbf{o}\in\mathcal{S}_{sig}
+&lt;/script&gt;
+&lt;/span&gt; and the transition function &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{s}\in\mathcal{S}_{tanh}
+&lt;/script&gt;
+&lt;/span&gt; computes &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\mapsto\sigma\left(BN\left(W\mathbf{h}^{\left(t-1\right)};\gamma_{h},\beta_{h}\right)+BN\left(W\mathbf{x}^{\left(t\right)};\gamma_{x},\beta_{x}\right)+\mathbf{b}\right)
+
+&lt;/script&gt;
+&lt;/span&gt;
+ when the hyper-parameters &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\gamma
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\beta
+&lt;/script&gt;
+&lt;/span&gt; are shared across different gates. Then the output of the layer is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{h}^{\left(t\right)}=o^{\left(t\right)}\circ tanh\left(BN\left(\mathbf{c}^{\left(t\right)};\gamma_{c},\beta_{c}\right)\right)
+&lt;/script&gt;
+&lt;/span&gt;. The authors suggested to set &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\beta_{x}=\beta_{h}=\mathbf{0}
+&lt;/script&gt;
+&lt;/span&gt; because there is already a bias parameter &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{b}
+&lt;/script&gt;
+&lt;/span&gt; and to prevent redundancy. In addition, they said that sharing the internal &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+BN
+&lt;/script&gt;
+&lt;/span&gt; statistics across time degrades performance severely. Therefore, one should use “fresh” &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+BN
+&lt;/script&gt;
+&lt;/span&gt; operators for each time-step with their own internal statistics (but share the &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\beta
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\gamma
+&lt;/script&gt;
+&lt;/span&gt; parameters).
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-4&quot;&gt;4&lt;/a&gt; The Evergrowing Field
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+RNNs is a rapidly growing field and this series only covered a small part of it. There are much more advance models, some of them are only from few months ago. If you are interested in this field, you may find very interesting stuff &lt;a class=&quot;URL&quot; href=&quot;https://smerity.com/articles/2016/iclr_2017_submissions.html&quot;&gt;here&lt;/a&gt;. 
+&lt;/div&gt;</content><author><name>Eran Amar</name></author><category term="neural_networks" /><summary type="html">Warning: MathJax requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser. &amp;lt;/hr&amp;gt;</summary></entry><entry><title type="html">Recurrent Neural Network - Dropout for LSTMs</title><link href="https://eranamar.github.io/site/2017/05/12/Recurrent-Neural-Network-Dropout-for-LSTMs.html" rel="alternate" type="text/html" title="Recurrent Neural Network - Dropout for LSTMs" /><published>2017-05-12T00:00:00+03:00</published><updated>2017-05-12T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/05/12/Recurrent-Neural-Network---Dropout-for-LSTMs</id><content type="html" xml:base="https://eranamar.github.io/site/2017/05/12/Recurrent-Neural-Network-Dropout-for-LSTMs.html">&lt;script type=&quot;math/tex&quot;&gt;
 \newcommand{\lyxlock}{}
 &lt;/script&gt;
 
@@ -331,9 +731,9 @@ In this post, the second in the series,  we will focus on two activation functio
 tanh\left(x\right)=\frac{e^{x}-e^{-x}}{e^{x}+e^{-x}}
 &lt;/script&gt;
 &lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-sig\left(x\right)=\left(1+e^{-x}\right)^{-1}.
+sig\left(x\right)=\left(1+e^{-x}\right)^{-1}
 &lt;/script&gt;
-&lt;/span&gt; Next section describe what are &lt;i&gt;gate&lt;/i&gt; functions, then we move to review two common improvements to the basic recurrent cell: the LSTM and GRU cells. 
+&lt;/span&gt;. Next section describe what are &lt;i&gt;gate&lt;/i&gt; functions, then we move to review two common improvements to the basic recurrent cell: the LSTM and GRU cells. 
 &lt;/div&gt;
 &lt;h1 class=&quot;Section&quot;&gt;
 &lt;a class=&quot;toc&quot; name=&quot;toc-Section-2&quot;&gt;2&lt;/a&gt; Gate Functions
