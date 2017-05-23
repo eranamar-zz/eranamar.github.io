@@ -591,7 +591,7 @@ Formally, define the following transformation <span class="MathJax_Preview"><scr
 
 \mathcal{S}'_{\sigma,\tau} & =\left\{ \mathbf{x},\mathbf{h}\mapsto\sigma\left(W\mathbf{x}+V_{1}\tau\left(\mathbf{x},\mathbf{h}\right)\right)\mid\forall W,V_{1}\right\} \\
 
- & =\left\{ \mathbf{x},\mathbf{h}\mapsto\mathbf{s}\left(\mathbf{x},\tau\left(\mathbf{h}\right)\right)\mid\mathbf{s}\in\mathcal{S}_{\sigma}\right\} 
+ & =\left\{ \mathbf{x},\mathbf{h}\mapsto\mathbf{s}\left(\mathbf{x},\tau\left(\mathbf{x},\mathbf{h}\right)\right)\mid\mathbf{s}\in\mathcal{S}_{\sigma}\right\} 
 
 \end{aligned}
 
@@ -600,7 +600,7 @@ Formally, define the following transformation <span class="MathJax_Preview"><scr
 
  in other words, mLSTM is an LSTM that apply its gates to the tuple <span class="MathJax_Preview"><script type="math/tex">
 
-\left(\mathbf{x}^{\left(t\right)},\tau\left(\mathbf{h}^{\left(t-1\right)}\right)\right)
+\left(\mathbf{x}^{\left(t\right)},\tau\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)\right)
 
 </script>
 </span> rather than <span class="MathJax_Preview"><script type="math/tex">
