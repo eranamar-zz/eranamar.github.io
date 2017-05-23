@@ -82,7 +82,7 @@ m
 </h2>
 <div class="Unindented">
 LSTM layer is a recurrent layer that keeps a memory vector <span class="MathJax_Preview"><script type="math/tex">
-\mathbf{c}^{\text{\left(t\right)}}
+\mathbf{c}^{\left(t\right)}
 </script>
 </span> for any time step <span class="MathJax_Preview"><script type="math/tex">
 t

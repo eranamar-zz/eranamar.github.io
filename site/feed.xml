@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-05-23T09:02:39+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">TheoryLunch Blog</title><subtitle>Computer science topics over lunch</subtitle><author><name>Eran Amar</name></author><entry><title type="html">Recurrent Neural Network - Recent Advancements</title><link href="https://eranamar.github.io/site/2017/05/18/Recurrent-Neural-Network-Recent-Advancements.html" rel="alternate" type="text/html" title="Recurrent Neural Network - Recent Advancements" /><published>2017-05-18T00:00:00+03:00</published><updated>2017-05-18T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/05/18/Recurrent-Neural-Network---Recent-Advancements</id><content type="html" xml:base="https://eranamar.github.io/site/2017/05/18/Recurrent-Neural-Network-Recent-Advancements.html">&lt;script type=&quot;math/tex&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-05-23T09:07:17+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">TheoryLunch Blog</title><subtitle>Computer science topics over lunch</subtitle><author><name>Eran Amar</name></author><entry><title type="html">Recurrent Neural Network - Recent Advancements</title><link href="https://eranamar.github.io/site/2017/05/18/Recurrent-Neural-Network-Recent-Advancements.html" rel="alternate" type="text/html" title="Recurrent Neural Network - Recent Advancements" /><published>2017-05-18T00:00:00+03:00</published><updated>2017-05-18T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/05/18/Recurrent-Neural-Network---Recent-Advancements</id><content type="html" xml:base="https://eranamar.github.io/site/2017/05/18/Recurrent-Neural-Network-Recent-Advancements.html">&lt;script type=&quot;math/tex&quot;&gt;
 
 \newcommand{\lyxlock}{}
 
@@ -114,7 +114,7 @@ m
 
 LSTM layer is a recurrent layer that keeps a memory vector &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 
-\mathbf{c}^{\text{\left(t\right)}}
+\mathbf{c}^{\left(t\right)}
 
 &lt;/script&gt;
 &lt;/span&gt; for any time step &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
