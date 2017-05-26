@@ -259,7 +259,7 @@ t\in\left[0,n\left(1-2p\right)\right]
 
 </script>
 </span>
-<br></div>
+</div>
 <div class="Unindented">
 
 </div>
