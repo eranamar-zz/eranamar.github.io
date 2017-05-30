@@ -1,6 +1,12 @@
 <head>
   <script> 
-		window.location.pathname.indexOf("{{site.baseurl}}") !== 0 && window.location.replace("{{site.baseurl}}" + window.location.pathname);
+    'use strict';
+    (function(){
+      var path = window.location.pathname.replace(/^\/+/, '/');  
+      if (!/^\/site/.test(path)){
+        window.location.replace("{{site.baseurl}}" + path);   
+      }
+    })();
   </script>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
