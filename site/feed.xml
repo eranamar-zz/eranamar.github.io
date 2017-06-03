@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-06-03T17:16:11+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">TheoryLunch Blog</title><subtitle>Computer science topics over lunch</subtitle><author><name>Eran Amar</name></author><entry><title type="html">Greedy Algorithm for Multiway-Cut in Trees</title><link href="https://eranamar.github.io/site/2017/05/26/Greedy-Algorithm-for-Multiway-Cut-in-Trees.html" rel="alternate" type="text/html" title="Greedy Algorithm for Multiway-Cut in Trees" /><published>2017-05-26T00:00:00+03:00</published><updated>2017-05-26T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/05/26/Greedy-Algorithm-for-Multiway-Cut-in-Trees</id><content type="html" xml:base="https://eranamar.github.io/site/2017/05/26/Greedy-Algorithm-for-Multiway-Cut-in-Trees.html">&lt;script type=&quot;math/tex&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-06-03T17:24:55+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">TheoryLunch Blog</title><subtitle>Computer science topics over lunch</subtitle><author><name>Eran Amar</name></author><entry><title type="html">Greedy Algorithm for Multiway-Cut in Trees</title><link href="https://eranamar.github.io/site/2017/05/26/Greedy-Algorithm-for-Multiway-Cut-in-Trees.html" rel="alternate" type="text/html" title="Greedy Algorithm for Multiway-Cut in Trees" /><published>2017-05-26T00:00:00+03:00</published><updated>2017-05-26T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/05/26/Greedy-Algorithm-for-Multiway-Cut-in-Trees</id><content type="html" xml:base="https://eranamar.github.io/site/2017/05/26/Greedy-Algorithm-for-Multiway-Cut-in-Trees.html">&lt;script type=&quot;math/tex&quot;&gt;
 \newcommand{\lyxlock}{}
 &lt;/script&gt;
 
@@ -798,7 +798,7 @@ In &lt;a class=&quot;URL&quot; href=&quot;https://arxiv.org/abs/1609.07959&quot;
 &lt;/span&gt;. 
 &lt;/div&gt;
 &lt;div class=&quot;Indented&quot;&gt;
-We ends up with a sum of two components: one that depends on the current input and one that depends on the past (i.e. &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+We end up with a sum of two components: one that depends on the current input and one that depends on the past (i.e. &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \mathbf{h}^{\left(t-1\right)}
 &lt;/script&gt;
 &lt;/span&gt; which encodes information about previous time steps), and the component with larger magnitude will dominate the transition. If &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
@@ -874,7 +874,7 @@ diag\left(\mathbf{v}\right)
 Note that the target dimension of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 T
 &lt;/script&gt;
-&lt;/span&gt; can be set to be arbitrary large (in the paper they chose it to be the same as &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt; may be arbitrarily large (in the paper they chose it to be the same as &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \mathbf{h}^{\left(t\right)}
 &lt;/script&gt;
 &lt;/span&gt;).

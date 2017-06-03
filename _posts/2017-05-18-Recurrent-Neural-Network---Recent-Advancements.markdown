@@ -182,7 +182,7 @@ In <a class="URL" href="https://arxiv.org/abs/1609.07959">this paper</a> from Oc
 </span>. 
 </div>
 <div class="Indented">
-We ends up with a sum of two components: one that depends on the current input and one that depends on the past (i.e. <span class="MathJax_Preview"><script type="math/tex">
+We end up with a sum of two components: one that depends on the current input and one that depends on the past (i.e. <span class="MathJax_Preview"><script type="math/tex">
 \mathbf{h}^{\left(t-1\right)}
 </script>
 </span> which encodes information about previous time steps), and the component with larger magnitude will dominate the transition. If <span class="MathJax_Preview"><script type="math/tex">
@@ -258,7 +258,7 @@ diag\left(\mathbf{v}\right)
 Note that the target dimension of <span class="MathJax_Preview"><script type="math/tex">
 T
 </script>
-</span> can be set to be arbitrary large (in the paper they chose it to be the same as <span class="MathJax_Preview"><script type="math/tex">
+</span> may be arbitrarily large (in the paper they chose it to be the same as <span class="MathJax_Preview"><script type="math/tex">
 \mathbf{h}^{\left(t\right)}
 </script>
 </span>).
