@@ -1,5 +1,5 @@
 .archive_list a {
-  font-size: 20px;
+  font-size: 24px;
 }
 
 .page-content, .sub-title, .page-link {
@@ -15,27 +15,28 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     color: rgba(0,0,0,.9);
+    font-size: 18px;
 }
 
 div.page-content{
-  font-size: 20px;
+  font-size: 24px;
 }
 
 
 div.post-content h1 {
-  font-size: 30px;
+  font-size: 32px;
 }
 
 div.post-content h2 {
-  font-size: 28px;
+  font-size: 30px;
 }
 
 div.post-content h3 {
-  font-size: 24px;
+  font-size: 28px;
 }
 
 div.sub-title {
-  font-size: 18px;
+  font-size: 22px;
 }
 /*
 .MathJax * {
@@ -53,7 +54,7 @@ div.sub-title {
     margin-top: 15px;
 }
 .Indented, .Unindented, .Theorem, .Lemma, .Claim, .Proof, .Definition, .post-content ol {
-    font-size: 20px;
+    font-size: 24px;
     margin-bottom: 10px;
     text-align: justify;
 }
