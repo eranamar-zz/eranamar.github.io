@@ -23,7 +23,7 @@ Warning: <a href="http://www.mathjax.org/">MathJax</a> requires JavaScript to co
 <a class="toc" name="toc-Section-1">1</a> What is visualization and why do we need it?
 </h1>
 <div class="Unindented">
-Before working on a dataset we would like to understand it. After working on it, we want to communicate our conclusions with others easily. When dealing with high-dimensional data, it’s hard to get a ’feel’ for the data. By just looking at numbers, we will advance pretty slowly. For example, common visualization methods are histograms and scatter plots, which capture only one or two parameters at a time, meaning we would have to look at many histograms (one for each feature). However, by visualizing our data we may instantly be able to recognize structure. In order to do this we would like to find a representation of our data in <span class="MathJax_Preview"><script type="math/tex">
+Before working on a dataset we would like to understand it. After working on it, we want to communicate our conclusions with others easily. When dealing with high-dimensional data, it’s hard to get a ’feel’ for the data by just looking at numbers, and we will advance pretty slowly. For example, common visualization methods are histograms and scatter plots, which capture only one or two parameters at a time, meaning we would have to look at many histograms (one for each feature). However, by visualizing our data we may instantly be able to recognize structure. In order to do this we would like to find a representation of our data in <span class="MathJax_Preview"><script type="math/tex">
 2
 </script>
 </span>D or <span class="MathJax_Preview"><script type="math/tex">
@@ -75,7 +75,7 @@ We claim structure is mostly determined by <b>similar</b> data points.
 This algorithm for high-dimensional data visualization focuses on preserving high-dimensional ’neighbors’ in low-dimension.
 </div>
 <div class="Indented">
-Assumption - ’neighbors’ in high dimension have small Euclidean distance. SNE converts the Euclidean distances to similarities (distribution) using Gaussian distribution:<span class="MathJax_Preview">
+Assumption - ’neighbors’ in high dimension have small Euclidean distance. SNE converts the Euclidean distances to similarities using Gaussian distribution:<span class="MathJax_Preview">
 <script type="math/tex;mode=display">
 
 p_{j|i}=\frac{\exp\left(-||\mathbf{x}_{i}-\mathbf{x}_{j}||^{2}/2\sigma_{i}^{2}\right)}{\sum\limits _{k\neq i}\exp\left(-||\mathbf{x}_{i}-\mathbf{x}_{k}||^{2}/2\sigma_{i}^{2}\right)}
@@ -107,28 +107,31 @@ j
 </span> is the neighbor of <span class="MathJax_Preview"><script type="math/tex">
 i
 </script>
-</span> in low-dimension. Note - choosing <span class="MathJax_Preview"><script type="math/tex">
+</span> in low-dimension. <br>
+Note - choosing <span class="MathJax_Preview"><script type="math/tex">
 \sigma_{i}
 </script>
 </span> for <span class="MathJax_Preview"><script type="math/tex">
 p_{j|i}
 </script>
-</span>: determine in advance the perplexity = effective number of neighbors for each data point. Then <span class="MathJax_Preview"><script type="math/tex">
+</span> is done by determining the perplexity, i.e. the effective number of neighbors for each data point. Then <span class="MathJax_Preview"><script type="math/tex">
 \forall i
 </script>
-</span> choose <span class="MathJax_Preview"><script type="math/tex">
+</span>, <span class="MathJax_Preview"><script type="math/tex">
 \sigma_{i}
 </script>
-</span> such that <span class="MathJax_Preview"><script type="math/tex">
+</span> is chosen such that <span class="MathJax_Preview"><script type="math/tex">
 \mathbf{x}_{i}
 </script>
-</span> has according number of neighbors in multivariate gaussian with mean <span class="MathJax_Preview"><script type="math/tex">
+</span> has according number of neighbors in the multivariate Gaussian with mean <span class="MathJax_Preview"><script type="math/tex">
 \mathbf{x}_{i}
 </script>
 </span> and covariance matrix <span class="MathJax_Preview"><script type="math/tex">
 \sigma_{i}\cdot I
 </script>
-</span>. By mapping each <span class="MathJax_Preview"><script type="math/tex">
+</span>. <br>
+<br>
+By mapping each <span class="MathJax_Preview"><script type="math/tex">
 \mathbf{x}_{i}\in\mathbb{R}^{n}
 </script>
 </span> to <span class="MathJax_Preview"><script type="math/tex">
@@ -150,10 +153,10 @@ C=\sum_{i}KL(P_{i}||Q_{i})=\sum_{i}\sum_{j}p_{j|i}\log\frac{p_{j|i}}{q_{j|i}}
 where <span class="MathJax_Preview"><script type="math/tex">
 P_{i}=(p_{1|i},...,p_{N|i}),\,Q_{i}=(q_{1|i},...,q_{N|i})
 </script>
-</span>.
+</span> and the initialization of low-dimensional data is random around the origin. 
 </div>
 <div class="Indented">
-The initialization of low-dimensional data is random around the origin. Notice the loss function, Kullback–Leibler (KL) divergence, is a natural way to measure similarity between two distributions.<br>
+Notice the loss function, Kullback–Leibler (KL) divergence, is a natural way to measure similarity between two distributions.<br>
 Also notice that this loss puts more emphasis on preserving the local structure of the data. KL-div is asymmetric, so different kinds of errors have a different affect:
 </div>
 <ul>
@@ -177,7 +180,7 @@ q_{j|i}
 </li>
 </ul>
 <div class="Unindented">
-This is good, as structure is preserved better by focusing on keeping close points together. This is easy to see in the following example: think of “unrolling” this swiss roll (like unrolling a carpet). Close points will stay together, far points won’t. This is true for many manifolds (spaces that locally resembles Euclidean space near each point) besides the swiss roll.
+This is good, as structure is preserved better by focusing on keeping close points together. This is easy to see in the following example: think of “unrolling” this swiss roll (like unrolling a carpet). Close points will stay within the same distance, far points won’t. This is true for many manifolds (spaces that locally resemble Euclidean space near each point) besides the swiss roll.
 </div>
 <div class="Indented">
 <div class="Frameless" style="width: 100%;">
@@ -190,7 +193,7 @@ This is good, as structure is preserved better by focusing on keeping close poin
 <a class="toc" name="toc-Subsection-4.1">4.1</a> The crowding problem
 </h2>
 <div class="Unindented">
-The main problem with SNE - mapped points tend to “crowd” together, like in this example: (images of 5 MNIST digits mapped with SNE to 2D and then marked by labels).
+The main problem with SNE - mapped points tend to “crowd” together, like in this example: images of 5 MNIST digits mapped with SNE to 2D and then marked by labels
 </div>
 <div class="Indented">
 <div class="Frameless" style="width: 100%;">
@@ -200,7 +203,7 @@ The main problem with SNE - mapped points tend to “crowd” together, like in 
 </div>
 </div>
 <div class="Indented">
-This happens because when reducing the dimensionality we need more “space” in which to represent our data-points. You can think of a sphere flattened to a circle where all distances are preserved (as much as possible) - the radius of the circle will have to be larger!
+This happens because when reducing the dimensionality we need more “space” in which to represent our data-points. You can think of a sphere flattened to a circle where all distances are preserved (as much as possible) - the radius of the circle will have to be larger than the radius of the sphere!
 </div>
 <div class="Indented">
 On one hand this causes type <span class="MathJax_Preview"><script type="math/tex">
@@ -295,10 +298,10 @@ Computing the gradient for each mapped point each iteration is very costly, espe
 
 </script>
 </span>
- when the first element (the fraction) is the exertion over the compression, and the other element is the spring. We can think of <span class="MathJax_Preview"><script type="math/tex">
+We can think of <span class="MathJax_Preview"><script type="math/tex">
 \mathbf{y}_{i}-\mathbf{y}_{j}
 </script>
-</span> as a spring between these two points (it might be too tight/loose depending on if the points were mapped to far/close accordingly). The exertion/compression is the correction we do this iteration. We calculate this for <span class="MathJax_Preview"><script type="math/tex">
+</span> as a spring between these two points (it might be too tight/loose depending on if the points were mapped to far/close accordingly). The fraction can be thought of as exertion/compression of the spring, in other words the correction we do in this iteration. We calculate this for <span class="MathJax_Preview"><script type="math/tex">
 N
 </script>
 </span> mapped points, and derive <span class="MathJax_Preview"><script type="math/tex">

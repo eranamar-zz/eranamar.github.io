@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-06-11T10:17:41+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">TheoryLunch Blog</title><subtitle>Computer science topics over lunch</subtitle><author><name>Eran Amar</name></author><entry><title type="html">Visualizing high-dimensional data with t-SNE</title><link href="https://eranamar.github.io/site/2017/06/11/Visualizing-high-dimensional-data-with-t-SNE.html" rel="alternate" type="text/html" title="Visualizing high-dimensional data with t-SNE" /><published>2017-06-11T00:00:00+03:00</published><updated>2017-06-11T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/06/11/Visualizing-high-dimensional-data-with-t-SNE</id><content type="html" xml:base="https://eranamar.github.io/site/2017/06/11/Visualizing-high-dimensional-data-with-t-SNE.html">&lt;script type=&quot;math/tex&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-06-11T10:49:09+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">TheoryLunch Blog</title><subtitle>Computer science topics over lunch</subtitle><author><name>Eran Amar</name></author><entry><title type="html">Visualizing high-dimensional data with t-SNE</title><link href="https://eranamar.github.io/site/2017/06/11/Visualizing-high-dimensional-data-with-t-SNE.html" rel="alternate" type="text/html" title="Visualizing high-dimensional data with t-SNE" /><published>2017-06-11T00:00:00+03:00</published><updated>2017-06-11T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/06/11/Visualizing-high-dimensional-data-with-t-SNE</id><content type="html" xml:base="https://eranamar.github.io/site/2017/06/11/Visualizing-high-dimensional-data-with-t-SNE.html">&lt;script type=&quot;math/tex&quot;&gt;
 \newcommand{\lyxlock}{}
 &lt;/script&gt;
 
@@ -12,7 +12,7 @@ Warning: &lt;a href=&quot;http://www.mathjax.org/&quot;&gt;MathJax&lt;/a&gt; req
 &lt;a class=&quot;toc&quot; name=&quot;toc-Section-1&quot;&gt;1&lt;/a&gt; What is visualization and why do we need it?
 &lt;/h1&gt;
 &lt;div class=&quot;Unindented&quot;&gt;
-Before working on a dataset we would like to understand it. After working on it, we want to communicate our conclusions with others easily. When dealing with high-dimensional data, it’s hard to get a ’feel’ for the data. By just looking at numbers, we will advance pretty slowly. For example, common visualization methods are histograms and scatter plots, which capture only one or two parameters at a time, meaning we would have to look at many histograms (one for each feature). However, by visualizing our data we may instantly be able to recognize structure. In order to do this we would like to find a representation of our data in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+Before working on a dataset we would like to understand it. After working on it, we want to communicate our conclusions with others easily. When dealing with high-dimensional data, it’s hard to get a ’feel’ for the data by just looking at numbers, and we will advance pretty slowly. For example, common visualization methods are histograms and scatter plots, which capture only one or two parameters at a time, meaning we would have to look at many histograms (one for each feature). However, by visualizing our data we may instantly be able to recognize structure. In order to do this we would like to find a representation of our data in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 2
 &lt;/script&gt;
 &lt;/span&gt;D or &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
@@ -64,7 +64,7 @@ We claim structure is mostly determined by &lt;b&gt;similar&lt;/b&gt; data point
 This algorithm for high-dimensional data visualization focuses on preserving high-dimensional ’neighbors’ in low-dimension.
 &lt;/div&gt;
 &lt;div class=&quot;Indented&quot;&gt;
-Assumption - ’neighbors’ in high dimension have small Euclidean distance. SNE converts the Euclidean distances to similarities (distribution) using Gaussian distribution:&lt;span class=&quot;MathJax_Preview&quot;&gt;
+Assumption - ’neighbors’ in high dimension have small Euclidean distance. SNE converts the Euclidean distances to similarities using Gaussian distribution:&lt;span class=&quot;MathJax_Preview&quot;&gt;
 &lt;script type=&quot;math/tex;mode=display&quot;&gt;
 
 p_{j|i}=\frac{\exp\left(-||\mathbf{x}_{i}-\mathbf{x}_{j}||^{2}/2\sigma_{i}^{2}\right)}{\sum\limits _{k\neq i}\exp\left(-||\mathbf{x}_{i}-\mathbf{x}_{k}||^{2}/2\sigma_{i}^{2}\right)}
@@ -96,28 +96,31 @@ j
 &lt;/span&gt; is the neighbor of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 i
 &lt;/script&gt;
-&lt;/span&gt; in low-dimension. Note - choosing &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt; in low-dimension. &lt;br /&gt;
+Note - choosing &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \sigma_{i}
 &lt;/script&gt;
 &lt;/span&gt; for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 p_{j|i}
 &lt;/script&gt;
-&lt;/span&gt;: determine in advance the perplexity = effective number of neighbors for each data point. Then &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt; is done by determining the perplexity, i.e. the effective number of neighbors for each data point. Then &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \forall i
 &lt;/script&gt;
-&lt;/span&gt; choose &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt;, &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \sigma_{i}
 &lt;/script&gt;
-&lt;/span&gt; such that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt; is chosen such that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \mathbf{x}_{i}
 &lt;/script&gt;
-&lt;/span&gt; has according number of neighbors in multivariate gaussian with mean &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt; has according number of neighbors in the multivariate Gaussian with mean &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \mathbf{x}_{i}
 &lt;/script&gt;
 &lt;/span&gt; and covariance matrix &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \sigma_{i}\cdot I
 &lt;/script&gt;
-&lt;/span&gt;. By mapping each &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt;. &lt;br /&gt;
+&lt;br /&gt;
+By mapping each &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \mathbf{x}_{i}\in\mathbb{R}^{n}
 &lt;/script&gt;
 &lt;/span&gt; to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
@@ -139,10 +142,10 @@ C=\sum_{i}KL(P_{i}||Q_{i})=\sum_{i}\sum_{j}p_{j|i}\log\frac{p_{j|i}}{q_{j|i}}
 where &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 P_{i}=(p_{1|i},...,p_{N|i}),\,Q_{i}=(q_{1|i},...,q_{N|i})
 &lt;/script&gt;
-&lt;/span&gt;.
+&lt;/span&gt; and the initialization of low-dimensional data is random around the origin. 
 &lt;/div&gt;
 &lt;div class=&quot;Indented&quot;&gt;
-The initialization of low-dimensional data is random around the origin. Notice the loss function, Kullback–Leibler (KL) divergence, is a natural way to measure similarity between two distributions.&lt;br /&gt;
+Notice the loss function, Kullback–Leibler (KL) divergence, is a natural way to measure similarity between two distributions.&lt;br /&gt;
 Also notice that this loss puts more emphasis on preserving the local structure of the data. KL-div is asymmetric, so different kinds of errors have a different affect:
 &lt;/div&gt;
 &lt;ul&gt;
@@ -166,7 +169,7 @@ q_{j|i}
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class=&quot;Unindented&quot;&gt;
-This is good, as structure is preserved better by focusing on keeping close points together. This is easy to see in the following example: think of “unrolling” this swiss roll (like unrolling a carpet). Close points will stay together, far points won’t. This is true for many manifolds (spaces that locally resembles Euclidean space near each point) besides the swiss roll.
+This is good, as structure is preserved better by focusing on keeping close points together. This is easy to see in the following example: think of “unrolling” this swiss roll (like unrolling a carpet). Close points will stay within the same distance, far points won’t. This is true for many manifolds (spaces that locally resemble Euclidean space near each point) besides the swiss roll.
 &lt;/div&gt;
 &lt;div class=&quot;Indented&quot;&gt;
 &lt;div class=&quot;Frameless&quot; style=&quot;width: 100%;&quot;&gt;
@@ -179,7 +182,7 @@ This is good, as structure is preserved better by focusing on keeping close poin
 &lt;a class=&quot;toc&quot; name=&quot;toc-Subsection-4.1&quot;&gt;4.1&lt;/a&gt; The crowding problem
 &lt;/h2&gt;
 &lt;div class=&quot;Unindented&quot;&gt;
-The main problem with SNE - mapped points tend to “crowd” together, like in this example: (images of 5 MNIST digits mapped with SNE to 2D and then marked by labels).
+The main problem with SNE - mapped points tend to “crowd” together, like in this example: images of 5 MNIST digits mapped with SNE to 2D and then marked by labels
 &lt;/div&gt;
 &lt;div class=&quot;Indented&quot;&gt;
 &lt;div class=&quot;Frameless&quot; style=&quot;width: 100%;&quot;&gt;
@@ -189,7 +192,7 @@ The main problem with SNE - mapped points tend to “crowd” together, like in 
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&quot;Indented&quot;&gt;
-This happens because when reducing the dimensionality we need more “space” in which to represent our data-points. You can think of a sphere flattened to a circle where all distances are preserved (as much as possible) - the radius of the circle will have to be larger!
+This happens because when reducing the dimensionality we need more “space” in which to represent our data-points. You can think of a sphere flattened to a circle where all distances are preserved (as much as possible) - the radius of the circle will have to be larger than the radius of the sphere!
 &lt;/div&gt;
 &lt;div class=&quot;Indented&quot;&gt;
 On one hand this causes type &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
@@ -284,10 +287,10 @@ Computing the gradient for each mapped point each iteration is very costly, espe
 
 &lt;/script&gt;
 &lt;/span&gt;
- when the first element (the fraction) is the exertion over the compression, and the other element is the spring. We can think of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+We can think of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \mathbf{y}_{i}-\mathbf{y}_{j}
 &lt;/script&gt;
-&lt;/span&gt; as a spring between these two points (it might be too tight/loose depending on if the points were mapped to far/close accordingly). The exertion/compression is the correction we do this iteration. We calculate this for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt; as a spring between these two points (it might be too tight/loose depending on if the points were mapped to far/close accordingly). The fraction can be thought of as exertion/compression of the spring, in other words the correction we do in this iteration. We calculate this for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 N
 &lt;/script&gt;
 &lt;/span&gt; mapped points, and derive &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
