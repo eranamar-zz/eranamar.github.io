@@ -19,6 +19,9 @@ Warning: <a href="http://www.mathjax.org/">MathJax</a> requires JavaScript to co
 
 
 
+<div class="Unindented">
+<b>Guest author:</b> thanks to Aviv Netanyahu for writing this post!
+</div>
 <h1 class="Section">
 <a class="toc" name="toc-Section-1">1</a> What is visualization and why do we need it?
 </h1>
