@@ -1,4 +1,338 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-06-03T17:24:55+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">TheoryLunch Blog</title><subtitle>Computer science topics over lunch</subtitle><author><name>Eran Amar</name></author><entry><title type="html">Greedy Algorithm for Multiway-Cut in Trees</title><link href="https://eranamar.github.io/site/2017/05/26/Greedy-Algorithm-for-Multiway-Cut-in-Trees.html" rel="alternate" type="text/html" title="Greedy Algorithm for Multiway-Cut in Trees" /><published>2017-05-26T00:00:00+03:00</published><updated>2017-05-26T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/05/26/Greedy-Algorithm-for-Multiway-Cut-in-Trees</id><content type="html" xml:base="https://eranamar.github.io/site/2017/05/26/Greedy-Algorithm-for-Multiway-Cut-in-Trees.html">&lt;script type=&quot;math/tex&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-06-11T10:13:06+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">TheoryLunch Blog</title><subtitle>Computer science topics over lunch</subtitle><author><name>Eran Amar</name></author><entry><title type="html">Visualizing high-dimensional data with t-SNE</title><link href="https://eranamar.github.io/site/2017/06/11/Visualizing-high-dimensional-data-with-t-SNE.html" rel="alternate" type="text/html" title="Visualizing high-dimensional data with t-SNE" /><published>2017-06-11T00:00:00+03:00</published><updated>2017-06-11T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/06/11/Visualizing-high-dimensional-data-with-t-SNE</id><content type="html" xml:base="https://eranamar.github.io/site/2017/06/11/Visualizing-high-dimensional-data-with-t-SNE.html">&lt;script type=&quot;math/tex&quot;&gt;
+\newcommand{\lyxlock}{}
+&lt;/script&gt;
+
+&lt;noscript&gt;
+&lt;div class=&quot;warning&quot;&gt;
+Warning: &lt;a href=&quot;http://www.mathjax.org/&quot;&gt;MathJax&lt;/a&gt; requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser.
+&lt;/div&gt;&lt;hr /&gt;
+&amp;lt;/hr&amp;gt;&lt;/noscript&gt;
+
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-1&quot;&gt;1&lt;/a&gt; What is visualization and why do we need it?
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+Before working on a dataset we would like to understand it. After working on it, we want to communicate our conclusions with others easily. When dealing with high-dimensional data, it’s hard to get a ’feel’ for the data. By just looking at numbers, we will advance pretty slowly. For example, common visualization methods are histograms and scatter plots, which capture only one or two parameters at a time, meaning we would have to look at many histograms (one for each feature). However, by visualizing our data we may instantly be able to recognize structure. In order to do this we would like to find a representation of our data in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+2
+&lt;/script&gt;
+&lt;/span&gt;D or &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+3
+&lt;/script&gt;
+&lt;/span&gt;D.
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-2&quot;&gt;2&lt;/a&gt; Our goal
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+Find an embedding of high-dimensional data to 2D or 3D (for simplicity, will assume &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+2
+&lt;/script&gt;
+&lt;/span&gt;D from now on). &lt;br /&gt;
+Formally, we want to learn &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\{\mathbf{x}_{1},...,\mathbf{x}_{N}\}\to\{\mathbf{y}_{1},...,\mathbf{y}_{N}\}
+
+&lt;/script&gt;
+&lt;/span&gt;
+ (&lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\{\mathbf{x}_{1},...,\mathbf{x}_{N}\}\subseteq\mathbb{R}^{n}
+&lt;/script&gt;
+&lt;/span&gt; is our data, &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\{\mathbf{y}_{1},...,\mathbf{y}_{N}\}\subseteq\mathbb{R}^{2}
+&lt;/script&gt;
+&lt;/span&gt; is the embedding) such that the structure of the original data is preserved after the embedding.
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-3&quot;&gt;3&lt;/a&gt; So why not PCA?
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+PCA projects high-dimensional data onto a lower dimension determined by the directions where the data varies most in. The result is a linear projection which focuses on preserving distance between &lt;b&gt;dissimilar&lt;/b&gt; data points. This is problematic:
+&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;
+Linear sometimes isn’t good enough.
+&lt;/li&gt;
+&lt;li&gt;
+We claim structure is mostly determined by &lt;b&gt;similar&lt;/b&gt; data points.
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-4&quot;&gt;4&lt;/a&gt; SNE (Hinton&amp;amp;Roweis)
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+This algorithm for high-dimensional data visualization focuses on preserving high-dimensional ’neighbors’ in low-dimension.
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+Assumption - ’neighbors’ in high dimension have small Euclidean distance. SNE converts the Euclidean distances to similarities (distribution) using Gaussian distribution:&lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+p_{j|i}=\frac{\exp\left(-||\mathbf{x}_{i}-\mathbf{x}_{j}||^{2}/2\sigma_{i}^{2}\right)}{\sum\limits _{k\neq i}\exp\left(-||\mathbf{x}_{i}-\mathbf{x}_{k}||^{2}/2\sigma_{i}^{2}\right)}
+
+&lt;/script&gt;
+&lt;/span&gt;
+&lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+p_{j|i}
+&lt;/script&gt;
+&lt;/span&gt; is the probability that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+j
+&lt;/script&gt;
+&lt;/span&gt; is the neighbor of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+i
+&lt;/script&gt;
+&lt;/span&gt; in high-dimension.&lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+q_{j|i}=\frac{\exp\left(-||\mathbf{y}_{i}-\mathbf{y}_{j}||^{2}\right)}{\sum\limits _{k\neq i}\exp\left(-||\mathbf{y}_{i}-\mathbf{y}_{k}||^{2}\right)}
+
+&lt;/script&gt;
+&lt;/span&gt;
+&lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+q_{j|i}
+&lt;/script&gt;
+&lt;/span&gt; is the probability that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+j
+&lt;/script&gt;
+&lt;/span&gt; is the neighbor of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+i
+&lt;/script&gt;
+&lt;/span&gt; in low-dimension. Note - choosing &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\sigma_{i}
+&lt;/script&gt;
+&lt;/span&gt; for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+p_{j|i}
+&lt;/script&gt;
+&lt;/span&gt;: determine in advance the perplexity = effective number of neighbors for each data point. Then &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\forall i
+&lt;/script&gt;
+&lt;/span&gt; choose &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\sigma_{i}
+&lt;/script&gt;
+&lt;/span&gt; such that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{x}_{i}
+&lt;/script&gt;
+&lt;/span&gt; has according number of neighbors in multivariate gaussian with mean &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{x}_{i}
+&lt;/script&gt;
+&lt;/span&gt; and covariance matrix &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\sigma_{i}\cdot I
+&lt;/script&gt;
+&lt;/span&gt;. By mapping each &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{x}_{i}\in\mathbb{R}^{n}
+&lt;/script&gt;
+&lt;/span&gt; to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{y}_{i}\in\mathbb{R}^{2}
+&lt;/script&gt;
+&lt;/span&gt; such that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\forall i,j,\,p_{j|i}
+&lt;/script&gt;
+&lt;/span&gt; is close as possible to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+q_{j|i}
+&lt;/script&gt;
+&lt;/span&gt;, we can preserve similarities. The algorithm finds such a mapping by &lt;b&gt;gradient descent&lt;/b&gt; w.r.t. the following loss (cost) function:&lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+C=\sum_{i}KL(P_{i}||Q_{i})=\sum_{i}\sum_{j}p_{j|i}\log\frac{p_{j|i}}{q_{j|i}}
+
+&lt;/script&gt;
+&lt;/span&gt;
+where &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+P_{i}=(p_{1|i},...,p_{N|i}),\,Q_{i}=(q_{1|i},...,q_{N|i})
+&lt;/script&gt;
+&lt;/span&gt;.
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+The initialization of low-dimensional data is random around the origin. Notice the loss function, Kullback–Leibler (KL) divergence, is a natural way to measure similarity between two distributions.&lt;br /&gt;
+Also notice that this loss puts more emphasis on preserving the local structure of the data. KL-div is asymmetric, so different kinds of errors have a different affect:
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;
+Type 1 error: &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+p_{j|i}
+&lt;/script&gt;
+&lt;/span&gt; is &lt;b&gt;large&lt;/b&gt; (i.e. two points were originally close) and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+q_{j|i}
+&lt;/script&gt;
+&lt;/span&gt; &lt;b&gt;small&lt;/b&gt; (i.e. these points were mapped too far), we pay a &lt;b&gt;large&lt;/b&gt; penalty.
+&lt;/li&gt;
+&lt;li&gt;
+Type 2 error: &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+p_{j|i}
+&lt;/script&gt;
+&lt;/span&gt; is &lt;b&gt;small&lt;/b&gt; (i.e. two points were originally far away) and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+q_{j|i}
+&lt;/script&gt;
+&lt;/span&gt; &lt;b&gt;large&lt;/b&gt; (i.e. these points were mapped too close), we pay a &lt;b&gt;small&lt;/b&gt; penalty.
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+This is good, as structure is preserved better by focusing on keeping close points together. This is easy to see in the following example: think of “unrolling” this swiss roll (like unrolling a carpet). Close points will stay together, far points won’t. This is true for many manifolds (spaces that locally resembles Euclidean space near each point) besides the swiss roll.
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+&lt;div class=&quot;Frameless&quot; style=&quot;width: 100%;&quot;&gt;
+&lt;div class=&quot;center&quot;&gt;
+&lt;img alt=&quot;figure swiss_roll.png&quot; class=&quot;embedded&quot; src=&quot;/site/assets/imgs/2017-06-11-t-SNE/swiss_roll.png&quot; style=&quot;width: 336px; max-width: 672px; height: 244px; max-height: 489px;&quot; /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2 class=&quot;Subsection&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Subsection-4.1&quot;&gt;4.1&lt;/a&gt; The crowding problem
+&lt;/h2&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+The main problem with SNE - mapped points tend to “crowd” together, like in this example: (images of 5 MNIST digits mapped with SNE to 2D and then marked by labels).
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+&lt;div class=&quot;Frameless&quot; style=&quot;width: 100%;&quot;&gt;
+&lt;div class=&quot;center&quot;&gt;
+&lt;img alt=&quot;figure crowding.jpg&quot; class=&quot;embedded&quot; src=&quot;/site/assets/imgs/2017-06-11-t-SNE/crowding.jpg&quot; style=&quot;width: 237px; max-width: 475px; height: 230px; max-height: 461px;&quot; /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+This happens because when reducing the dimensionality we need more “space” in which to represent our data-points. You can think of a sphere flattened to a circle where all distances are preserved (as much as possible) - the radius of the circle will have to be larger!
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+On one hand this causes type &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+1
+&lt;/script&gt;
+&lt;/span&gt; error (close points mapped too far), which forces far mapped points to come closer together. On the other, causes type &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+2
+&lt;/script&gt;
+&lt;/span&gt; error (far points mapped close) which forces them to move away from each other. Type &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+2
+&lt;/script&gt;
+&lt;/span&gt; error makes us pay a small price, however if many points cause error &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+2
+&lt;/script&gt;
+&lt;/span&gt;, the price will be higher, forcing the points to indeed move. What we just described causes the mapped points to correct themselves to the center such that they end up very close to each other. Consider the MNIST example above. If we did not know the labels we couldn’t make much sense of the mapping.
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-5&quot;&gt;5&lt;/a&gt; T-SNE (van der Maaten&amp;amp;Hinton)
+&lt;/h1&gt;
+&lt;h2 class=&quot;Subsection&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Subsection-5.1&quot;&gt;5.1&lt;/a&gt; Solving the crowding problem
+&lt;/h2&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+Instead of mapped points correcting themselves to minimize the loss, we can do this by increasing &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+q_{j|i}
+&lt;/script&gt;
+&lt;/span&gt; in advance. Recall, the loss is: &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\sum\limits _{i}\sum\limits _{j}p_{j|i}\log\frac{p_{j|i}}{q_{j|i}}
+&lt;/script&gt;
+&lt;/span&gt;, thus larger &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+q_{j|i}
+&lt;/script&gt;
+&lt;/span&gt; minimizes it. We do this by defining: &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+q_{ij}=\frac{(1+||\mathbf{y}_{i}-\mathbf{y}_{j}||)^{-1}}{\sum\limits _{k\neq l}(1+||\mathbf{y}_{k}-\mathbf{y}_{l}||)^{-1}}
+
+&lt;/script&gt;
+&lt;/span&gt;
+using Cauchy distribution instead of Gaussian distribution. This increases &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+q_{j|i}
+&lt;/script&gt;
+&lt;/span&gt; since Cauchy distribution has a heavier tail than Gaussian distribution:
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+&lt;div class=&quot;Frameless&quot; style=&quot;width: 100%;&quot;&gt;
+&lt;div class=&quot;center&quot;&gt;
+&lt;img alt=&quot;figure cauchy.jpg&quot; class=&quot;embedded&quot; src=&quot;/site/assets/imgs/2017-06-11-t-SNE/cauchy.jpg&quot; style=&quot;width: 398px; max-width: 797px; height: 274px; max-height: 548px;&quot; /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+(Hence the name of the algorithm - Cauchy distribution is a T-student distribution with &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+1
+&lt;/script&gt;
+&lt;/span&gt; degree of freedom).
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+Note also that we changed the probability from conditional to joint probability (this was done for technical optimization reasons). For the same reason, &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+p_{j|i}
+&lt;/script&gt;
+&lt;/span&gt; was converted to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+p_{ij}=\frac{p_{j|i}+p_{i|j}}{2N}
+&lt;/script&gt;
+&lt;/span&gt;. We can still use Gaussian distribution for the original data since we are trying to compensate for error in the &lt;b&gt;mapped&lt;/b&gt; space.
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+Now the performance on MNIST is much better:
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+&lt;div class=&quot;Frameless&quot; style=&quot;width: 100%;&quot;&gt;
+&lt;div class=&quot;center&quot;&gt;
+&lt;img alt=&quot;figure mnist.png&quot; class=&quot;embedded&quot; src=&quot;/site/assets/imgs/2017-06-11-t-SNE/mnist.png&quot; style=&quot;width: 378px; max-width: 757px; height: 214px; max-height: 429px;&quot; /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+It’s obvious that global structure is preserved and crowding is resolved. Notice also that when zooming in on the mapping of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+1
+&lt;/script&gt;
+&lt;/span&gt; digits, the local structure is preserved as well - digits with same orientation were mapped close to each other.
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-6&quot;&gt;6&lt;/a&gt; Barnes-Hut approximation (van der Maaten)
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+Computing the gradient for each mapped point each iteration is very costly, especially when the dataset is very large. At each iteration, &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\forall i
+&lt;/script&gt;
+&lt;/span&gt;, we compute:&lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\frac{\partial C}{\partial\mathbf{y}_{i}}=4\sum_{j\neq i}\frac{(p_{ij}-q_{ij})}{1+||\mathbf{y}_{i}-\mathbf{y}_{j}||^{2}}\cdot(\mathbf{y}_{i}-\mathbf{y}_{j})
+
+&lt;/script&gt;
+&lt;/span&gt;
+ when the first element (the fraction) is the exertion over the compression, and the other element is the spring. We can think of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{y}_{i}-\mathbf{y}_{j}
+&lt;/script&gt;
+&lt;/span&gt; as a spring between these two points (it might be too tight/loose depending on if the points were mapped to far/close accordingly). The exertion/compression is the correction we do this iteration. We calculate this for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+N
+&lt;/script&gt;
+&lt;/span&gt; mapped points, and derive &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+C
+&lt;/script&gt;
+&lt;/span&gt; by all data-points, so for each iteration we have &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{O}(N^{2})
+&lt;/script&gt;
+&lt;/span&gt; computations. This limits us to datasets with only few thousands of points! However, we can reduce the computation time to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathcal{O}(N\log N)
+&lt;/script&gt;
+&lt;/span&gt; by reducing the number of computations per iteration. The main idea - forces exerted by a group of points on a point that is relatively far away are all very similar. Therefore we can calculate &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{y}_{i}-\mathbf{y}_{j^{*}}
+&lt;/script&gt;
+&lt;/span&gt;where &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{y}_{j^{*}}
+&lt;/script&gt;
+&lt;/span&gt; is the average of the group of far away points, instead of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{y}_{i}-\mathbf{y}_{j}
+&lt;/script&gt;
+&lt;/span&gt; for each &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+\mathbf{y}_{j}
+&lt;/script&gt;
+&lt;/span&gt; in the far away group.
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-7&quot;&gt;7&lt;/a&gt; Some applications
+&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;
+Visualize word embeddings - &lt;a class=&quot;URL&quot; href=&quot;http://nlp.yvespeirsman.be/blog/visualizing-word-embeddings-with-tsne/&quot;&gt;http://nlp.yvespeirsman.be/blog/visualizing-word-embeddings-with-tsne/&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+Multiple maps word embeddings - &lt;a class=&quot;URL&quot; href=&quot;http://homepage.tudelft.nl/19j49/multiplemaps/Multiple_maps_t-SNE/Multiple_maps_t-SNE.html&quot;&gt;http://homepage.tudelft.nl/19j49/multiplemaps/Multiple_maps_t-SNE/Multiple_maps_t-SNE.html&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+Visualization of genetic disease phenotype similarities by multiple maps t-SNE - &lt;a class=&quot;URL&quot; href=&quot;https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4243097/&quot;&gt;https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4243097/&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-8&quot;&gt;8&lt;/a&gt; When can t-SNE fail?
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+When the data is noisy or on a highly varying manifold, the local linearity assumption we make (by converting Euclidean distances to similarities) does not hold. What can we do? - smooth data with PCA (in case of noise) or use Autoencoders (in case of highly varying manifold).
+&lt;/div&gt;</content><author><name>Aviv Netanyahu</name></author><category term="guest_author" /><category term="visualization" /><category term="dimensionality_reduction" /><summary type="html">Warning: MathJax requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser. &amp;lt;/hr&amp;gt;</summary></entry><entry><title type="html">Greedy Algorithm for Multiway-Cut in Trees</title><link href="https://eranamar.github.io/site/2017/05/26/Greedy-Algorithm-for-Multiway-Cut-in-Trees.html" rel="alternate" type="text/html" title="Greedy Algorithm for Multiway-Cut in Trees" /><published>2017-05-26T00:00:00+03:00</published><updated>2017-05-26T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/05/26/Greedy-Algorithm-for-Multiway-Cut-in-Trees</id><content type="html" xml:base="https://eranamar.github.io/site/2017/05/26/Greedy-Algorithm-for-Multiway-Cut-in-Trees.html">&lt;script type=&quot;math/tex&quot;&gt;
 \newcommand{\lyxlock}{}
 &lt;/script&gt;
 
