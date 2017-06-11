@@ -33,7 +33,10 @@ div.sub-title { font-size: 22px; }
     font-size: 19px;
   }
 }
-
+.post-content img.embedded {
+  display: block;
+  margin: 0 auto;
+}
 .post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6, 
 .post-content p, .post-content blockquote, .post-content pre, 
 .post-content ul, .post-content ol, .post-content dl, .post-content figure, .highlight {
