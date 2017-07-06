@@ -2,7 +2,7 @@
 layout: post
 author: Eran Amar
 title:  On the Hardness of Counting Problems - Part 1
-date:   2017-07-10
+date:   2017-07-06
 comments: true
 tags: complexity approximation
 ---
