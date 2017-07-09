@@ -17,8 +17,9 @@ The idea to start with this blog came to me during one of my daily lunch meeting
 ### About the Author
 
 My name is Eran Amar, and I am a Master students at [Weizmann Institute of Science](https://www.weizmann.ac.il/feinberg/academics/msc-program-outline) doing applied research in Deep Learning. My advisor is [Prof. Eran Segal](http://www.wisdom.weizmann.ac.il/~/eran/). 
+Information about my professional experience can be found in my [LinkedIn profile](https://www.linkedin.com/in/eranamar/).
 
-If you find any errors or want to send a comment, you are welcome to contact me via my [email](mailto:eran.amar@weizmann.ac.il). 
+If you find any errors or want to send a comment, you are welcome to contact me via this [email address](mailto:eran.amar@weizmann.ac.il). 
 
 ### The Technology
 
