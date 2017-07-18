@@ -1,513 +1,1757 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-07-09T14:21:56+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">TheoryLunch Blog</title><subtitle>Computer science topics over lunch</subtitle><author><name>Eran Amar</name></author><entry><title type="html">On the Hardness of Counting Problems - Part 1</title><link href="https://eranamar.github.io/site/2017/07/06/On-the-Hardness-of-Counting-Problems-Part-1.html" rel="alternate" type="text/html" title="On the Hardness of Counting Problems - Part 1" /><published>2017-07-06T00:00:00+03:00</published><updated>2017-07-06T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/07/06/On-the-Hardness-of-Counting-Problems---Part-1</id><content type="html" xml:base="https://eranamar.github.io/site/2017/07/06/On-the-Hardness-of-Counting-Problems-Part-1.html">&lt;script type=&quot;math/tex&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.5">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-07-18T13:37:05+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">TheoryLunch Blog</title><subtitle>Computer science topics over lunch</subtitle><author><name>Eran Amar</name></author><entry><title type="html">On the Hardness of Counting Problems - Part 2</title><link href="https://eranamar.github.io/site/2017/07/18/On-the-Hardness-of-Counting-Problems-Part-2.html" rel="alternate" type="text/html" title="On the Hardness of Counting Problems - Part 2" /><published>2017-07-18T00:00:00+03:00</published><updated>2017-07-18T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/07/18/On-the-Hardness-of-Counting-Problems---Part-2</id><content type="html" xml:base="https://eranamar.github.io/site/2017/07/18/On-the-Hardness-of-Counting-Problems-Part-2.html">&lt;script type=&quot;math/tex&quot;&gt;
+
 \newcommand{\lyxlock}{}
+
 &lt;/script&gt;
 
 &lt;noscript&gt;
 &lt;div class=&quot;warning&quot;&gt;
+
 Warning: &lt;a href=&quot;http://www.mathjax.org/&quot;&gt;MathJax&lt;/a&gt; requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser.
+
 &lt;/div&gt;&lt;hr /&gt;
-&amp;lt;/hr&amp;gt;&lt;/noscript&gt;
+&lt;/noscript&gt;
 
 &lt;h1 class=&quot;Section&quot;&gt;
-&lt;a class=&quot;toc&quot; name=&quot;toc-Section-1&quot;&gt;1&lt;/a&gt; What is a Counting Problem?
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-1&quot;&gt;1&lt;/a&gt; Recap
+
 &lt;/h1&gt;
 &lt;div class=&quot;Unindented&quot;&gt;
-Every undergraduate student in Computer Science knows the &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{P}
+
+The &lt;a class=&quot;URL&quot; href=&quot;https://eranamar.github.io/site/2017/07/06/On-the-Hardness-of-Counting-Problems-Part-1.html&quot;&gt;previous post&lt;/a&gt; discussed the &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{P},\mathcal{NP}
+
 &lt;/script&gt;
 &lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{NP}
-&lt;/script&gt;
-&lt;/span&gt; families and the legendary question “is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{P}
-&lt;/script&gt;
-&lt;/span&gt; equals &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{NP}
-&lt;/script&gt;
-&lt;/span&gt;?”. However, there is another interesting family that is not always covered in undergraduate courses; that is the &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#\mathcal{P}
+
 &lt;/script&gt;
-&lt;/span&gt; (“sharp P”) family. In this post we will define and discuss this family and two concrete similar-but-different problems from it that demonstrate interesting properties about its hardness. 
-&lt;/div&gt;
-&lt;div class=&quot;Indented&quot;&gt;
-Formally, &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{P}
+&lt;/span&gt; families. We said that the hierarchy between decision problems from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{P},\mathcal{NP}
+
 &lt;/script&gt;
-&lt;/span&gt; is the family of decision problems that can be solved in polynomial time. A known example is the &lt;i&gt;Perfect Matching&lt;/i&gt; problem: given a graph, determine whether it has a perfect matching or not. A perfect matching is a set of edges that touches all the vertices in the graph and any pair of edges have disjoint endpoints.
-&lt;/div&gt;
-&lt;div class=&quot;Indented&quot;&gt;
-The family &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{NP}
-&lt;/script&gt;
-&lt;/span&gt; contains all the decision problems that has polynomial time algorithm over the non-deterministic computational model (we won’t get into that). We know that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{P}\subseteq\mathcal{NP}
-&lt;/script&gt;
-&lt;/span&gt;, but we don’t know if the other direction also holds. A famous &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{NP}
-&lt;/script&gt;
-&lt;/span&gt;-complete example is the &lt;i&gt;Hamiltonian Cycle&lt;/i&gt; problem: given a graph, determine whether it contains a cycle that visits every vertex exactly once. We say “complete” to note that the problem is harder at least as any other problem inside that family, that is, if we could solve it efficiently (i.e. in polynomial time) then we could solve any other problem in the family efficiently. When a problem &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-P_{1}
-&lt;/script&gt;
-&lt;/span&gt; is at least harder as other problem &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-P_{2}
-&lt;/script&gt;
-&lt;/span&gt; we denote it &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-P_{1}\ge P_{2}
-&lt;/script&gt;
-&lt;/span&gt;. 
-&lt;/div&gt;
-&lt;div class=&quot;Indented&quot;&gt;
-Any problem in either &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{P}
-&lt;/script&gt;
-&lt;/span&gt; or &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{NP}
-&lt;/script&gt;
-&lt;/span&gt; can be rephrased slightly different. We can ask “&lt;i&gt;how many&lt;/i&gt; perfect matching this graph contains?” rather than “is there a perfect matching in this graph?”. When asking&lt;i&gt; how much&lt;/i&gt; instead of &lt;i&gt;is there&lt;/i&gt; the problem become a Counting problem. Following that, the formal definition of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\#\mathcal{P}
-&lt;/script&gt;
-&lt;/span&gt; is: the family the Counting version of any problem in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{NP}
-&lt;/script&gt;
-&lt;/span&gt;.
-&lt;/div&gt;
-&lt;div class=&quot;Indented&quot;&gt;
-Notice that for any &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-P\in\mathcal{P}\cup\mathcal{NP}
-&lt;/script&gt;
-&lt;/span&gt; we have &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-P\le\#P
-&lt;/script&gt;
-&lt;/span&gt; because having a count of the desired property can, in particular, distinguish between the cases that this count is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-0
-&lt;/script&gt;
-&lt;/span&gt; or higher, that is, decide whether that property exists or not. Hence, we can safely state the general hierarchy, that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{P}\le\mathcal{NP}\le\#\mathcal{P}
-&lt;/script&gt;
-&lt;/span&gt;.
-&lt;/div&gt;
-&lt;div class=&quot;Indented&quot;&gt;
-Let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-P_{1},P_{2}
-&lt;/script&gt;
-&lt;/span&gt; be the &lt;i&gt;Perfect Matching&lt;/i&gt; and &lt;i&gt;Hamiltonian Cycle&lt;/i&gt; problems respectively, and let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\#P_{1},\#P_{2}
-&lt;/script&gt;
-&lt;/span&gt; be their Counting versions. It is interesting to see whether the hierarchy between problems from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{P}
-&lt;/script&gt;
-&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{NP}
-&lt;/script&gt;
-&lt;/span&gt; preserved for their Counting versions as well. For instance, for the problems above, we know that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-P_{1}\le P_{2}
-&lt;/script&gt;
-&lt;/span&gt; since &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{P}\subseteq\mathcal{NP}
-&lt;/script&gt;
-&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-P_{2}
-&lt;/script&gt;
-&lt;/span&gt; is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{NP}
-&lt;/script&gt;
-&lt;/span&gt;-complete, is that implies also &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\#P_{1}\le\#P_{2}
-&lt;/script&gt;
-&lt;/span&gt;?
-&lt;/div&gt;
-&lt;div class=&quot;Indented&quot;&gt;
-The short answer is no. In the next section we will show that in a more detailed discussion.
-&lt;/div&gt;
-&lt;h1 class=&quot;Section&quot;&gt;
-&lt;a class=&quot;toc&quot; name=&quot;toc-Section-2&quot;&gt;2&lt;/a&gt; Counting Makes Problems Much Harder
-&lt;/h1&gt;
-&lt;div class=&quot;Unindented&quot;&gt;
-We start with two basic definitions from the field of boolean logic.
-&lt;/div&gt;
-&lt;div class=&quot;Definition&quot;&gt;
-A &lt;i&gt;Conjunctive Normal Form&lt;/i&gt; (&lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt; do not preserved when moving to their Counting versions. We defined &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 CNF
+
 &lt;/script&gt;
-&lt;/span&gt;) formula &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+DNF
+
+&lt;/script&gt;
+&lt;/span&gt; formulas (see section 2 in previous post), and the problems &lt;i&gt;CNF-SAT &lt;/i&gt;that is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{NP}
+
+&lt;/script&gt;
+&lt;/span&gt;-complete and &lt;i&gt;DNF-SAT&lt;/i&gt; that is in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{P}
+
+&lt;/script&gt;
+&lt;/span&gt;. We used the relation between their Counting versions to show that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\#DNF
+
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\#CNF
+
+&lt;/script&gt;
+&lt;/span&gt; are equally hard to solve exactly. The relation is as follows: if &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \phi
+
 &lt;/script&gt;
-&lt;/span&gt; other a set of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt; is a &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 n
+
 &lt;/script&gt;
-&lt;/span&gt; boolean variables is defined as &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;/span&gt; variables &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+CNF
+
+&lt;/script&gt;
+&lt;/span&gt; formula, then &lt;span class=&quot;MathJax_Preview&quot;&gt;
 &lt;script type=&quot;math/tex;mode=display&quot;&gt;
 
-\phi=\bigwedge_{i=1}^{m}C_{i}
+
+
+\#CNF\left(\phi\right)+\#DNF\left(\neg\phi\right)=2^{n}
+
+
 
 &lt;/script&gt;
 &lt;/span&gt;
-where each of its &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-m
+
+Furthermore, we showed that both problems are &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\#\mathcal{P}
+
 &lt;/script&gt;
-&lt;/span&gt; clauses is of the form &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-C_{i}=\bigvee_{j=1}^{\left|C_{i}\right|}\ell_{i,j}
-&lt;/script&gt;
-&lt;/span&gt;, that is, the clause is a disjunction of some number of literals. A literal &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\ell_{i,j}
-&lt;/script&gt;
-&lt;/span&gt; is a variable or its negation. Note that since there are &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-n
-&lt;/script&gt;
-&lt;/span&gt; variables then &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\left|C_{i}\right|\le2n
-&lt;/script&gt;
-&lt;/span&gt;.
-&lt;/div&gt;
-&lt;div class=&quot;Unindented&quot;&gt;
+&lt;/span&gt;-complete, demonstrating that even an “easy” decision problem like &lt;i&gt;DNF-SAT&lt;/i&gt; can be very hard when considering its Counting counterpart. 
 
 &lt;/div&gt;
-&lt;div class=&quot;Definition&quot;&gt;
-A &lt;i&gt;Disjunctive Normal Form&lt;/i&gt; (&lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-DNF
+&lt;div class=&quot;Indented&quot;&gt;
+
+This post we will show that there is some hierarchy inside &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\#\mathcal{P}
+
 &lt;/script&gt;
-&lt;/span&gt;) formula &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\psi
-&lt;/script&gt;
-&lt;/span&gt; other a set of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-n
-&lt;/script&gt;
-&lt;/span&gt; boolean variables is defined analogously to the &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-CNF
-&lt;/script&gt;
-&lt;/span&gt; version, as &lt;span class=&quot;MathJax_Preview&quot;&gt;
-&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+&lt;/span&gt; when considering &lt;i&gt;approximated solutions&lt;/i&gt; instead of exact solutions.
+
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-2&quot;&gt;2&lt;/a&gt; Approximation Algorithm for &lt;i&gt;#DNF-SAT&lt;/i&gt;
+&lt;/h1&gt;
+&lt;h2 class=&quot;Subsection&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Subsection-2.1&quot;&gt;2.1&lt;/a&gt; Deterministic Approximation
+
+&lt;/h2&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+
+Let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 
 \psi=\bigvee_{i=1}^{m}C_{i}
 
 &lt;/script&gt;
-&lt;/span&gt;
-where each of its &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-m
-&lt;/script&gt;
-&lt;/span&gt; clauses is of the form &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-C_{i}=\bigwedge_{j=1}^{\left|C_{i}\right|}\ell_{i,j}
-&lt;/script&gt;
-&lt;/span&gt;.
-&lt;/div&gt;
-&lt;div class=&quot;Unindented&quot;&gt;
-The &lt;i&gt;CNF-SAT&lt;/i&gt; problem, gets as an input a &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-CNF
-&lt;/script&gt;
-&lt;/span&gt; boolean formula, and decides whether that formula has a &lt;i&gt;satisfying assignment (s.a.)&lt;/i&gt; or not. That is, an assignment of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-True/False
-&lt;/script&gt;
-&lt;/span&gt; for each of its variables such that the formula evaluated to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-True
-&lt;/script&gt;
-&lt;/span&gt;. The &lt;i&gt;DNF-SAT&lt;/i&gt; is defined the same but for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt; be a &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 DNF
+
 &lt;/script&gt;
-&lt;/span&gt; formulas rather than &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-CNF
+&lt;/span&gt; formula, and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+k^{*}=\#DNF\left(\psi\right)
+
 &lt;/script&gt;
-&lt;/span&gt; ones.
+&lt;/span&gt;. We want to find a polynomial time algorithm that yields some &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+k
+
+&lt;/script&gt;
+&lt;/span&gt; which is an approximation for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+k^{*}
+
+&lt;/script&gt;
+&lt;/span&gt;. Formally, for an approximation factor of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+p
+
+&lt;/script&gt;
+&lt;/span&gt;, &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+k^{*}\le k\le p\cdot k^{*}
+
+&lt;/script&gt;
+&lt;/span&gt;. We will talk more about the approximation parameter later.
+
 &lt;/div&gt;
 &lt;div class=&quot;Indented&quot;&gt;
+
+First note that if a clause contains a variable and its negation then immediately we can conclude that there are no satisfying assignments (s.a.) for that clause as it contains a contradiction, so we will omit it from the formula (can be done in linear time). So assume, from now on, that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\psi
+
+&lt;/script&gt;
+&lt;/span&gt; do not contains any contradiction. For the rest of this discussion, we say that a boolean variable &lt;i&gt;appear&lt;/i&gt; in a clause &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+C
+
+&lt;/script&gt;
+&lt;/span&gt; if either it or its negation contained in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+C
+
+&lt;/script&gt;
+&lt;/span&gt;.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Let’s focus on an arbitrary clause &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+C_{i}\in\psi
+
+&lt;/script&gt;
+&lt;/span&gt; . We can easily count the number of s.a. it has; it is exactly &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\#DNF\left(C_{i}\right)=2^{t}
+
+&lt;/script&gt;
+&lt;/span&gt; when &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+t\in\left\{ 0,1,..,n-1\right\} 
+
+&lt;/script&gt;
+&lt;/span&gt; is the number of variables that do not appear in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+C_{i}
+
+&lt;/script&gt;
+&lt;/span&gt;. That is true because the value of any variable in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+C_{i}
+
+&lt;/script&gt;
+&lt;/span&gt; is determined by its appearance (if it has negation or not) so only variables which are not in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+C_{i}
+
+&lt;/script&gt;
+&lt;/span&gt; can be either &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+True
+
+&lt;/script&gt;
+&lt;/span&gt; or &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+False
+
+&lt;/script&gt;
+&lt;/span&gt; and having two options.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Moreover, we can &lt;b&gt;efficiently &lt;/b&gt;sample at uniform any s.a. for that clause. Simply iterate over the &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+n
+
+&lt;/script&gt;
+&lt;/span&gt; variables, if a variable appears in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+C_{i}
+
+&lt;/script&gt;
+&lt;/span&gt; then it have only one allowed value so assigned it that value, and if it is not appear in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+C_{i}
+
+&lt;/script&gt;
+&lt;/span&gt; then toss a coin and assign &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+True
+
+&lt;/script&gt;
+&lt;/span&gt; or &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+False
+
+&lt;/script&gt;
+&lt;/span&gt; accordingly. 
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Trivial approximation algorithm will calculate the exact &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\#DNF\left(C_{i}\right)
+
+&lt;/script&gt;
+&lt;/span&gt; for each &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+C_{i}
+
+&lt;/script&gt;
+&lt;/span&gt; in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\psi
+
+&lt;/script&gt;
+&lt;/span&gt; and returns their sum &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+k=\sum_{i=1}^{m}\#DNF\left(C_{i}\right)
+
+&lt;/script&gt;
+&lt;/span&gt;. However, we may have s.a. that were counted more than once (if they are satisfying more than a single clause). Thus the approximation factor of that algorithm is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+m
+
+&lt;/script&gt;
+&lt;/span&gt;, because in the worst case all the clauses have the same set of satisfying assignments so we counted each s.a. &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+m
+
+&lt;/script&gt;
+&lt;/span&gt; times, yielding &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+k\le m\cdot k^{*}
+
+&lt;/script&gt;
+&lt;/span&gt;.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+We can improve that algorithm by using the inclusion-exclusion principle: instead of accumulating the number of s.a. for each clause, accumulate the number of s.a. that &lt;i&gt;weren’t counted so far&lt;/i&gt;.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Unfortunately, finding which assignment was already counted forces us to enumerate all the assignments which obviously takes exponential time. Hence we will give a probabilistic estimation for that, instead. When working with estimations, we need to state the success probability for our estimation and it is also preferable that we will have a way to increase that probability (mostly at the cost of more computations and drawing more random samples). 
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Next section we will describe how to get an estimation of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+k
+
+&lt;/script&gt;
+&lt;/span&gt; such that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\left(1-p\right)k^{*}\le k\le\left(1+p\right)k^{*}
+
+&lt;/script&gt;
+&lt;/span&gt; for &lt;b&gt;any&lt;/b&gt; &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+p
+
+&lt;/script&gt;
+&lt;/span&gt;, even a polynomialy small one (i.e. &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+p=\frac{1}{poly\left(n\right)}
+
+&lt;/script&gt;
+&lt;/span&gt;) with a very large probability. 
+
+&lt;/div&gt;
+&lt;h2 class=&quot;Subsection&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Subsection-2.2&quot;&gt;2.2&lt;/a&gt; Probabilistic Approximation
+
+&lt;/h2&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+
+The overall procedure is still simple: iterate over each clause &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+C_{i}
+
+&lt;/script&gt;
+&lt;/span&gt; and estimate the &lt;i&gt;fraction&lt;/i&gt; of s.a. for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+C_{i}
+
+&lt;/script&gt;
+&lt;/span&gt; that were not counted before (as a number between zero and one), denote that estimation by &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\tilde{k}_{i}
+
+&lt;/script&gt;
+&lt;/span&gt;, let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+S_{i}
+
+&lt;/script&gt;
+&lt;/span&gt; be the total number of s.a. for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+C_{i}
+
+&lt;/script&gt;
+&lt;/span&gt; calculated as mentioned in the deterministic approximation section. Then output &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+k=\sum_{i=1}^{m}\tilde{k}_{i}\cdot S_{i}
+
+&lt;/script&gt;
+&lt;/span&gt;.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+It left to show how to compute &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\tilde{k}_{i}
+
+&lt;/script&gt;
+&lt;/span&gt;, so we do the following. Let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+t=c\left(\frac{m}{p}\right)^{2}\ln m
+
+&lt;/script&gt;
+&lt;/span&gt;, when &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+c
+
+&lt;/script&gt;
+&lt;/span&gt; will be determined later. Sample &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+t
+
+&lt;/script&gt;
+&lt;/span&gt; independent times, an uniformly random s.a. for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+C_{i}
+
+&lt;/script&gt;
+&lt;/span&gt;. For each such assignment define a corresponding binary variable &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+X_{j}
+
+&lt;/script&gt;
+&lt;/span&gt; that is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+1
+
+&lt;/script&gt;
+&lt;/span&gt; if it is not satisfying any previous clause, and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+0
+
+&lt;/script&gt;
+&lt;/span&gt; otherwise. Note that evaluating all &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\left\{ X_{j}\right\} _{j=1}^{t}
+
+&lt;/script&gt;
+&lt;/span&gt; takes &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{O}\left(poly\left(n,m\right)\cdot t\right)
+
+&lt;/script&gt;
+&lt;/span&gt; time. Then return &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\tilde{k}_{i}=\frac{1}{t}\sum_{j=1}^{t}X_{j}
+
+&lt;/script&gt;
+&lt;/span&gt;. That completes our probabilistic approximation algorithm for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\#DNF
+
+&lt;/script&gt;
+&lt;/span&gt;.
+
+&lt;/div&gt;
+&lt;h3 class=&quot;Subsubsection-&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Subsubsection--1&quot;&gt;&lt;/a&gt;Analysis
+
+&lt;/h3&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+
+We need to analyze the quality of approximation of each &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\tilde{k_{i}}
+
+&lt;/script&gt;
+&lt;/span&gt;, then show that with high probability &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\sum_{i=1}^{m}\tilde{k}_{i}\cdot S_{i}
+
+&lt;/script&gt;
+&lt;/span&gt; is within the claimed approximation bounds. For the first part, we focus on a single estimation &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\tilde{k}_{i}
+
+&lt;/script&gt;
+&lt;/span&gt; for the clause &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+C_{i}
+
+&lt;/script&gt;
+&lt;/span&gt;. 
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+S_{i}
+
+&lt;/script&gt;
+&lt;/span&gt; be the number of all s.a. for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+C_{i}
+
+&lt;/script&gt;
+&lt;/span&gt; and let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+s_{i}
+
+&lt;/script&gt;
+&lt;/span&gt; be the number of s.a. for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+C_{i}
+
+&lt;/script&gt;
+&lt;/span&gt; that &lt;i&gt;aren’t satisfying any clause before &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+C_{i}
+
+&lt;/script&gt;
+&lt;/span&gt;&lt;/i&gt;. Out goal is to show that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\tilde{k}_{i}
+
+&lt;/script&gt;
+&lt;/span&gt; is, with high probability, close to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\frac{s_{i}}{S_{i}}
+
+&lt;/script&gt;
+&lt;/span&gt;. Observe that all the variables &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\left\{ X_{j}\right\} _{j=1}^{t}
+
+&lt;/script&gt;
+&lt;/span&gt; for estimating &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\tilde{k}_{i}
+
+&lt;/script&gt;
+&lt;/span&gt; were actually sampled i.i.d from a Bernoulli distribution with parameter &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+q_{i}=\frac{s_{i}}{S_{i}}
+
+&lt;/script&gt;
+&lt;/span&gt; (which is also its expectation). As a result &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathbb{E}\left[\tilde{k}_{i}\right]=q_{i}
+
+&lt;/script&gt;
+&lt;/span&gt;, so apply &lt;a class=&quot;URL&quot; href=&quot;https://eranamar.github.io/site/2017/03/24/Comparing-Chernoff-Hoeffding-bounds.html&quot;&gt;Hoeffding inequality&lt;/a&gt; to get &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+\begin{aligned}
+
+\mathbf{P}\left[\left|\tilde{k}_{i}-q_{i}\right|&gt;\frac{p}{m}\right] &amp; \le2\exp\left(\frac{-2\left(\frac{p}{m}\right)^{2}t^{2}}{t}\right)\\
+
+ &amp; =2\exp\left(-2c\ln m\right)=2m^{-2c}
+
+\end{aligned}
+
+&lt;/script&gt;
+&lt;/span&gt;
+
+which means that with high probability the estimator is “successful”, that is,&lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+
+
+q_{i}-\frac{p}{m}\le\tilde{k}_{i}\le q_{i}+\frac{p}{m}
+
+
+
+&lt;/script&gt;
+&lt;/span&gt;
+
+and equivalently, &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+
+
+s_{i}-S_{i}\frac{p}{m}\le\tilde{k}_{i}\cdot S_{i}\le s_{i}+S_{i}\frac{p}{m}
+
+
+
+&lt;/script&gt;
+&lt;/span&gt;
+
+If all the estimators &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\tilde{k}_{1},\tilde{k}_{2},..
+
+&lt;/script&gt;
+&lt;/span&gt; were successful, then &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+
+
+k\le\sum_{i=1}^{m}\left(s_{i}+S_{i}\frac{p}{m}\right)=k^{*}+\sum_{i=1}^{m}S_{i}\frac{p}{m}\le k^{*}+\frac{p}{m}\left(mk^{*}\right)=\left(1+p\right)k^{*}
+
+
+
+&lt;/script&gt;
+&lt;/span&gt;
+
+and also similarly &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+k\ge\left(1-p\right)k^{*}
+
+&lt;/script&gt;
+&lt;/span&gt;, which are exactly the approximation bounds that we wanted to achieve. To conclude the analysis, note that by applying the union bound, all the estimators will be successful with probability &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\ge1-\sum_{i=1}^{m}2m^{-2c}=1-\frac{2}{m^{2c-1}}
+
+&lt;/script&gt;
+&lt;/span&gt;.
+
+&lt;/div&gt;
+&lt;h3 class=&quot;Subsubsection-&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Subsubsection--2&quot;&gt;&lt;/a&gt;Trade off between the parameters
+
+&lt;/h3&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+
+It is interesting to examine the relations between the different parameters, and how each affect the running time, success probability, and the quality of approximation.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Consider the parameter &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+t
+
+&lt;/script&gt;
+&lt;/span&gt;, which is the number of samples the algorithm has to draw to estimate each &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\tilde{k}_{i}
+
+&lt;/script&gt;
+&lt;/span&gt;. That &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+t
+
+&lt;/script&gt;
+&lt;/span&gt; is linearly depends on a parameter &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+c
+
+&lt;/script&gt;
+&lt;/span&gt; which controls the “success probability” of all the estimators (simultaneously). On the one hand, large &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+c
+
+&lt;/script&gt;
+&lt;/span&gt; gives a success probability that is extremely close to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+1
+
+&lt;/script&gt;
+&lt;/span&gt;. But on the other hand, it increases the number of samples &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+t
+
+&lt;/script&gt;
+&lt;/span&gt; per clause, and the total running time of the algorithm, which is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{O}\left(poly\left(n,m\right)\cdot c\cdot p^{-2}\right)
+
+&lt;/script&gt;
+&lt;/span&gt;.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Similarly, the better approximation we want for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+k^{*}
+
+&lt;/script&gt;
+&lt;/span&gt;, the smaller &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+p
+
+&lt;/script&gt;
+&lt;/span&gt; that we should set (even smaller than &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+1
+
+&lt;/script&gt;
+&lt;/span&gt;), then the number of samples and the running time increased inversely proportional to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+p^{2}
+
+&lt;/script&gt;
+&lt;/span&gt;.
+
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-3&quot;&gt;3&lt;/a&gt; What About Approximating &lt;i&gt;#CNF-SAT&lt;/i&gt;?
+
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+
+Previous section dealt with approximating, either in the deterministic or probabilistic manner, the &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\#DNF
+
+&lt;/script&gt;
+&lt;/span&gt; problem. Unfortunately, as oppose to that we did with exact solutions, approximating &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\#DNF
+
+&lt;/script&gt;
+&lt;/span&gt; do not help us approximating &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\#CNF
+
+&lt;/script&gt;
+&lt;/span&gt;. We will prove that by proving a stronger claim.
+
+&lt;/div&gt;
+&lt;div class=&quot;Claim&quot;&gt;
+
+Let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+P
+
+&lt;/script&gt;
+&lt;/span&gt; be any &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{NP}
+
+&lt;/script&gt;
+&lt;/span&gt;-complete problem, and denote &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\#P
+
+&lt;/script&gt;
+&lt;/span&gt; its Counting versions. There is no polynomial-time approximation algorithm of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\#P
+
+&lt;/script&gt;
+&lt;/span&gt; to &lt;b&gt;any factor&lt;/b&gt;, unless &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{P}=\mathcal{NP}
+
+&lt;/script&gt;
+&lt;/span&gt;.
+
+&lt;/div&gt;
+&lt;div class=&quot;Proof&quot;&gt;
+
+Assume that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{P}\ne\mathcal{NP}
+
+&lt;/script&gt;
+&lt;/span&gt;. Suppose toward contradiction that we have some polynomial-time approximation algorithm for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\#P
+
+&lt;/script&gt;
+&lt;/span&gt;, and denote it by &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+Alg
+
+&lt;/script&gt;
+&lt;/span&gt;. Given an instance &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+x
+
+&lt;/script&gt;
+&lt;/span&gt; for the &lt;b&gt;decision&lt;/b&gt; problem &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+P
+
+&lt;/script&gt;
+&lt;/span&gt;, simulate &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+Alg\left(x\right)
+
+&lt;/script&gt;
+&lt;/span&gt; and get an approximation for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\#P\left(x\right)
+
+&lt;/script&gt;
+&lt;/span&gt;. Then declare &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+No
+
+&lt;/script&gt;
+&lt;/span&gt; as the output of the decision problem if that approximation is zero, and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+Yes
+
+&lt;/script&gt;
+&lt;/span&gt; otherwise. Note that this reduction runs in polynomial time. Moreover, the Counting versions have zero solutions if and only if &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+P\left(x\right)=No
+
+&lt;/script&gt;
+&lt;/span&gt;. Since any multiplicative approximation of zero is still zero, we can use the approximation algorithm for the counting problem to efficiently solve the &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{NP}
+
+&lt;/script&gt;
+&lt;/span&gt;-complete decision problem, contradicting that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{P}\ne\mathcal{NP}
+
+&lt;/script&gt;
+&lt;/span&gt;.
+
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-4&quot;&gt;4&lt;/a&gt; &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+DNF
+
+&lt;/script&gt;
+&lt;/span&gt; Formulas are Not &lt;i&gt;Always&lt;/i&gt; Easy!
+
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+
+During this and the previous post, we mentioned &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+DNF
+
+&lt;/script&gt;
+&lt;/span&gt; formulas as something which is easy to solve. We showed that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+DNFSAT\in\mathcal{P}
+
+&lt;/script&gt;
+&lt;/span&gt;, and always compared it to its “difficult” variation - the &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+CNF
+
+&lt;/script&gt;
+&lt;/span&gt; version. However, a &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+DNF
+
+&lt;/script&gt;
+&lt;/span&gt; formula can also be “difficult”. It just depends what we are asking. For example, deciding if a &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+DNF
+
+&lt;/script&gt;
+&lt;/span&gt; formula &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\psi
+
+&lt;/script&gt;
+&lt;/span&gt; is a tautology (i.e. evaluated to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+True
+
+&lt;/script&gt;
+&lt;/span&gt; for any assignment) is an &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{NP}
+
+&lt;/script&gt;
+&lt;/span&gt;-complete problem. One can show that by noting that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\phi:=\neg\psi
+
+&lt;/script&gt;
+&lt;/span&gt; is a &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+CNF
+
+&lt;/script&gt;
+&lt;/span&gt; formula, and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\phi
+
+&lt;/script&gt;
+&lt;/span&gt; is a &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+No
+
+&lt;/script&gt;
+&lt;/span&gt; instance for &lt;i&gt;CNF-SAT&lt;/i&gt; if and only if &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\psi
+
+&lt;/script&gt;
+&lt;/span&gt; is a &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+Yes
+
+&lt;/script&gt;
+&lt;/span&gt; instance for the &lt;i&gt;DNF-TAUTOLOGY&lt;/i&gt; problem. Thus, the problem are equally hard.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Similarly, we can define an “easy” problem for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+CNF
+
+&lt;/script&gt;
+&lt;/span&gt; formulas: decide whether a &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+CNF
+
+&lt;/script&gt;
+&lt;/span&gt; formula &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\phi
+
+&lt;/script&gt;
+&lt;/span&gt; is a tautology can be done in polynomial time, by checking if its negation &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\psi:=\neg\phi
+
+&lt;/script&gt;
+&lt;/span&gt; has a s.a. which is polynomial since &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+DNFSAT\in\mathcal{P}
+
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\psi
+
+&lt;/script&gt;
+&lt;/span&gt; is a &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+DNF
+
+&lt;/script&gt;
+&lt;/span&gt; formula.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+As a conclusion, the hardness of those decision problems depends not only on the form of the formula but also on what are we asking to decide.
+
+&lt;/div&gt;</content><author><name>Eran Amar</name></author><category term="complexity" /><category term="approximation" /><summary type="html"></summary></entry><entry><title type="html">On the Hardness of Counting Problems - Part 1</title><link href="https://eranamar.github.io/site/2017/07/06/On-the-Hardness-of-Counting-Problems-Part-1.html" rel="alternate" type="text/html" title="On the Hardness of Counting Problems - Part 1" /><published>2017-07-06T00:00:00+03:00</published><updated>2017-07-06T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/07/06/On-the-Hardness-of-Counting-Problems---Part-1</id><content type="html" xml:base="https://eranamar.github.io/site/2017/07/06/On-the-Hardness-of-Counting-Problems-Part-1.html">&lt;script type=&quot;math/tex&quot;&gt;
+
+\newcommand{\lyxlock}{}
+
+&lt;/script&gt;
+
+&lt;noscript&gt;
+&lt;div class=&quot;warning&quot;&gt;
+
+Warning: &lt;a href=&quot;http://www.mathjax.org/&quot;&gt;MathJax&lt;/a&gt; requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser.
+
+&lt;/div&gt;&lt;hr /&gt;
+&lt;/noscript&gt;
+
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-1&quot;&gt;1&lt;/a&gt; What is a Counting Problem?
+
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+
+Every undergraduate student in Computer Science knows the &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{P}
+
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{NP}
+
+&lt;/script&gt;
+&lt;/span&gt; families and the legendary question “is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{P}
+
+&lt;/script&gt;
+&lt;/span&gt; equals &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{NP}
+
+&lt;/script&gt;
+&lt;/span&gt;?”. However, there is another interesting family that is not always covered in undergraduate courses; that is the &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\#\mathcal{P}
+
+&lt;/script&gt;
+&lt;/span&gt; (“sharp P”) family. In this post we will define and discuss this family and two concrete similar-but-different problems from it that demonstrate interesting properties about its hardness. 
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Formally, &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{P}
+
+&lt;/script&gt;
+&lt;/span&gt; is the family of decision problems that can be solved in polynomial time. A known example is the &lt;i&gt;Perfect Matching&lt;/i&gt; problem: given a graph, determine whether it has a perfect matching or not. A perfect matching is a set of edges that touches all the vertices in the graph and any pair of edges have disjoint endpoints.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+The family &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{NP}
+
+&lt;/script&gt;
+&lt;/span&gt; contains all the decision problems that has polynomial time algorithm over the non-deterministic computational model (we won’t get into that). We know that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{P}\subseteq\mathcal{NP}
+
+&lt;/script&gt;
+&lt;/span&gt;, but we don’t know if the other direction also holds. A famous &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{NP}
+
+&lt;/script&gt;
+&lt;/span&gt;-complete example is the &lt;i&gt;Hamiltonian Cycle&lt;/i&gt; problem: given a graph, determine whether it contains a cycle that visits every vertex exactly once. We say “complete” to note that the problem is harder at least as any other problem inside that family, that is, if we could solve it efficiently (i.e. in polynomial time) then we could solve any other problem in the family efficiently. When a problem &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+P_{1}
+
+&lt;/script&gt;
+&lt;/span&gt; is at least harder as other problem &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+P_{2}
+
+&lt;/script&gt;
+&lt;/span&gt; we denote it &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+P_{1}\ge P_{2}
+
+&lt;/script&gt;
+&lt;/span&gt;. 
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Any problem in either &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{P}
+
+&lt;/script&gt;
+&lt;/span&gt; or &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{NP}
+
+&lt;/script&gt;
+&lt;/span&gt; can be rephrased slightly different. We can ask “&lt;i&gt;how many&lt;/i&gt; perfect matching this graph contains?” rather than “is there a perfect matching in this graph?”. When asking&lt;i&gt; how much&lt;/i&gt; instead of &lt;i&gt;is there&lt;/i&gt; the problem become a Counting problem. Following that, the formal definition of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\#\mathcal{P}
+
+&lt;/script&gt;
+&lt;/span&gt; is: the family the Counting version of any problem in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{NP}
+
+&lt;/script&gt;
+&lt;/span&gt;.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Notice that for any &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+P\in\mathcal{P}\cup\mathcal{NP}
+
+&lt;/script&gt;
+&lt;/span&gt; we have &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+P\le\#P
+
+&lt;/script&gt;
+&lt;/span&gt; because having a count of the desired property can, in particular, distinguish between the cases that this count is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+0
+
+&lt;/script&gt;
+&lt;/span&gt; or higher, that is, decide whether that property exists or not. Hence, we can safely state the general hierarchy, that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{P}\le\mathcal{NP}\le\#\mathcal{P}
+
+&lt;/script&gt;
+&lt;/span&gt;.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+Let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+P_{1},P_{2}
+
+&lt;/script&gt;
+&lt;/span&gt; be the &lt;i&gt;Perfect Matching&lt;/i&gt; and &lt;i&gt;Hamiltonian Cycle&lt;/i&gt; problems respectively, and let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\#P_{1},\#P_{2}
+
+&lt;/script&gt;
+&lt;/span&gt; be their Counting versions. It is interesting to see whether the hierarchy between problems from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{P}
+
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{NP}
+
+&lt;/script&gt;
+&lt;/span&gt; preserved for their Counting versions as well. For instance, for the problems above, we know that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+P_{1}\le P_{2}
+
+&lt;/script&gt;
+&lt;/span&gt; since &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{P}\subseteq\mathcal{NP}
+
+&lt;/script&gt;
+&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+P_{2}
+
+&lt;/script&gt;
+&lt;/span&gt; is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\mathcal{NP}
+
+&lt;/script&gt;
+&lt;/span&gt;-complete, is that implies also &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\#P_{1}\le\#P_{2}
+
+&lt;/script&gt;
+&lt;/span&gt;?
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
+The short answer is no. In the next section we will show that in a more detailed discussion.
+
+&lt;/div&gt;
+&lt;h1 class=&quot;Section&quot;&gt;
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-2&quot;&gt;2&lt;/a&gt; Counting Makes Problems Much Harder
+
+&lt;/h1&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+
+We start with two basic definitions from the field of boolean logic.
+
+&lt;/div&gt;
+&lt;div class=&quot;Definition&quot;&gt;
+
+A &lt;i&gt;Conjunctive Normal Form&lt;/i&gt; (&lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+CNF
+
+&lt;/script&gt;
+&lt;/span&gt;) formula &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\phi
+
+&lt;/script&gt;
+&lt;/span&gt; other a set of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+n
+
+&lt;/script&gt;
+&lt;/span&gt; boolean variables is defined as &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+
+
+\phi=\bigwedge_{i=1}^{m}C_{i}
+
+
+
+&lt;/script&gt;
+&lt;/span&gt;
+
+where each of its &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+m
+
+&lt;/script&gt;
+&lt;/span&gt; clauses is of the form &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+C_{i}=\bigvee_{j=1}^{\left|C_{i}\right|}\ell_{i,j}
+
+&lt;/script&gt;
+&lt;/span&gt;, that is, the clause is a disjunction of some number of literals. A literal &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\ell_{i,j}
+
+&lt;/script&gt;
+&lt;/span&gt; is a variable or its negation. Note that since there are &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+n
+
+&lt;/script&gt;
+&lt;/span&gt; variables then &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\left|C_{i}\right|\le2n
+
+&lt;/script&gt;
+&lt;/span&gt;.
+
+&lt;/div&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+
+
+
+&lt;/div&gt;
+&lt;div class=&quot;Definition&quot;&gt;
+
+A &lt;i&gt;Disjunctive Normal Form&lt;/i&gt; (&lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+DNF
+
+&lt;/script&gt;
+&lt;/span&gt;) formula &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+\psi
+
+&lt;/script&gt;
+&lt;/span&gt; other a set of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+n
+
+&lt;/script&gt;
+&lt;/span&gt; boolean variables is defined analogously to the &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+CNF
+
+&lt;/script&gt;
+&lt;/span&gt; version, as &lt;span class=&quot;MathJax_Preview&quot;&gt;
+&lt;script type=&quot;math/tex;mode=display&quot;&gt;
+
+
+
+\psi=\bigvee_{i=1}^{m}C_{i}
+
+
+
+&lt;/script&gt;
+&lt;/span&gt;
+
+where each of its &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+m
+
+&lt;/script&gt;
+&lt;/span&gt; clauses is of the form &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+C_{i}=\bigwedge_{j=1}^{\left|C_{i}\right|}\ell_{i,j}
+
+&lt;/script&gt;
+&lt;/span&gt;.
+
+&lt;/div&gt;
+&lt;div class=&quot;Unindented&quot;&gt;
+
+The &lt;i&gt;CNF-SAT&lt;/i&gt; problem, gets as an input a &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+CNF
+
+&lt;/script&gt;
+&lt;/span&gt; boolean formula, and decides whether that formula has a &lt;i&gt;satisfying assignment (s.a.)&lt;/i&gt; or not. That is, an assignment of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+True/False
+
+&lt;/script&gt;
+&lt;/span&gt; for each of its variables such that the formula evaluated to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+True
+
+&lt;/script&gt;
+&lt;/span&gt;. The &lt;i&gt;DNF-SAT&lt;/i&gt; is defined the same but for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+DNF
+
+&lt;/script&gt;
+&lt;/span&gt; formulas rather than &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
+CNF
+
+&lt;/script&gt;
+&lt;/span&gt; ones.
+
+&lt;/div&gt;
+&lt;div class=&quot;Indented&quot;&gt;
+
 We will need the following facts in the coming discussion:
+
 &lt;/div&gt;
 &lt;ol&gt;
 &lt;li&gt;
+
 The &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \neg
+
 &lt;/script&gt;
 &lt;/span&gt; operator (negation) transforms any &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 CNF
+
 &lt;/script&gt;
 &lt;/span&gt; formula &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \phi
+
 &lt;/script&gt;
 &lt;/span&gt; to a &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 DNF
+
 &lt;/script&gt;
 &lt;/span&gt; formula and vice versa. 
+
 &lt;/li&gt;
 &lt;li&gt;
+
 For &lt;i&gt;any&lt;/i&gt; boolean formula &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \phi
+
 &lt;/script&gt;
 &lt;/span&gt; over &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 n
+
 &lt;/script&gt;
 &lt;/span&gt; variables (regardless its form), there are exactly &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 2^{n}
+
 &lt;/script&gt;
 &lt;/span&gt; possible assignments each of which satisfy exactly one from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \left\{ \phi,\neg\phi\right\} 
+
 &lt;/script&gt;
 &lt;/span&gt;. 
+
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;div class=&quot;Unindented&quot;&gt;
 
+
+
 &lt;/div&gt;
 &lt;div class=&quot;Indented&quot;&gt;
+
 It is very easy to solve &lt;i&gt;DNF-SAT&lt;/i&gt; efficiently, meaning, in polynomial time. Given a &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 DNF
+
 &lt;/script&gt;
 &lt;/span&gt; formula &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \psi
+
 &lt;/script&gt;
 &lt;/span&gt;, iterate over its clauses until you find a satisfiable clause then declare that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \psi
+
 &lt;/script&gt;
 &lt;/span&gt; is satisfiable, however, if you failed to find such a clause then declare that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \psi
+
 &lt;/script&gt;
 &lt;/span&gt; is not satisfiable. Observe that any clause of the form &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 C_{i}=\bigwedge_{j=1}^{\left|C_{i}\right|}\ell_{i,j}
+
 &lt;/script&gt;
 &lt;/span&gt; is satisfiable if and only if it does not contains a variable and its negation; which we can check with a single pass over the literals of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 C_{i}
+
 &lt;/script&gt;
 &lt;/span&gt;. As a result, &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 DNFSAT\in\mathcal{P}
+
 &lt;/script&gt;
 &lt;/span&gt;.
+
 &lt;/div&gt;
 &lt;div class=&quot;Indented&quot;&gt;
+
 In contrast to &lt;i&gt;DNF-SAT&lt;/i&gt;, the &lt;i&gt;CNF-SAT&lt;/i&gt; is know to be &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \mathcal{NP}
+
 &lt;/script&gt;
 &lt;/span&gt;-complete, so we &lt;i&gt;believe&lt;/i&gt; that it cannot be solved in polynomial time. Similar to the claim from the previous section, we conclude that &lt;i&gt;CNF-SAT&lt;/i&gt; is “at least harder” as &lt;i&gt;DNF-SAT&lt;/i&gt;, that is, &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 DNFSAT\le CNFSAT
+
 &lt;/script&gt;
 &lt;/span&gt;. However, as regard to the Counting versions of those problems, we can show the opposite inequality; that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#CNFSAT\le\#DNFSAT
+
 &lt;/script&gt;
 &lt;/span&gt;. 
+
 &lt;/div&gt;
 &lt;div class=&quot;Indented&quot;&gt;
+
 To prove that, we need to show that if we could solve &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#DNFSAT
+
 &lt;/script&gt;
 &lt;/span&gt; efficiently, then we could solve &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#CNFSAT
+
 &lt;/script&gt;
 &lt;/span&gt; efficiently. So suppose we have a magical algorithm that can solve &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#DNFSAT
+
 &lt;/script&gt;
 &lt;/span&gt; in polynomial time. Given a &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 CNF
+
 &lt;/script&gt;
 &lt;/span&gt; formula &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \phi
+
 &lt;/script&gt;
 &lt;/span&gt; over &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 n
+
 &lt;/script&gt;
 &lt;/span&gt; boolean variables, construct &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \psi=\neg\phi
+
 &lt;/script&gt;
 &lt;/span&gt; and feed it to the magical algorithm. Let its output be the number &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 t
+
 &lt;/script&gt;
 &lt;/span&gt;, then return &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 2^{n}-t
+
 &lt;/script&gt;
 &lt;/span&gt;. 
+
 &lt;/div&gt;
 &lt;div class=&quot;Indented&quot;&gt;
+
 The correctness of that reduction follows from the two facts we stated earlier. Note that also all the procedures can be executed in polynomial time, so we solved &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#CNFSAT
+
 &lt;/script&gt;
 &lt;/span&gt; in polynomial time using an efficient solver for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#DNFSAT
+
 &lt;/script&gt;
 &lt;/span&gt;, therefore, &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#CNFSAT\le\#DNFSAT
+
 &lt;/script&gt;
 &lt;/span&gt;.
+
 &lt;/div&gt;
 &lt;div class=&quot;Indented&quot;&gt;
+
 Actually, if we will look closely on that reduction, we will see that it should works perfectly for the other direction as well, that is, solving &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#DNFSAT
+
 &lt;/script&gt;
 &lt;/span&gt; by a an efficient algorithm for the &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#CNFSAT
+
 &lt;/script&gt;
 &lt;/span&gt;, so we may conclude that both problems are &lt;b&gt;equally hard&lt;/b&gt;. This is an evidence that the hierarchy between decision problems do not preserved for their Counting versions. Putting it differently, we can say that Counting makes problems much harder, such that even an “easy” problems from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \mathcal{P}
+
 &lt;/script&gt;
 &lt;/span&gt; become harder as the entire &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \mathcal{NP}
+
 &lt;/script&gt;
 &lt;/span&gt; when you consider its Counting version.
+
 &lt;/div&gt;
 &lt;h1 class=&quot;Section&quot;&gt;
 &lt;a class=&quot;toc&quot; name=&quot;toc-Section-3&quot;&gt;3&lt;/a&gt; &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#DNF
+
 &lt;/script&gt;
 &lt;/span&gt; is Also &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#\mathcal{P}
+
 &lt;/script&gt;
 &lt;/span&gt;-Complete
+
 &lt;/h1&gt;
 &lt;div class=&quot;Unindented&quot;&gt;
+
 Since &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#DNF
+
 &lt;/script&gt;
 &lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#CNF
+
 &lt;/script&gt;
 &lt;/span&gt; are equally hard, it is enough to show that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#CNF
+
 &lt;/script&gt;
 &lt;/span&gt; is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#\mathcal{P}
+
 &lt;/script&gt;
 &lt;/span&gt;-complete; for that we need a reduction from any problem in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#\mathcal{P}
+
 &lt;/script&gt;
 &lt;/span&gt; to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#CNF
+
 &lt;/script&gt;
 &lt;/span&gt;. Recall the Cook-Levin reduction which proves that &lt;i&gt;CNF-SAT&lt;/i&gt; is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \mathcal{NP}
+
 &lt;/script&gt;
 &lt;/span&gt;-complete. That reduction can be applied to any &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 P\in\mathcal{NP}
+
 &lt;/script&gt;
 &lt;/span&gt; and produce a polynomial procedure that converts any input &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 x
+
 &lt;/script&gt;
 &lt;/span&gt; for the original problem &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 P
+
 &lt;/script&gt;
 &lt;/span&gt;, to a &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 CNF
+
 &lt;/script&gt;
 &lt;/span&gt; formula &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \phi
+
 &lt;/script&gt;
 &lt;/span&gt; for the problem &lt;i&gt;CNF-SAT&lt;/i&gt;, such that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \phi
+
 &lt;/script&gt;
 &lt;/span&gt; is satisfiable if and only if the decision problem &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 P
+
 &lt;/script&gt;
 &lt;/span&gt; says &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 Yes
+
 &lt;/script&gt;
 &lt;/span&gt; for the original input &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 x
+
 &lt;/script&gt;
 &lt;/span&gt;. That way, any efficient solver for &lt;i&gt;CNF-SAT&lt;/i&gt; solves &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 P
+
 &lt;/script&gt;
 &lt;/span&gt; efficiently, so &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 P\le CNFSAT
+
 &lt;/script&gt;
 &lt;/span&gt;. 
+
 &lt;/div&gt;
 &lt;div class=&quot;Indented&quot;&gt;
+
 An important property of the Cook-Levin reduction is that it keeps the number of s.a. for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \phi
+
 &lt;/script&gt;
 &lt;/span&gt; &lt;u&gt;exactly&lt;/u&gt; as the number of witnesses for the original input &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 x
+
 &lt;/script&gt;
 &lt;/span&gt; of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 P
+
 &lt;/script&gt;
 &lt;/span&gt;. That means, that we can use the same reduction to convert any Counting problem &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#P\in\#\mathcal{P}
+
 &lt;/script&gt;
 &lt;/span&gt; to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#CNF
+
 &lt;/script&gt;
 &lt;/span&gt;. That is, the reduction will yields a procedure to convert any input &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 x
+
 &lt;/script&gt;
 &lt;/span&gt; for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#P
+
 &lt;/script&gt;
 &lt;/span&gt; to a formula &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \phi
+
 &lt;/script&gt;
 &lt;/span&gt; for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#CNF
+
 &lt;/script&gt;
 &lt;/span&gt; such that the number of s.a. of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \phi
+
 &lt;/script&gt;
 &lt;/span&gt; is the solution for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#P\left(x\right)
+
 &lt;/script&gt;
 &lt;/span&gt;. As a result, &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#CNF
+
 &lt;/script&gt;
 &lt;/span&gt; is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#\mathcal{P}
+
 &lt;/script&gt;
 &lt;/span&gt;-complete, and then also &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#DNF
+
 &lt;/script&gt;
 &lt;/span&gt;.
+
 &lt;/div&gt;
 &lt;div class=&quot;Indented&quot;&gt;
+
 Following the conclusion from previous section, we can say further that even a simple problem from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \mathcal{P}
+
 &lt;/script&gt;
 &lt;/span&gt;, can have a Counting version that is not just “harder” but harder as &lt;i&gt;any other problem&lt;/i&gt; in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#\mathcal{P}
+
 &lt;/script&gt;
 &lt;/span&gt;.
+
 &lt;/div&gt;
 &lt;h1 class=&quot;Section&quot;&gt;
 &lt;a class=&quot;toc&quot; name=&quot;toc-Section-4&quot;&gt;4&lt;/a&gt; Is There a Structure inside &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#\mathcal{P}
+
 &lt;/script&gt;
 &lt;/span&gt;?
+
 &lt;/h1&gt;
 &lt;div class=&quot;Unindented&quot;&gt;
+
 Going back to the &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#CNF
+
 &lt;/script&gt;
 &lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#DNF
+
 &lt;/script&gt;
 &lt;/span&gt; problems, we saw that they are related via the relation &lt;span class=&quot;MathJax_Preview&quot;&gt;
 &lt;script type=&quot;math/tex;mode=display&quot;&gt;
 
+
+
 \#CNF\left(\phi\right)+\#DNF\left(\neg\phi\right)=2^{n}
+
+
 
 &lt;/script&gt;
 &lt;/span&gt;
+
  for any &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 CNF
+
 &lt;/script&gt;
 &lt;/span&gt; formula &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \phi
+
 &lt;/script&gt;
 &lt;/span&gt; over &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 n
+
 &lt;/script&gt;
 &lt;/span&gt; boolean variables. We exploited that relation to show that the problems are equally hard when talking about &lt;b&gt;exact-solutions&lt;/b&gt;. However, an hierarchy emerged once we moved to consider&lt;b&gt; approximated solutions&lt;/b&gt; for those problems. Therefore, there is some kind of structure for the family &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#\mathcal{P}
+
 &lt;/script&gt;
 &lt;/span&gt; under the appropriate notion of “solving” the problems.
+
 &lt;/div&gt;
 &lt;div class=&quot;Indented&quot;&gt;
+
 Next post we will discuss an approximation algorithm for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#DNF
+
 &lt;/script&gt;
 &lt;/span&gt; and the hardness of approximating &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#CNF
+
 &lt;/script&gt;
 &lt;/span&gt;, showing that the additive relation from above it not enough for constructing an approximation algorithm for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#CNF
+
 &lt;/script&gt;
 &lt;/span&gt; based on approximation for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+
 \#DNF
+
 &lt;/script&gt;
 &lt;/span&gt;.
-&lt;/div&gt;</content><author><name>Eran Amar</name></author><category term="complexity" /><category term="approximation" /><summary type="html">Warning: MathJax requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser. &amp;lt;/hr&amp;gt;</summary></entry><entry><title type="html">Approximation Algorithm for the Steiner Tree Problem</title><link href="https://eranamar.github.io/site/2017/07/02/Approximation-Algorithm-for-the-Steiner-Tree-Problem.html" rel="alternate" type="text/html" title="Approximation Algorithm for the Steiner Tree Problem" /><published>2017-07-02T00:00:00+03:00</published><updated>2017-07-02T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/07/02/Approximation-Algorithm-for-the-Steiner-Tree-Problem</id><content type="html" xml:base="https://eranamar.github.io/site/2017/07/02/Approximation-Algorithm-for-the-Steiner-Tree-Problem.html">&lt;script type=&quot;math/tex&quot;&gt;
+
+&lt;/div&gt;</content><author><name>Eran Amar</name></author><category term="complexity" /><category term="approximation" /><summary type="html"></summary></entry><entry><title type="html">Approximation Algorithm for the Steiner Tree Problem</title><link href="https://eranamar.github.io/site/2017/07/02/Approximation-Algorithm-for-the-Steiner-Tree-Problem.html" rel="alternate" type="text/html" title="Approximation Algorithm for the Steiner Tree Problem" /><published>2017-07-02T00:00:00+03:00</published><updated>2017-07-02T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/07/02/Approximation-Algorithm-for-the-Steiner-Tree-Problem</id><content type="html" xml:base="https://eranamar.github.io/site/2017/07/02/Approximation-Algorithm-for-the-Steiner-Tree-Problem.html">&lt;script type=&quot;math/tex&quot;&gt;
 
 \newcommand{\lyxlock}{}
 
@@ -4341,347 +5585,4 @@ Next post I will discuss two popular improvements to the recurrent neurons that 
 &lt;/div&gt;
 &lt;div class=&quot;Indented&quot;&gt;
 &lt;b&gt;Acknowledgments:&lt;/b&gt; I want to thank Ron Shiff for his useful comments and corrections to this post.
-&lt;/div&gt;</content><author><name>Eran Amar</name></author><category term="neural_networks" /><summary type="html">Warning: MathJax requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser. &amp;lt;/hr&amp;gt;</summary></entry><entry><title type="html">Memory Efficient Algorithm for Finding Cycles in Graphs</title><link href="https://eranamar.github.io/site/2017/04/06/Memory-Efficient-Algorithm-for-Finding-Cycles-in-Graphs.html" rel="alternate" type="text/html" title="Memory Efficient Algorithm for Finding Cycles in Graphs" /><published>2017-04-06T00:00:00+03:00</published><updated>2017-04-06T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/04/06/Memory-Efficient-Algorithm-for-Finding-Cycles-in-Graphs</id><content type="html" xml:base="https://eranamar.github.io/site/2017/04/06/Memory-Efficient-Algorithm-for-Finding-Cycles-in-Graphs.html">&lt;script type=&quot;math/tex&quot;&gt;
-\newcommand{\lyxlock}{}
-&lt;/script&gt;
-
-&lt;noscript&gt;
-&lt;div class=&quot;warning&quot;&gt;
-Warning: &lt;a href=&quot;http://www.mathjax.org/&quot;&gt;MathJax&lt;/a&gt; requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser.
-&lt;/div&gt;&lt;hr /&gt;
-&amp;lt;/hr&amp;gt;&lt;/noscript&gt;
-
-&lt;h1 class=&quot;Section&quot;&gt;
-&lt;a class=&quot;toc&quot; name=&quot;toc-Section-1&quot;&gt;1&lt;/a&gt; Cycle Detection in Graphs 
-&lt;/h1&gt;
-&lt;div class=&quot;Unindented&quot;&gt;
-Somewhere in 2015, I encountered a nice algorithmic question during an interview for some algotreading company. The question was &lt;i&gt;how one can decide if there is a cycle in an undirected connected graph&lt;/i&gt;? There are two immediate answers here, the first is running &lt;i&gt;Breadth First Search (BFS)&lt;/i&gt; on arbitrary node and memorizing the nodes that were already visited. The search ends either when the algorithm complete scanning the whole graph or when it reach some node twice, outputting “No” or “Yes” respectively. Another possible solution is by running &lt;i&gt;Depth First Search (DFS)&lt;/i&gt; and keeping a variable to count the length of the path explored. The algorithm declare a cycle if the length of the path reach the number of vertices in the graph. For the rest of this post, denote that number by &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-n
-&lt;/script&gt;
-&lt;/span&gt;.
-&lt;/div&gt;
-&lt;div class=&quot;Indented&quot;&gt;
-Those two solutions are simple, and more importantly, have the same &lt;i&gt;space complexity&lt;/i&gt;. That is, both consumes around the same amount of working memory (in bits) ignoring the memory needed for the input and output of the algorithm. Even though DFS have implementation that requires less memory than BFS, ultimately both requires &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\Omega\left(n\log n\right)
-&lt;/script&gt;
-&lt;/span&gt; bits. One can justify the space complexity as follow: both algorithms has to keep track of their search (a queue in BFS and a stack is DFS) which potentially can be as large as the entire graph thus &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\Omega\left(n\right)
-&lt;/script&gt;
-&lt;/span&gt;, and each node need &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\Omega\left(\log n\right)
-&lt;/script&gt;
-&lt;/span&gt; bits for encoding so the total space complexity is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\Omega\left(n\log n\right)
-&lt;/script&gt;
-&lt;/span&gt; bits.
-&lt;/div&gt;
-&lt;div class=&quot;Indented&quot;&gt;
-During the rest of this post we will focus on &lt;i&gt;space complexity&lt;/i&gt; rather than &lt;i&gt;time complexity&lt;/i&gt;. We will present an algorithm that can determine if there is a cycle in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{O}\left(\log^{2}n\right)
-&lt;/script&gt;
-&lt;/span&gt; bits [base on &lt;a class=&quot;URL&quot; href=&quot;http://www.sciencedirect.com/science/article/pii/S002200007080006X&quot;&gt;this paper&lt;/a&gt;] and then discuss the importance of related problem: the &lt;i&gt;s-t connectivity&lt;/i&gt;.
-&lt;/div&gt;
-&lt;h1 class=&quot;Section&quot;&gt;
-&lt;a class=&quot;toc&quot; name=&quot;toc-Section-2&quot;&gt;2&lt;/a&gt; The &lt;i&gt;s-t Connectivity&lt;/i&gt; Problem
-&lt;/h1&gt;
-&lt;h2 class=&quot;Subsection&quot;&gt;
-&lt;a class=&quot;toc&quot; name=&quot;toc-Subsection-2.1&quot;&gt;2.1&lt;/a&gt; Solving &lt;i&gt;s-t connectivity&lt;/i&gt; as a Sub-step
-&lt;/h2&gt;
-&lt;div class=&quot;Unindented&quot;&gt;
-We will start from solving a slightly different problem then uses its solution as a procedure in our cycle-detection algorithm. 
-&lt;/div&gt;
-&lt;div class=&quot;Indented&quot;&gt;
-Introducing the &lt;i&gt;undirected s-t connectivity&lt;/i&gt; problem: The input is an undirected graph &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-G=\left(V,E\right)
-&lt;/script&gt;
-&lt;/span&gt; of size &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-n
-&lt;/script&gt;
-&lt;/span&gt; and two vertices &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-s,t\in V
-&lt;/script&gt;
-&lt;/span&gt;. The output should be &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-1
-&lt;/script&gt;
-&lt;/span&gt; if there is path in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-G
-&lt;/script&gt;
-&lt;/span&gt; that connects &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-s
-&lt;/script&gt;
-&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-t
-&lt;/script&gt;
-&lt;/span&gt;, and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-0
-&lt;/script&gt;
-&lt;/span&gt; otherwise. The &lt;i&gt;directed s-t connectivity&lt;/i&gt; is the about the same but the input graph is directed (i.e its edges has directions) and the output should be &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-1
-&lt;/script&gt;
-&lt;/span&gt; whether there is a &lt;i&gt;directed&lt;/i&gt; path from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-s
-&lt;/script&gt;
-&lt;/span&gt; to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-t
-&lt;/script&gt;
-&lt;/span&gt;.
-&lt;/div&gt;
-&lt;div class=&quot;Indented&quot;&gt;
-Before we present the algorithm, we first define the following predicate: for any &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-u,v\in V
-&lt;/script&gt;
-&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-k\in\mathbb{N}
-&lt;/script&gt;
-&lt;/span&gt; define &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-conn\left(u,v;k\right)=1
-&lt;/script&gt;
-&lt;/span&gt; if exists a path from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-u
-&lt;/script&gt;
-&lt;/span&gt; to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-v
-&lt;/script&gt;
-&lt;/span&gt; of at most &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-k
-&lt;/script&gt;
-&lt;/span&gt; steps (i.e. edges), otherwise &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-conn\left(u,v;k\right)=0
-&lt;/script&gt;
-&lt;/span&gt;. 
-&lt;/div&gt;
-&lt;div class=&quot;Indented&quot;&gt;
-The next observations are key points needed to solve the &lt;i&gt;s-t connectivity &lt;/i&gt;efficiently (both for directed and undirected case).
-&lt;/div&gt;
-&lt;ol&gt;
-&lt;li&gt;
-For any &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-u,v\in V
-&lt;/script&gt;
-&lt;/span&gt; and any &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-k\in\mathbb{N}
-&lt;/script&gt;
-&lt;/span&gt;, we have that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-conn\left(u,v;2^{k}\right)=1
-&lt;/script&gt;
-&lt;/span&gt; if and only if &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\exists w\in V
-&lt;/script&gt;
-&lt;/span&gt; such that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-conn\left(u,w;2^{k-1}\right)=1
-&lt;/script&gt;
-&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-conn\left(w,v;2^{k-1}\right)=1
-&lt;/script&gt;
-&lt;/span&gt;
-&lt;/li&gt;
-&lt;li&gt;
-Let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-u,v\in V
-&lt;/script&gt;
-&lt;/span&gt;, they are connected if and only if &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-conn\left(u,v;2^{\lceil\log n\rceil}\right)=1
-&lt;/script&gt;
-&lt;/span&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&quot;Unindented&quot;&gt;
-From here the algorithm is straight forward: denote the algorithm by &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-Alg\left(u,v;2^{k}\right)
-&lt;/script&gt;
-&lt;/span&gt; that upon receiving &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-u,v
-&lt;/script&gt;
-&lt;/span&gt; from the graph &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-G=\left(V,E\right)
-&lt;/script&gt;
-&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-k\in\mathbb{N}
-&lt;/script&gt;
-&lt;/span&gt;:
-&lt;/div&gt;
-&lt;ol&gt;
-&lt;li&gt;
-If &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-k=0
-&lt;/script&gt;
-&lt;/span&gt; output &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathbf{1}_{\left[u=v\right]}
-&lt;/script&gt;
-&lt;/span&gt;, and if &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-k=1
-&lt;/script&gt;
-&lt;/span&gt; output &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathbf{1}_{\left[u=v\vee\left(u,v\right)\in E\right]}
-&lt;/script&gt;
-&lt;/span&gt;
-&lt;/li&gt;
-&lt;li&gt;
-For each &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-w\in V
-&lt;/script&gt;
-&lt;/span&gt;: if &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-Alg\left(u,w;2^{k-1}\right)=1
-&lt;/script&gt;
-&lt;/span&gt; and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-Alg\left(w,v;2^{k-1}\right)=1
-&lt;/script&gt;
-&lt;/span&gt; then output &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-1
-&lt;/script&gt;
-&lt;/span&gt;
-&lt;/li&gt;
-&lt;li&gt;
-Output &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-0
-&lt;/script&gt;
-&lt;/span&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&quot;Unindented&quot;&gt;
-The solution for &lt;i&gt;s-t connectivity&lt;/i&gt; is achieved by outputting “Yes” if and only if &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-Alg\left(s,t,2^{\lceil\log n\rceil}\right)=1
-&lt;/script&gt;
-&lt;/span&gt;. 
-&lt;/div&gt;
-&lt;div class=&quot;Indented&quot;&gt;
-Obviously, the depth of the recursion is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{O}\left(\log n\right)
-&lt;/script&gt;
-&lt;/span&gt; and in each level of the recursion the algorithm only needs to keep track of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-w
-&lt;/script&gt;
-&lt;/span&gt;, which is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{O}\left(\log n\right)
-&lt;/script&gt;
-&lt;/span&gt; bits, therefore the total memory complexity of the algorithm is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{O}\left(\log^{2}n\right)
-&lt;/script&gt;
-&lt;/span&gt; bits.
-&lt;/div&gt;
-&lt;h2 class=&quot;Subsection&quot;&gt;
-&lt;a class=&quot;toc&quot; name=&quot;toc-Subsection-2.2&quot;&gt;2.2&lt;/a&gt; Extending the algorithm to detect cycles
-&lt;/h2&gt;
-&lt;div class=&quot;Unindented&quot;&gt;
-How solving the &lt;i&gt;s-t connectivity&lt;/i&gt; problem helps us with cycle detection? The next observation answer that: let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-G=\left(V,E\right)
-&lt;/script&gt;
-&lt;/span&gt; be the graph in question and &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-u,v\in V
-&lt;/script&gt;
-&lt;/span&gt; two endpoints of some edge, they must stay connected after removing that edge from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-G
-&lt;/script&gt;
-&lt;/span&gt; if and only if both participating in a cycle contained in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-G
-&lt;/script&gt;
-&lt;/span&gt;.
-&lt;/div&gt;
-&lt;div class=&quot;Indented&quot;&gt;
-For the directed case the algorithm is as follow: iterate over any edge &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\left(u,v\right)\in E
-&lt;/script&gt;
-&lt;/span&gt;, delete it temporarily from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-G
-&lt;/script&gt;
-&lt;/span&gt; and check if &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-Alg\left(v,u;2^{\lceil\log n\rceil}\right)=1
-&lt;/script&gt;
-&lt;/span&gt; on the resulting graph, that is, if &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-v
-&lt;/script&gt;
-&lt;/span&gt; is still connected to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-u
-&lt;/script&gt;
-&lt;/span&gt; even after you delete the edge from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-u
-&lt;/script&gt;
-&lt;/span&gt; to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-v
-&lt;/script&gt;
-&lt;/span&gt;. If &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-Alg\left(v,u;2^{\lceil\log n\rceil}\right)=1
-&lt;/script&gt;
-&lt;/span&gt; then declare a cycle, else, restore back the edge and continue to the next one. Note that this solution also works for undirected graphs. The memory complexity is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{O}\left(\log^{2}n\right)+\log n=\mathcal{O}\left(\log^{2}n\right)
-&lt;/script&gt;
-&lt;/span&gt; and we done.
-&lt;/div&gt;
-&lt;h2 class=&quot;Subsection&quot;&gt;
-&lt;a class=&quot;toc&quot; name=&quot;toc-Subsection-2.3&quot;&gt;2.3&lt;/a&gt; Is it the best we can do?
-&lt;/h2&gt;
-&lt;div class=&quot;Unindented&quot;&gt;
-Actually, for undirected graphs there is an algorithm with &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{O}\left(\log n\right)
-&lt;/script&gt;
-&lt;/span&gt; bits, improving the square on the log from the construction from previous section. The interested reader can read more about it &lt;a class=&quot;URL&quot; href=&quot;http://www.cs.cornell.edu/courses/cs682/2008sp/Handouts/Reingold05.pdf&quot;&gt;here&lt;/a&gt;. For the directed case it is an open question whether we can improve the &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\log^{2}n
-&lt;/script&gt;
-&lt;/span&gt; or not.
-&lt;/div&gt;
-&lt;h2 class=&quot;Subsection&quot;&gt;
-&lt;a class=&quot;toc&quot; name=&quot;toc-Subsection-2.4&quot;&gt;2.4&lt;/a&gt; Beyond Cycles in Graphs
-&lt;/h2&gt;
-&lt;div class=&quot;Unindented&quot;&gt;
-The &lt;i&gt;directed s-t connectivity &lt;/i&gt;problem is important because it captures the “hardness” of any problem that requires logarithmic amount of memory space. The reduction to show that is actually very easy, suppose we have an algorithm that solves some problem in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{O}\left(s\right)
-&lt;/script&gt;
-&lt;/span&gt; space where &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-s
-&lt;/script&gt;
-&lt;/span&gt; is logarithmic in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-n
-&lt;/script&gt;
-&lt;/span&gt; (the size of the input), generate the following directed graph: create a vertex &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-v
-&lt;/script&gt;
-&lt;/span&gt; for any state (memory configuration) of the algorithm. Since its memory is &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{O}\left(s\right)
-&lt;/script&gt;
-&lt;/span&gt;, there are at most &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-2^{\mathcal{O}\left(s\right)}=\mathcal{O}\left(poly\left(n\right)\right)
-&lt;/script&gt;
-&lt;/span&gt; states (thus vertices). Create an edge from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-u
-&lt;/script&gt;
-&lt;/span&gt; to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-v
-&lt;/script&gt;
-&lt;/span&gt; iff &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-v
-&lt;/script&gt;
-&lt;/span&gt; is a valid possible successor state of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-u
-&lt;/script&gt;
-&lt;/span&gt;. Add a vertex &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-t
-&lt;/script&gt;
-&lt;/span&gt; and connects to it all the states that leads to outputting “Yes”. Denote by &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-s
-&lt;/script&gt;
-&lt;/span&gt; the starting-state of the algorithm and now solving the original problem is equivalent to finding a directed path from &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-s
-&lt;/script&gt;
-&lt;/span&gt; to &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-t
-&lt;/script&gt;
-&lt;/span&gt; in the states-graph.
-&lt;/div&gt;
-&lt;div class=&quot;Indented&quot;&gt;
-This reduction was presented by Walter Savitch in 1970, and it also works for Nondeterministic algorithms. The conclusion is that any nondeterministic problem that can be solved in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{O}\left(s\right)
-&lt;/script&gt;
-&lt;/span&gt; space (where &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-s
-&lt;/script&gt;
-&lt;/span&gt; is logarithmic in the size of the input) can be solved deterministically in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{O}\left(s^{2}\right)
-&lt;/script&gt;
-&lt;/span&gt;. Applying that conclusion with the algorithm for &lt;i&gt;directed s-t connectivity&lt;/i&gt; yields that any problem with nondeterministic &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{O}\left(\log n\right)
-&lt;/script&gt;
-&lt;/span&gt; memory can be solved deterministically (via reduction to &lt;i&gt;directed s-t connectivity&lt;/i&gt;) with &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\mathcal{O}\left(\log^{2}n\right)
-&lt;/script&gt;
-&lt;/span&gt; memory.
-&lt;/div&gt;</content><author><name>Eran Amar</name></author><category term="complexity" /><category term="algorithms" /><summary type="html">Warning: MathJax requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser. &amp;lt;/hr&amp;gt;</summary></entry></feed>
+&lt;/div&gt;</content><author><name>Eran Amar</name></author><category term="neural_networks" /><summary type="html">Warning: MathJax requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser. &amp;lt;/hr&amp;gt;</summary></entry></feed>
