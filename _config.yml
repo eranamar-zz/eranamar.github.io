@@ -18,9 +18,9 @@ repository: eranamar/eranamar.github.io
 title: TheoryLunch Blog
 email: eran.amar@weizmann.ac.il
 destination: site/
-disqus: 
+disqus:
   shortname: theorylunch
-description:  
+description:
   Computer science topics over lunch
 baseurl: "/site" # the subpath of your site, e.g. /blog
 url: https://eranamar.github.io # the base hostname & protocol for your site, e.g. http://example.com
@@ -31,14 +31,14 @@ google_analytics: UA-85168990-2
 markdown: kramdown
 future: true
 theme: minima
-gems: 
+plugins: 
   - jekyll-feed
 #  - jekyll-minifier
   - jekyll-sitemap
 exclude:
   - Gemfile
   - Gemfile.lock
-sitemap: 
+sitemap:
   filename: "sitemap.xml"
 tag_page_layout: tag_page
 tag_page_dir: tag
