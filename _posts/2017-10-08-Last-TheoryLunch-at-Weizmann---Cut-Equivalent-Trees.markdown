@@ -4,7 +4,7 @@ author: Eran Amar
 title:  Last TheoryLunch at Weizmann - Cut-Equivalent Trees
 date:   2017-10-08
 comments: true
-tags: graph_theory last_theory_lunch_weizmann
+tags: graphs last_theory_lunch_weizmann
 ---
 
 
