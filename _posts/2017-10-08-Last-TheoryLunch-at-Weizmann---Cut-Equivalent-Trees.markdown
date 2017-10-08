@@ -23,7 +23,7 @@ Warning: <a href="http://www.mathjax.org/">MathJax</a> requires JavaScript to co
 <a class="toc" name="toc-Section-1">1</a> Last TheoryLunch Meeting at Weizmann Institute of Science
 </h1>
 <div class="Unindented">
-For those of you who don’t know, this blog originated from my lunch meetings with my friends at <a class="URL" href="https://www.weizmann.ac.il/feinberg/academics/msc-program-outline">Weizmann Institute of Science</a> during my Master studies. As all good things comes to an end, also does my time at Weizmann, and last week our lunch group gathered for the last time. This post presents the topic discussed on that meeting.
+For those of you who don’t know, this blog originated from my lunch meetings with my friends at <a class="URL" href="https://www.weizmann.ac.il/feinberg/academics/msc-program-outline">Weizmann Institute of Science</a> during my Master studies. As all good things comes to an end, also is my time at Weizmann, and last week our lunch group gathered for the last time. This post presents the topic discussed on that meeting.
 </div>
 <div class="Indented">
 I want to thank my good friends, Yosef Pogrow and Ron Shiff, for the great time we had and for all the enriching lunch meetings (also those which didn’t included theory). Without you guys, this blog would not have been created, I wish you both best of luck ahead!
