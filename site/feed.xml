@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.5.2">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-10-08T10:20:44+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">TheoryLunch Blog</title><subtitle>Computer science topics over lunch</subtitle><author><name>Eran Amar</name></author><entry><title type="html">Last TheoryLunch at Weizmann - Cut-Equivalent Trees</title><link href="https://eranamar.github.io/site/2017/10/08/Last-TheoryLunch-at-Weizmann-Cut-Equivalent-Trees.html" rel="alternate" type="text/html" title="Last TheoryLunch at Weizmann - Cut-Equivalent Trees" /><published>2017-10-08T00:00:00+03:00</published><updated>2017-10-08T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/10/08/Last-TheoryLunch-at-Weizmann---Cut-Equivalent-Trees</id><content type="html" xml:base="https://eranamar.github.io/site/2017/10/08/Last-TheoryLunch-at-Weizmann-Cut-Equivalent-Trees.html">&lt;script type=&quot;math/tex&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.5.2">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2017-10-12T17:58:20+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">TheoryLunch Blog</title><subtitle>Computer science topics over lunch</subtitle><author><name>Eran Amar</name></author><entry><title type="html">Last TheoryLunch at Weizmann - Cut Equivalent Trees</title><link href="https://eranamar.github.io/site/2017/10/08/Last-TheoryLunch-at-Weizmann-Cut-Equivalent-Trees.html" rel="alternate" type="text/html" title="Last TheoryLunch at Weizmann - Cut Equivalent Trees" /><published>2017-10-08T00:00:00+03:00</published><updated>2017-10-08T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/10/08/Last-TheoryLunch-at-Weizmann---Cut-Equivalent-Trees</id><content type="html" xml:base="https://eranamar.github.io/site/2017/10/08/Last-TheoryLunch-at-Weizmann-Cut-Equivalent-Trees.html">&lt;script type=&quot;math/tex&quot;&gt;
 \newcommand{\lyxlock}{}
 &lt;/script&gt;
 
@@ -66,7 +66,7 @@ S\subseteq V
 &lt;/span&gt; such that &lt;span class=&quot;MathJax_Preview&quot;&gt;
 &lt;script type=&quot;math/tex;mode=display&quot;&gt;
 
-S=\arg\min_{S'\subseteq V,s\in S',t\notin S'}w_{G}\left(S'\right)
+S=\arg\min_{S'\subseteq V}w_{G}\left(S'\right)
 
 &lt;/script&gt;
 &lt;/span&gt;
@@ -262,7 +262,10 @@ One interesting question to ask is, &lt;i&gt;what cut-equivalent trees can tell 
 [Krauthgamer and Pogrow, 2017]. Let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 G=\left(V,E_{G},w_{G}\right)
 &lt;/script&gt;
-&lt;/span&gt; be a weighted undirected graph, and let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt; be a weighted undirected graph with &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+n
+&lt;/script&gt;
+&lt;/span&gt; vertices, and let &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 T=\left(V,E_{T},w_{T}\right)
 &lt;/script&gt;
 &lt;/span&gt; be a cut-equivalent tree of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
