@@ -1,7 +1,7 @@
 ---
 layout: post
 author: Eran Amar
-title:  Last TheoryLunch at Weizmann - Cut-Equivalent Trees
+title:  Last TheoryLunch at Weizmann - Cut Equivalent Trees
 date:   2017-10-08
 comments: true
 tags: graphs last_theory_lunch_weizmann
@@ -77,7 +77,7 @@ S\subseteq V
 </span> such that <span class="MathJax_Preview">
 <script type="math/tex;mode=display">
 
-S=\arg\min_{S'\subseteq V,s\in S',t\notin S'}w_{G}\left(S'\right)
+S=\arg\min_{S'\subseteq V}w_{G}\left(S'\right)
 
 </script>
 </span>
@@ -273,7 +273,10 @@ One interesting question to ask is, <i>what cut-equivalent trees can tell us abo
 [Krauthgamer and Pogrow, 2017]. Let <span class="MathJax_Preview"><script type="math/tex">
 G=\left(V,E_{G},w_{G}\right)
 </script>
-</span> be a weighted undirected graph, and let <span class="MathJax_Preview"><script type="math/tex">
+</span> be a weighted undirected graph with <span class="MathJax_Preview"><script type="math/tex">
+n
+</script>
+</span> vertices, and let <span class="MathJax_Preview"><script type="math/tex">
 T=\left(V,E_{T},w_{T}\right)
 </script>
 </span> be a cut-equivalent tree of <span class="MathJax_Preview"><script type="math/tex">
