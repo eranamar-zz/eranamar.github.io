@@ -16,7 +16,7 @@
 author: Eran Amar
 repository: eranamar/eranamar.github.io
 title: TheoryLunch Blog
-email: eran.amar@weizmann.ac.il
+email: eran.amar@gmail.com
 destination: site/
 disqus:
   shortname: theorylunch
@@ -31,7 +31,7 @@ google_analytics: UA-85168990-2
 markdown: kramdown
 future: true
 theme: minima
-plugins: 
+plugins:
   - jekyll-feed
 #  - jekyll-minifier
   - jekyll-sitemap

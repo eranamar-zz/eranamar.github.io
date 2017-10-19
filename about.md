@@ -10,17 +10,18 @@ I will discuss most of the times topics related to Complexity, Probability theor
 
 
 ### What with this name "Theory Lunch"?
- 
-The idea to start with this blog came to me during one of my daily lunch meetings with friends. I figured that some of our discussions can be easily written as posts in a blog, so I started one :)
+
+The idea to start with this blog came to me during my Master studies at [Weizmann Institute of Science](https://www.weizmann.ac.il/feinberg/academics/msc-program-outline), on one of my daily lunch meetings with friends there.
+ I figured that some of our discussions can be easily written as posts in a blog, so I started one :)
 
 
 ### About the Author
 
-My name is Eran Amar, and I am a Master students at [Weizmann Institute of Science](https://www.weizmann.ac.il/feinberg/academics/msc-program-outline) doing applied research in Deep Learning. My advisor is [Prof. Eran Segal](http://www.wisdom.weizmann.ac.il/~/eran/). 
+My name is Eran Amar, and I am a Data Scientist at Crosswise-Oracle.
 Information about my professional experience can be found in my [LinkedIn profile](https://www.linkedin.com/in/eranamar/).
 
-If you find any errors or want to send a comment, you are welcome to contact me via this [email address](mailto:eran.amar@weizmann.ac.il). 
+If you find any errors or want to send a comment, you are welcome to contact me via this [email address](mailto:eran.amar@gmail.com).
 
 ### The Technology
 
-I am using [Jekyll](https://jekyllrb.com/) to generate the files for the site, [Github Pages](https://pages.github.com/) to serve them statically, and [KaTex](https://khan.github.io/KaTeX/) to render the math. There are some hacks that I am using to allow writing the drafts in [Lyx](https://www.lyx.org/AdditionalSoftware) you can contact me for more details.  
+I am using [Jekyll](https://jekyllrb.com/) to generate the files for the site, [Github Pages](https://pages.github.com/) to serve them statically, and [KaTex](https://khan.github.io/KaTeX/) to render the math. There are some hacks that I am using to allow writing the drafts in [Lyx](https://www.lyx.org/AdditionalSoftware) you are welcome to contact me for more details.  
