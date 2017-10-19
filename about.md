@@ -18,7 +18,7 @@ The idea to start with this blog came to me during my Master studies at [Weizman
 ### About the Author
 
 My name is Eran Amar, and I am a Data Scientist at Crosswise-Oracle.
-Information about my professional experience can be found in my [LinkedIn profile](https://www.linkedin.com/in/eranamar/).
+Information about my professional experience can be found in my [LinkedIn profile](https://www.linkedin.com/in/eranamar/). Information about my Teaching experiense and links to projects from my studies can be found [here](https://eranamar.herokuapp.com/).
 
 If you find any errors or want to send a comment, you are welcome to contact me via this [email address](mailto:eran.amar@gmail.com).
 
