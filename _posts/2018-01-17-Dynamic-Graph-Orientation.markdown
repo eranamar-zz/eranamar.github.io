@@ -4,7 +4,7 @@ author: Eran Amar
 title:  Dynamic-Graph Orientation
 date:   2018-01-17
 comments: true
-tags: graphs, streaming_algorithm
+tags: graphs streaming_algorithm
 ---
 
 

@@ -22,7 +22,7 @@ disqus:
   shortname: theorylunch
 description:
   Computer science topics over lunch
-baseurl: "/site" # the subpath of your site, e.g. /blog
+baseurl: /site # the subpath of your site, e.g. /blog
 url: https://eranamar.github.io # the base hostname & protocol for your site, e.g. http://example.com
 url_production: https://eranamar.github.io
 github_username:  eranamar
