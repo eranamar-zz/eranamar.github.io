@@ -29,6 +29,8 @@ github_username:  eranamar
 google_analytics: UA-85168990-2
 # Build settings
 markdown: kramdown
+kramdown:
+  math_engine: mathjax
 future: true
 theme: minima
 plugins:

@@ -66,7 +66,7 @@ u\rightarrow v
 G
 </script>
 </span>, denote it <span class="MathJax_Preview"><script type="math/tex">
-\overrightarrow{G}=\left(V,\overrightarrow{E}\right)
+\hat{G}=\left(V,\hat{E}\right)
 </script>
 </span>. 
 </div>
@@ -74,12 +74,12 @@ G
 We are interested in two metrics: the first is the<i> outgoing degree bound</i>, which is defined by the term <span class="MathJax_Preview">
 <script type="math/tex;mode=display">
 
-deg\left(\overrightarrow{G}\right):=\max_{v\in V}deg_{out}\left(v;\overrightarrow{G}\right)
+deg\left(\hat{G}\right):=\max_{v\in V}deg_{out}\left(v;\hat{G}\right)
 
 </script>
 </span>
  where <span class="MathJax_Preview"><script type="math/tex">
-deg_{out}(v;\overrightarrow{G}):=\left|\left\{ u\in V\mid v\rightarrow u\right\} \right|
+deg_{out}(v;\hat{G}):=\left|\left\{ u\in V\mid v\rightarrow u\right\} \right|
 </script>
 </span> is the number of <span class="MathJax_Preview"><script type="math/tex">
 v
@@ -88,7 +88,7 @@ v
 v
 </script>
 </span> points to, in the oriented graph <span class="MathJax_Preview"><script type="math/tex">
-\overrightarrow{G}
+\hat{G}
 </script>
 </span>.
 </div>
@@ -100,10 +100,10 @@ Due to the fact that <span class="MathJax_Preview"><script type="math/tex">
 G
 </script>
 </span> is acyclic, we know it is actually a collection of one or more trees, then there exists an orientation <span class="MathJax_Preview"><script type="math/tex">
-\overrightarrow{G}
+\hat{G}
 </script>
 </span> in which <span class="MathJax_Preview"><script type="math/tex">
-deg\left(\overrightarrow{G}\right)\le1
+deg\left(\hat{G}\right)\le1
 </script>
 </span> (think that each node points to its parent in its corresponding tree).
 </div>
@@ -226,10 +226,10 @@ To see that infinite oscillation is impossible, consider some optimal orientatio
 G
 </script>
 </span>, denote it <span class="MathJax_Preview"><script type="math/tex">
-\overrightarrow{G}^{*}
+\hat{G}^{*}
 </script>
 </span>, in which <span class="MathJax_Preview"><script type="math/tex">
-deg\left(\overrightarrow{G}^{*}\right)\le1
+deg\left(\hat{G}^{*}\right)\le1
 </script>
 </span>. Suppose that <span class="MathJax_Preview"><script type="math/tex">
 e_{i}=\left(v,u_{1}\right)
@@ -247,7 +247,7 @@ makeSink\left(\cdot\right)
 G_{i}=\left(V,E_{i}\right)
 </script>
 </span> that don’t agree with <span class="MathJax_Preview"><script type="math/tex">
-\overrightarrow{G}^{*}
+\hat{G}^{*}
 </script>
 </span>, after applying <span class="MathJax_Preview"><script type="math/tex">
 makeSink\left(\cdot\right)
@@ -280,7 +280,7 @@ We will show that <span class="MathJax_Preview"><script type="math/tex">
 \phi_{k}
 </script>
 </span>, which is the number of edges conflicting with <span class="MathJax_Preview"><script type="math/tex">
-\overrightarrow{G}^{*}
+\hat{G}^{*}
 </script>
 </span> before applying <span class="MathJax_Preview"><script type="math/tex">
 makeSink\left(u_{k+1}\right)
@@ -304,7 +304,7 @@ makeSink\left(u_{k+1}\right)
 4
 </script>
 </span> other edges, thus the total number of conflicting edges with <span class="MathJax_Preview"><script type="math/tex">
-\overrightarrow{G}^{*}
+\hat{G}^{*}
 </script>
 </span> decreased by at least <span class="MathJax_Preview"><script type="math/tex">
 3

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.6.2">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2018-01-18T07:36:27+02:00</updated><id>https://eranamar.github.io/site/</id><title type="html">TheoryLunch Blog</title><subtitle>Computer science topics over lunch</subtitle><author><name>Eran Amar</name></author><entry><title type="html">Dynamic-Graph Orientation</title><link href="https://eranamar.github.io/site/2018/01/17/Dynamic-Graph-Orientation.html" rel="alternate" type="text/html" title="Dynamic-Graph Orientation" /><published>2018-01-17T00:00:00+02:00</published><updated>2018-01-17T00:00:00+02:00</updated><id>https://eranamar.github.io/site/2018/01/17/Dynamic-Graph-Orientation</id><content type="html" xml:base="https://eranamar.github.io/site/2018/01/17/Dynamic-Graph-Orientation.html">&lt;script type=&quot;math/tex&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.6.2">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2018-01-18T07:45:45+02:00</updated><id>https://eranamar.github.io/site/</id><title type="html">TheoryLunch Blog</title><subtitle>Computer science topics over lunch</subtitle><author><name>Eran Amar</name></author><entry><title type="html">Dynamic-Graph Orientation</title><link href="https://eranamar.github.io/site/2018/01/17/Dynamic-Graph-Orientation.html" rel="alternate" type="text/html" title="Dynamic-Graph Orientation" /><published>2018-01-17T00:00:00+02:00</published><updated>2018-01-17T00:00:00+02:00</updated><id>https://eranamar.github.io/site/2018/01/17/Dynamic-Graph-Orientation</id><content type="html" xml:base="https://eranamar.github.io/site/2018/01/17/Dynamic-Graph-Orientation.html">&lt;script type=&quot;math/tex&quot;&gt;
 \newcommand{\lyxlock}{}
 &lt;/script&gt;
 
@@ -55,7 +55,7 @@ u\rightarrow v
 G
 &lt;/script&gt;
 &lt;/span&gt;, denote it &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\overrightarrow{G}=\left(V,\overrightarrow{E}\right)
+\hat{G}=\left(V,\hat{E}\right)
 &lt;/script&gt;
 &lt;/span&gt;. 
 &lt;/div&gt;
@@ -63,12 +63,12 @@ G
 We are interested in two metrics: the first is the&lt;i&gt; outgoing degree bound&lt;/i&gt;, which is defined by the term &lt;span class=&quot;MathJax_Preview&quot;&gt;
 &lt;script type=&quot;math/tex;mode=display&quot;&gt;
 
-deg\left(\overrightarrow{G}\right):=\max_{v\in V}deg_{out}\left(v;\overrightarrow{G}\right)
+deg\left(\hat{G}\right):=\max_{v\in V}deg_{out}\left(v;\hat{G}\right)
 
 &lt;/script&gt;
 &lt;/span&gt;
  where &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-deg_{out}(v;\overrightarrow{G}):=\left|\left\{ u\in V\mid v\rightarrow u\right\} \right|
+deg_{out}(v;\hat{G}):=\left|\left\{ u\in V\mid v\rightarrow u\right\} \right|
 &lt;/script&gt;
 &lt;/span&gt; is the number of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 v
@@ -77,7 +77,7 @@ v
 v
 &lt;/script&gt;
 &lt;/span&gt; points to, in the oriented graph &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\overrightarrow{G}
+\hat{G}
 &lt;/script&gt;
 &lt;/span&gt;.
 &lt;/div&gt;
@@ -89,10 +89,10 @@ Due to the fact that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script ty
 G
 &lt;/script&gt;
 &lt;/span&gt; is acyclic, we know it is actually a collection of one or more trees, then there exists an orientation &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\overrightarrow{G}
+\hat{G}
 &lt;/script&gt;
 &lt;/span&gt; in which &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-deg\left(\overrightarrow{G}\right)\le1
+deg\left(\hat{G}\right)\le1
 &lt;/script&gt;
 &lt;/span&gt; (think that each node points to its parent in its corresponding tree).
 &lt;/div&gt;
@@ -215,10 +215,10 @@ To see that infinite oscillation is impossible, consider some optimal orientatio
 G
 &lt;/script&gt;
 &lt;/span&gt;, denote it &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\overrightarrow{G}^{*}
+\hat{G}^{*}
 &lt;/script&gt;
 &lt;/span&gt;, in which &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-deg\left(\overrightarrow{G}^{*}\right)\le1
+deg\left(\hat{G}^{*}\right)\le1
 &lt;/script&gt;
 &lt;/span&gt;. Suppose that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 e_{i}=\left(v,u_{1}\right)
@@ -236,7 +236,7 @@ makeSink\left(\cdot\right)
 G_{i}=\left(V,E_{i}\right)
 &lt;/script&gt;
 &lt;/span&gt; that don’t agree with &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\overrightarrow{G}^{*}
+\hat{G}^{*}
 &lt;/script&gt;
 &lt;/span&gt;, after applying &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 makeSink\left(\cdot\right)
@@ -269,7 +269,7 @@ We will show that &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=
 \phi_{k}
 &lt;/script&gt;
 &lt;/span&gt;, which is the number of edges conflicting with &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\overrightarrow{G}^{*}
+\hat{G}^{*}
 &lt;/script&gt;
 &lt;/span&gt; before applying &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 makeSink\left(u_{k+1}\right)
@@ -293,7 +293,7 @@ makeSink\left(u_{k+1}\right)
 4
 &lt;/script&gt;
 &lt;/span&gt; other edges, thus the total number of conflicting edges with &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
-\overrightarrow{G}^{*}
+\hat{G}^{*}
 &lt;/script&gt;
 &lt;/span&gt; decreased by at least &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 3
