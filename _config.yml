@@ -18,8 +18,8 @@ repository: eranamar/eranamar.github.io
 title: TheoryLunch Blog
 email: eran.amar@gmail.com
 destination: site/
-disqus:
-  shortname: theorylunch
+#disqus:
+#  shortname: theorylunch
 description:
   Computer science topics over lunch
 baseurl: /site # the subpath of your site, e.g. /blog
