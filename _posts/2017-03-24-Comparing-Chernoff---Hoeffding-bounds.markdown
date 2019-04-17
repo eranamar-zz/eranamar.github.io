@@ -23,13 +23,13 @@ Warning: <a href="http://www.mathjax.org/">MathJax</a> requires JavaScript to co
 <a class="toc" name="toc-Section-1">1</a> The Definitions and Motivation
 </h1>
 <div class="Unindented">
-Hoeffding and Chernoff bounds (a.k.a “inequalities”) are very common <i>concentration measures</i> that are being used in many fields in computer science. A concentration measure is a way to bound the probability of the sum of random variables to get values outside a neighborhood of the sum of their means. 
+Hoeffding and Chernoff bounds (a.k.a “inequalities”) are very common <i>concentration measures</i> that are being used in many fields in computer science. A concentration measure is a way to bound the probability for the event in which the sum of random variables is “far” from the sum of their means. 
 </div>
 <div class="Indented">
 For example: suppose we have <span class="MathJax_Preview"><script type="math/tex">
 n
 </script>
-</span> (fair) coins to toss and we want to know what is the probability that the total number of heads (i.e sum of indicators) will be “far” from half of the tosses (which is the mean of that sum), say that either <span class="MathJax_Preview"><script type="math/tex">
+</span> (fair) coins to toss and we want to know what is the probability that the total number of heads (i.e sum of indicators) will be “far” from half of the tosses (which is the sum of their means), say that either <span class="MathJax_Preview"><script type="math/tex">
 \#heads>\frac{3}{4}n
 </script>
 </span> or <span class="MathJax_Preview"><script type="math/tex">
@@ -38,23 +38,23 @@ n
 </span>. Chernoff’s and Hoeffding’s bounds can be used to <i>bound</i> the probability for that to happen. 
 </div>
 <div class="Indented">
-Both bounds are similar in their settings and their results, and sometimes it is not clear which bound is better for a given setting; maybe even both bound are equivalent. In this post we will try to get an intuition which bound is stronger (and when). 
+Both bounds are similar in their settings and their results, and sometimes it is not clear which bound is better for a given setting; maybe even both bounds are equivalent. In this post we will try to get an intuition which bound is stronger (and when). 
 </div>
 <div class="Indented">
-Note that each of the bounds have several common variations and we will discuss only the ones which we considered “popular”. Let’s start with the first bound, a multiplicative version of Chernoff’s bound.
+Note that each bounds have several common variations and we will discuss only the ones that are stated below. Let’s start with the first bound, a multiplicative version of Chernoff’s bound.
 </div>
 <div class="Definition">
 Chernoff bound. Let <span class="MathJax_Preview"><script type="math/tex">
 \left\{ X_{i}\right\} _{i=1}^{n}
 </script>
-</span> be independent random variables ranging in <span class="MathJax_Preview"><script type="math/tex">
+</span> be a collection of independent random variables ranging in <span class="MathJax_Preview"><script type="math/tex">
 \left[0,1\right]
 </script>
 </span>, denote <span class="MathJax_Preview"><script type="math/tex">
 X:=\sum_{i=1}^{n}X_{i}
 </script>
 </span> and let <span class="MathJax_Preview"><script type="math/tex">
-\mu:=\mathbb{E}\left[X\right]
+\mu:=\mathbb{E}\left[X\right]=\sum_{i=1}^{n}\mathbb{E}\left[X_{i}\right]
 </script>
 </span>, then for any <span class="MathJax_Preview"><script type="math/tex">
 \epsilon\in\left(0,1\right)
@@ -84,7 +84,7 @@ a<b
 X:=\sum_{i=1}^{n}X_{i}
 </script>
 </span> and let <span class="MathJax_Preview"><script type="math/tex">
-\mu:=\mathbb{E}\left[X\right]
+\mu:=\mathbb{E}\left[X\right]=\sum_{i=1}^{n}\mathbb{E}\left[X_{i}\right]
 </script>
 </span>, then for any <span class="MathJax_Preview"><script type="math/tex">
 t
@@ -113,7 +113,7 @@ In first glance it seems that we cannot compare between the definitions, mostly 
 </span>. The solution for that is to scale and shift the variables to make them takes values in <span class="MathJax_Preview"><script type="math/tex">
 \left[0,1\right]
 </script>
-</span>. We will start with exactly that, and them transform Hoeffding’s inequality into “Chernoff’s”.
+</span>. We will start with exactly that, and then transform Hoeffding’s inequality into “Chernoff’s”.
 </div>
 <div class="Indented">
 So for any <span class="MathJax_Preview"><script type="math/tex">
@@ -128,7 +128,7 @@ Y=\sum_{i=1}^{n}Y_{i}=\frac{X}{b-a}-na
 </span>. Observe that <span class="MathJax_Preview"><script type="math/tex">
 \mathbb{E}\left[Y\right]=\frac{\mu}{b-a}-na
 </script>
-</span>. Clearly, now the range of <span class="MathJax_Preview"><script type="math/tex">
+</span>. Clearly, now the range of the variables <span class="MathJax_Preview"><script type="math/tex">
 \left\{ Y_{i}\right\} _{i=1}^{n}
 </script>
 </span> is <span class="MathJax_Preview"><script type="math/tex">
@@ -180,7 +180,7 @@ a=0
 </span> is now holds whenever <span class="MathJax_Preview"><script type="math/tex">
 t<\mu
 </script>
-</span>, which make sense because Chernoff’s bound, as we defined it in the beginning, only concerned with deviations that are up to <span class="MathJax_Preview"><script type="math/tex">
+</span>, which make sense because Chernoff’s bound, as we defined it, only concerned with deviations that are up to <span class="MathJax_Preview"><script type="math/tex">
 \mu
 </script>
 </span>. 
@@ -208,13 +208,13 @@ nb
 </span>. If <span class="MathJax_Preview"><script type="math/tex">
 nb<3\mu
 </script>
-</span> then Chernoff is stronger and vise versa. We conclude that none of the bounds is always preferred upon the other (which is not so suprising), and the answer to the question “which one to use” depends on the parameters of the distribution in hand.
+</span> then Chernoff is stronger and vise versa. We conclude that none of the bounds is always preferred upon the other (which is not so surprising), and the answer to the question “which one to use” depends on the parameters of the distribution in hand.
 </div>
 <h1 class="Section">
 <a class="toc" name="toc-Section-4">4</a> Chernoff bound is tight!
 </h1>
 <div class="Unindented">
-One suprising fact about Chernoff’s bound is that in some cases it is tight (i.e. gives a lower bound). The theorem below is taken from those <a class="URL" href="https://ece.uwaterloo.ca/~nmousavi/Papers/Chernoff-Tightness.pdf">notes</a> (see the link for the full proof).
+One surprising fact about Chernoff’s bound is that in some cases it is tight (i.e. gives a lower bound). The theorem below is taken from these <a class="URL" href="https://ece.uwaterloo.ca/~nmousavi/Papers/Chernoff-Tightness.pdf">notes</a> (see the link for the full proof).
 </div>
 <div class="Theorem">
 Let <span class="MathJax_Preview"><script type="math/tex">

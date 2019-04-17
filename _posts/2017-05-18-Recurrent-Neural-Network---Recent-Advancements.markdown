@@ -102,7 +102,7 @@ f^{\left(t\right)},i^{\left(t\right)},o^{\left(t\right)}
 </span> on the tuple <span class="MathJax_Preview"><script type="math/tex">
 \left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)
 </script>
-</span>, note that those activations are vectors in <span class="MathJax_Preview"><script type="math/tex">
+</span>, note that these activations are vectors in <span class="MathJax_Preview"><script type="math/tex">
 \left[0,1\right]^{m}
 </script>
 </span>. 
@@ -127,7 +127,7 @@ A new memory-vector is then being computed by <span class="MathJax_Preview">
 </span>. 
 </div>
 <div class="Indented">
-The gate functions are of great importance for LSTM layer, they are what allows the layer to learn short and long term dependencies, and they also help avoiding the <i>exploding and vanishing gradients problem</i>.
+The gate functions are of great importance for LSTM layer, they are what allow the layer to learn short and long term dependencies, and they also help avoiding the <i>exploding and vanishing gradients problem</i>.
 </div>
 <h2 class="Subsection">
 <a class="toc" name="toc-Subsection-2.2">2.2</a> Simple Variations
@@ -325,7 +325,7 @@ Formally, define the following transformation <span class="MathJax_Preview"><scr
 </span> you will see the <i>multiplicative</i> effect of the input vector on the transformation of <span class="MathJax_Preview"><script type="math/tex">
 \mathbf{h}
 </script>
-</span>. That way, the author said, <span class="MathJax_Preview"><script type="math/tex">
+</span>. That way, the authors said, <span class="MathJax_Preview"><script type="math/tex">
 \mathcal{S}'_{\sigma,\tau}
 </script>
 </span> can yield much richer family of input-dependent transformations for <span class="MathJax_Preview"><script type="math/tex">
@@ -405,8 +405,8 @@ BN
 </span> parameters).
 </div>
 <h1 class="Section">
-<a class="toc" name="toc-Section-4">4</a> The Evergrowing Field
+<a class="toc" name="toc-Section-4">4</a> The Ever-growing Field
 </h1>
 <div class="Unindented">
-RNNs is a rapidly growing field and this series only covered a small part of it. There are much more advance models, some of them are only from few months ago. If you are interested in this field, you may find very interesting stuff <a class="URL" href="https://smerity.com/articles/2016/iclr_2017_submissions.html">here</a>. 
+RNNs is a rapidly growing field and this series only covers a small part of it. There are much more advanced models, some of them are only from few months ago. If you are interested in this field, you may find very interesting stuff <a class="URL" href="https://smerity.com/articles/2016/iclr_2017_submissions.html">here</a>. 
 </div>

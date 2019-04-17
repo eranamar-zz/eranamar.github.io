@@ -130,7 +130,7 @@ At first glance it seems trivial to apply dropout to LSTM layers. However, when 
 Several works tried to apply dropout to LSTM layers in several naive ways but without success. It seems that just dropping randomly some coordinates from the recurrent connections <span class="MathJax_Preview"><script type="math/tex">
 \mathbf{h}^{\left(t-1\right)}
 </script>
-</span> impair the ability of the LSTM layer to learn long\short term dependencies. In the next section we will review some works that applied dropout to LSTMs in a way that successfully yields better generalization. 
+</span> impair the ability of the LSTM layer to learn long\short term dependencies and does not improve generalization. In the next section we will review some works that applied dropout to LSTMs in a way that successfully yields better generalization. 
 </div>
 <h1 class="Section">
 <a class="toc" name="toc-Section-3">3</a> Variants
@@ -222,7 +222,7 @@ Small note, the authors also addressed in their paper some issues related to sca
 <a class="toc" name="toc-Subsection-3.5">3.5</a> Zoneout
 </h2>
 <div class="Unindented">
-The very last dropout variation is by <a class="URL" href="https://arxiv.org/abs/1606.01305">David Krueger et al</a>, from 2017. They suggested to treat the memory vector <span class="MathJax_Preview"><script type="math/tex">
+The very last dropout variation (to the day I wrote this post) is by <a class="URL" href="https://arxiv.org/abs/1606.01305">David Krueger et al</a>, from 2017. They suggested to treat the memory vector <span class="MathJax_Preview"><script type="math/tex">
 \mathbf{c}^{\left(t\right)}
 </script>
 </span> and the output vector (a.k.a <i>hidden</i> vector) <span class="MathJax_Preview"><script type="math/tex">
@@ -280,11 +280,11 @@ Observe again that the computation of the candidate hidden-vector is based on <s
 <a class="toc" name="toc-Section-4">4</a> More and More and More
 </h1>
 <div class="Unindented">
-In the last year, dropout for LSTM networks gained more attention, and the list of different variants is growing quickly. This post tried to cover only <i>some</i> fraction of all the variants available out there. It is left for the interested reader to search for the literature for more about this topic. 
+In the last year, dropout for LSTM networks gained more attention, and the list of different variants is growing quickly. This post tried to cover only <i>some</i> fraction of all the variants available out there. It is left for the curious reader to search the literature for more about this topic. 
 </div>
 <div class="Indented">
-Note that some of the dropout variations discussed above can be applied to basic RNN and GRU cells without much modifications - we refer you to the papers themselves for more details. 
+Note that some of the dropout variations discussed above can be applied to basic RNN and GRU cells without much modifications - please refer to the papers themselves for more details. 
 </div>
 <div class="Indented">
-Next post, will discuss recent advancement in the field of RNNs, such as Multiplicative LSTMs, Recurrent Batch Normalization and more.
+Next post, I will discuss recent advancement in the field of RNNs, such as Multiplicative LSTMs, Recurrent Batch Normalization and more.
 </div>

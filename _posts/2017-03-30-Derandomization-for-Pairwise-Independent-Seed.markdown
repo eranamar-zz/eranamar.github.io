@@ -23,37 +23,37 @@ Warning: <a href="http://www.mathjax.org/">MathJax</a> requires JavaScript to co
 <a class="toc" name="toc-Section-1">1</a> Randomized Algorithm Settings
 </h1>
 <div class="Unindented">
-Randomized algorithm is an algorithm that in addition to its input also uses internally <span class="MathJax_Preview"><script type="math/tex">
+Randomized algorithm is an algorithm that in addition to its inputs also uses internally <span class="MathJax_Preview"><script type="math/tex">
 t
 </script>
-</span> coin-tosses (i.e. random bits) in order to decide on its output, so different invocations of the algorithm with the same input may yield different outputs that depends on the results of the coins. One can think about the internal coin-tosses as a binary string <span class="MathJax_Preview"><script type="math/tex">
+</span> coin-tosses (i.e. uniformly random bits) in order to decide on its output, so different invocations of the algorithm with same inputs may yield different outputs that depend on the results of these coins. One can think about the internal coin-tosses as a binary string <span class="MathJax_Preview"><script type="math/tex">
 r
 </script>
 </span> of length <span class="MathJax_Preview"><script type="math/tex">
 t
 </script>
-</span> that is being fixed before the algorithm starts, a.k.a <i>seed</i>, and the randomness now comes from choosing different string for each invocation. 
+</span> that is being fixed before the algorithm starts and being consumed sequentially during the algorithm’s execution. Such string is often called <i>seed</i>, and the randomness within the algorithm now comes from choosing a different string at the beginning of each execution. 
 </div>
 <div class="Indented">
 Note that tossing <span class="MathJax_Preview"><script type="math/tex">
 t
 </script>
-</span> fair coins, is exactly like drawing a random string <span class="MathJax_Preview"><script type="math/tex">
+</span> fair coins, is exactly like drawing uniformly at random a string <span class="MathJax_Preview"><script type="math/tex">
 r
 </script>
 </span> from the set <span class="MathJax_Preview"><script type="math/tex">
 \left\{ 0,1\right\} ^{t}
 </script>
-</span> where all candidates have equal probability (i.e. each has a probability of <span class="MathJax_Preview"><script type="math/tex">
+</span> (i.e. each string has a probability of <span class="MathJax_Preview"><script type="math/tex">
 2^{-t}
 </script>
 </span>).
 </div>
 <div class="Indented">
-Say we have a randomize algorithm <span class="MathJax_Preview"><script type="math/tex">
+Suppose we have a randomized algorithm <span class="MathJax_Preview"><script type="math/tex">
 A
 </script>
-</span> for some problem that we would like to solve. We have a guarantee that for any input <span class="MathJax_Preview"><script type="math/tex">
+</span> that solves a problem of interest. We have a guarantee that for any input <span class="MathJax_Preview"><script type="math/tex">
 x
 </script>
 </span> of length <span class="MathJax_Preview"><script type="math/tex">
@@ -137,7 +137,7 @@ t=\mathcal{O}\left(n\right)
 </span>.
 </div>
 <div class="Indented">
-Terrible, terrible running time.
+That is, of course, terrible running time.
 </div>
 <div class="Indented">
 On the other hand, if <span class="MathJax_Preview"><script type="math/tex">
@@ -146,7 +146,7 @@ t
 </span> is a constant or even up to <span class="MathJax_Preview"><script type="math/tex">
 \mathcal{O}\left(\log n\right)
 </script>
-</span>, then the resulting running time will stay polynomial, and everybody is happy. In the next section we will see that with an additional assumption, we can “decrease” the seed length from <span class="MathJax_Preview"><script type="math/tex">
+</span>, then the resulting running time will stay polynomial, and everyone is happy. In the next section we will see that with an additional assumption, we can “decrease” the seed length from <span class="MathJax_Preview"><script type="math/tex">
 n
 </script>
 </span> to <span class="MathJax_Preview"><script type="math/tex">
@@ -201,19 +201,19 @@ k=2
 
 </div>
 <div class="Indented">
-What this definition have with our settings? observe that up until now we implicitly assumed that the algorithm needs its coins to be fully independent. That is, if we think of <span class="MathJax_Preview"><script type="math/tex">
+What this definition have with our settings? Observe that up until now we implicitly assumed that the algorithm needs its coins to be fully independent. That is, if we think of <span class="MathJax_Preview"><script type="math/tex">
 s
 </script>
-</span> as a series of Bernoulli r.vs then we actually required <span class="MathJax_Preview"><script type="math/tex">
+</span> as a series of Bernoulli RVs then we actually require <span class="MathJax_Preview"><script type="math/tex">
 s
 </script>
-</span> to be <i>t</i>-wise independent family, which is much stronger property than pairwise independence. If we relax that requirement and assume that the algorithm only needs its coins to be pairwise independent, then there is a way (described in next section) to construct <span class="MathJax_Preview"><script type="math/tex">
+</span> to be <i>t</i>-wise independent family, which is a much stronger property compare to the pairwise independence property. If we relax that requirement and assume that the algorithm only needs its coins to be pairwise independent, then there is a way (described in next section) to construct <span class="MathJax_Preview"><script type="math/tex">
 n
 </script>
 </span> <i>pairwise independent</i> bits using only <span class="MathJax_Preview"><script type="math/tex">
 \mathcal{O}\left(\log n\right)
 </script>
-</span> <i>fully independent</i> bits. That construction can be “embedded” into our algorithm such that we ultimately ends up with a procedure that only requires <span class="MathJax_Preview"><script type="math/tex">
+</span> <i>fully independent</i> bits. That construction can be “embedded” into our algorithm such that we ultimately end up with a procedure that only requires <span class="MathJax_Preview"><script type="math/tex">
 \mathcal{O}\left(\log n\right)
 </script>
 </span> fully independent seed. Applying the derandomization method from previous section will result with a deterministic algorithm that will still run in <span class="MathJax_Preview"><script type="math/tex">
@@ -222,7 +222,7 @@ poly\left(n\right)
 </span> time.
 </div>
 <div class="Indented">
-Of course, we may assume pairwise independence only if it won’t break the correctness analysis of the randomized algorithm that we want to derandomize.
+Of course, the aforementioned derandomization method is valid only if the assumption of pairwise independent seed doesn’t break the correctness analysis of the randomized algorithm.
 </div>
 <h1 class="Section">
 <a class="toc" name="toc-Section-4">4</a> Stretching the Seed
@@ -252,7 +252,7 @@ t
 </span>. Let <span class="MathJax_Preview"><script type="math/tex">
 \mathcal{S}=\left\{ \left\langle \mathbf{s},\mathbf{x}\right\rangle _{mod2}\mid\mathbf{x}\in\left\{ 0,1\right\} ^{t},\:\:x\ne\mathbf{0}\right\} 
 </script>
-</span> be the set of all possible sums modulo 2 of those r.vs and note that <span class="MathJax_Preview"><script type="math/tex">
+</span> be the set of all possible sums modulo 2 of those RVs and note that <span class="MathJax_Preview"><script type="math/tex">
 \left|\mathcal{S}\right|=2^{t}-1=\Theta\left(n\right)
 </script>
 </span>, then <span class="MathJax_Preview"><script type="math/tex">
@@ -310,7 +310,7 @@ X
 </span>. Take any <span class="MathJax_Preview"><script type="math/tex">
 b_{1},b_{2}\in\left\{ 0,1\right\} 
 </script>
-</span>. If <span class="MathJax_Preview"><script type="math/tex">
+</span>. In case <span class="MathJax_Preview"><script type="math/tex">
 b_{1}=b_{2}
 </script>
 </span> then <span class="MathJax_Preview">
@@ -324,10 +324,16 @@ b_{1}=b_{2}
 \end{aligned}
 </script>
 </span>
-and we done. And if <span class="MathJax_Preview"><script type="math/tex">
+so <span class="MathJax_Preview"><script type="math/tex">
+X
+</script>
+</span> and <span class="MathJax_Preview"><script type="math/tex">
+Z
+</script>
+</span> are independent. And in case that <span class="MathJax_Preview"><script type="math/tex">
 b_{2}=1-b_{1}
 </script>
-</span> then very similarly we get<span class="MathJax_Preview">
+</span> then similarly we get<span class="MathJax_Preview">
 <script type="math/tex;mode=display">
 \begin{aligned}
 \mathbf{P}\left[X=b_{1},Z=b_{2}\right] & =\mathbf{P}\left[X=b_{1},X+Y=1-b_{1}\right]\\
@@ -381,10 +387,10 @@ M_{2}=\sum_{i\in I_{2}\backslash I_{1}}\mathbf{s}_{i}
 </span> (all the operations in the proof are modulo 2). Note that any pair of variables from <span class="MathJax_Preview"><script type="math/tex">
 \left\{ M_{0},M_{1},M_{2}\right\} 
 </script>
-</span> are independent because they defined on mutually disjoint set of indices. Moreover, by the lemma from above, each of them if it is not a constant zero then it is distributed as <span class="MathJax_Preview"><script type="math/tex">
+</span> are independent because they defined on mutually disjoint set of indices. Moreover, by the lemma from above, each of them if it is not the constant zero then is distributed as <span class="MathJax_Preview"><script type="math/tex">
 Bernoulli\left(0.5\right)
 </script>
-</span>. When plugging in the new notations we get<span class="MathJax_Preview">
+</span>. When plugging-in the new notations we get<span class="MathJax_Preview">
 <script type="math/tex;mode=display">
 \begin{aligned}
 \mathbf{P}\left[X_{1}=b_{1},\:X_{2}=b_{2}\right] & =\mathbf{P}\left[M_{0}+M_{1}=b_{1},\:M_{0}+M_{2}=b_{2}\right]
@@ -424,7 +430,7 @@ X_{1}
 </span> is independent of <span class="MathJax_Preview"><script type="math/tex">
 X_{2}
 </script>
-</span>, and that complete the proof.
+</span>, and that completes the proof.
 </div>
 <div class="Unindented">
 

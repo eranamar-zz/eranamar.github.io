@@ -23,16 +23,16 @@ Warning: <a href="http://www.mathjax.org/">MathJax</a> requires JavaScript to co
 <a class="toc" name="toc-Section-1">1</a> Cycle Detection in Graphs 
 </h1>
 <div class="Unindented">
-Somewhere in 2015, I encountered a nice algorithmic question during an interview for some algotreading company. The question was <i>how one can decide if there is a cycle in an undirected connected graph</i>? There are two immediate answers here, the first is running <i>Breadth First Search (BFS)</i> on arbitrary node and memorizing the nodes that were already visited. The search ends either when the algorithm complete scanning the whole graph or when it reach some node twice, outputting “No” or “Yes” respectively. Another possible solution is by running <i>Depth First Search (DFS)</i> and keeping a variable to count the length of the path explored. The algorithm declare a cycle if the length of the path reach the number of vertices in the graph. For the rest of this post, denote that number by <span class="MathJax_Preview"><script type="math/tex">
+Somewhere in 2015, I encountered a nice algorithmic question during an interview for an algotreading company. The question was <i>how one can decide if there is a cycle in an undirected connected graph</i>? There are two immediate answers here, the first is running <i>Breadth First Search (BFS)</i> on arbitrary node and memorizing the nodes that were already visited. The search ends either when the algorithm complete scanning the whole graph or when it reaches some node twice, outputting “No” or “Yes” respectively. Another possible solution is by running <i>Depth First Search (DFS)</i> and keeping a variable to count the length of the longest path explored. The algorithm declare a cycle if at any point in time the length of the path reaches the number of vertices in the graph. For the rest of this post, denote that number by <span class="MathJax_Preview"><script type="math/tex">
 n
 </script>
 </span>.
 </div>
 <div class="Indented">
-Those two solutions are simple, and more importantly, have the same <i>space complexity</i>. That is, both consumes around the same amount of working memory (in bits) ignoring the memory needed for the input and output of the algorithm. Even though DFS have implementation that requires less memory than BFS, ultimately both requires <span class="MathJax_Preview"><script type="math/tex">
+Those two solutions are simple, and more important for this discussion, have the same <i>space complexity</i>. That is, both consume around the same amount of working memory (in bits) ignoring the memory needed for the input and output of the algorithm. Even though DFS have implementation that requires less memory than BFS, ultimately both requires <span class="MathJax_Preview"><script type="math/tex">
 \Omega\left(n\log n\right)
 </script>
-</span> bits. One can justify the space complexity as follow: both algorithms has to keep track of their search (a queue in BFS and a stack is DFS) which potentially can be as large as the entire graph thus <span class="MathJax_Preview"><script type="math/tex">
+</span> bits. One can (informally) justify the aforementioned space complexity as follow: both algorithms have to keep track of their search (a queue in BFS and a stack is DFS) which potentially can be as large as the entire graph thus <span class="MathJax_Preview"><script type="math/tex">
 \Omega\left(n\right)
 </script>
 </span>, and each node need <span class="MathJax_Preview"><script type="math/tex">
@@ -83,7 +83,7 @@ t
 </span>, and <span class="MathJax_Preview"><script type="math/tex">
 0
 </script>
-</span> otherwise. The <i>directed s-t connectivity</i> is the about the same but the input graph is directed (i.e its edges has directions) and the output should be <span class="MathJax_Preview"><script type="math/tex">
+</span> otherwise. The <i>directed s-t connectivity</i> is about the same but the input graph is directed (i.e its edges has directions) and the output should be <span class="MathJax_Preview"><script type="math/tex">
 1
 </script>
 </span> whether there is a <i>directed</i> path from <span class="MathJax_Preview"><script type="math/tex">
@@ -154,7 +154,7 @@ conn\left(u,v;2^{\lceil\log n\rceil}\right)=1
 </li>
 </ol>
 <div class="Unindented">
-From here the algorithm is straight forward: denote the algorithm by <span class="MathJax_Preview"><script type="math/tex">
+From here the algorithm is straightforward: denote the algorithm by <span class="MathJax_Preview"><script type="math/tex">
 Alg\left(u,v;2^{k}\right)
 </script>
 </span> that upon receiving <span class="MathJax_Preview"><script type="math/tex">
@@ -173,13 +173,13 @@ k\in\mathbb{N}
 If <span class="MathJax_Preview"><script type="math/tex">
 k=0
 </script>
-</span> output <span class="MathJax_Preview"><script type="math/tex">
+</span>, it outputs <span class="MathJax_Preview"><script type="math/tex">
 \mathbf{1}_{\left[u=v\right]}
 </script>
 </span>, and if <span class="MathJax_Preview"><script type="math/tex">
 k=1
 </script>
-</span> output <span class="MathJax_Preview"><script type="math/tex">
+</span> it outputs <span class="MathJax_Preview"><script type="math/tex">
 \mathbf{1}_{\left[u=v\vee\left(u,v\right)\in E\right]}
 </script>
 </span>
@@ -207,7 +207,7 @@ Output <span class="MathJax_Preview"><script type="math/tex">
 </li>
 </ol>
 <div class="Unindented">
-The solution for <i>s-t connectivity</i> is achieved by outputting “Yes” if and only if <span class="MathJax_Preview"><script type="math/tex">
+The solution for <i>s-t connectivity</i> can be achieved by outputting “Yes” if and only if <span class="MathJax_Preview"><script type="math/tex">
 Alg\left(s,t,2^{\lceil\log n\rceil}\right)=1
 </script>
 </span>. 
@@ -218,6 +218,9 @@ Obviously, the depth of the recursion is <span class="MathJax_Preview"><script t
 </script>
 </span> and in each level of the recursion the algorithm only needs to keep track of <span class="MathJax_Preview"><script type="math/tex">
 w
+</script>
+</span> and <span class="MathJax_Preview"><script type="math/tex">
+k
 </script>
 </span>, which is <span class="MathJax_Preview"><script type="math/tex">
 \mathcal{O}\left(\log n\right)
@@ -231,7 +234,7 @@ w
 <a class="toc" name="toc-Subsection-2.2">2.2</a> Extending the algorithm to detect cycles
 </h2>
 <div class="Unindented">
-How solving the <i>s-t connectivity</i> problem helps us with cycle detection? The next observation answer that: let <span class="MathJax_Preview"><script type="math/tex">
+How solving the <i>s-t connectivity</i> problem helps us with cycles detection? The next observation answer that: let <span class="MathJax_Preview"><script type="math/tex">
 G=\left(V,E\right)
 </script>
 </span> be the graph in question and <span class="MathJax_Preview"><script type="math/tex">
@@ -282,7 +285,7 @@ Alg\left(v,u;2^{\lceil\log n\rceil}\right)=1
 Actually, for undirected graphs there is an algorithm with <span class="MathJax_Preview"><script type="math/tex">
 \mathcal{O}\left(\log n\right)
 </script>
-</span> bits, improving the square on the log from the construction from previous section. The interested reader can read more about it <a class="URL" href="http://www.cs.cornell.edu/courses/cs682/2008sp/Handouts/Reingold05.pdf">here</a>. For the directed case it is an open question whether we can improve the <span class="MathJax_Preview"><script type="math/tex">
+</span> bits, improving the square on the log in the construction from previous section. The curious reader can read more about it <a class="URL" href="http://www.cs.cornell.edu/courses/cs682/2008sp/Handouts/Reingold05.pdf">here</a>. For the directed case it is an open question whether we can improve the <span class="MathJax_Preview"><script type="math/tex">
 \log^{2}n
 </script>
 </span> or not.
@@ -291,7 +294,7 @@ Actually, for undirected graphs there is an algorithm with <span class="MathJax_
 <a class="toc" name="toc-Subsection-2.4">2.4</a> Beyond Cycles in Graphs
 </h2>
 <div class="Unindented">
-The <i>directed s-t connectivity </i>problem is important because it captures the “hardness” of any problem that requires logarithmic amount of memory space. The reduction to show that is actually very easy, suppose we have an algorithm that solves some problem in <span class="MathJax_Preview"><script type="math/tex">
+The <i>directed s-t connectivity </i>problem is an important theoretical problem because it captures the “hardness” of any problem that requires logarithmic amount of memory space. The reduction to show that is actually very easy, suppose we have an algorithm that solves some problem in <span class="MathJax_Preview"><script type="math/tex">
 \mathcal{O}\left(s\right)
 </script>
 </span> space where <span class="MathJax_Preview"><script type="math/tex">
@@ -300,7 +303,10 @@ s
 </span> is logarithmic in <span class="MathJax_Preview"><script type="math/tex">
 n
 </script>
-</span> (the size of the input), generate the following directed graph: create a vertex <span class="MathJax_Preview"><script type="math/tex">
+</span> (and <span class="MathJax_Preview"><script type="math/tex">
+n
+</script>
+</span> is the size of the input), generate the following directed graph: create a vertex <span class="MathJax_Preview"><script type="math/tex">
 v
 </script>
 </span> for any state (memory configuration) of the algorithm. Since its memory is <span class="MathJax_Preview"><script type="math/tex">
@@ -345,11 +351,11 @@ s
 </span> is logarithmic in the size of the input) can be solved deterministically in <span class="MathJax_Preview"><script type="math/tex">
 \mathcal{O}\left(s^{2}\right)
 </script>
-</span>. Applying that conclusion with the algorithm for <i>directed s-t connectivity</i> yields that any problem with nondeterministic <span class="MathJax_Preview"><script type="math/tex">
+</span>. Combining that conclusion with the algorithm for <i>directed s-t connectivity</i> yields that any problem with nondeterministic <span class="MathJax_Preview"><script type="math/tex">
 \mathcal{O}\left(\log n\right)
 </script>
-</span> memory can be solved deterministically (via reduction to <i>directed s-t connectivity</i>) with <span class="MathJax_Preview"><script type="math/tex">
+</span> space complexity can be solved deterministically (via reduction to <i>directed s-t connectivity</i>) with <span class="MathJax_Preview"><script type="math/tex">
 \mathcal{O}\left(\log^{2}n\right)
 </script>
-</span> memory.
+</span> space complexity.
 </div>

@@ -60,13 +60,13 @@ m,
 
 </script>
 </span>
-In this post, the second in the series,  we will focus on two activation functions: <span class="MathJax_Preview"><script type="math/tex">
+In this post, which is the second in the series,  we will focus on two activation functions: <span class="MathJax_Preview"><script type="math/tex">
 tanh\left(x\right)=\frac{e^{x}-e^{-x}}{e^{x}+e^{-x}}
 </script>
 </span> and <span class="MathJax_Preview"><script type="math/tex">
 sig\left(x\right)=\left(1+e^{-x}\right)^{-1}
 </script>
-</span>. Next section describe what are <i>gate</i> functions, then we move to review two common improvements to the basic recurrent cell: the LSTM and GRU cells. 
+</span>. Next section describes what are <i>gate</i> functions, then we move to review two common improvements to the basic recurrent cell: the LSTM and GRU cells. 
 </div>
 <h1 class="Section">
 <a class="toc" name="toc-Section-2">2</a> Gate Functions
@@ -93,10 +93,10 @@ tanh
 </span> and <span class="MathJax_Preview"><script type="math/tex">
 sig
 </script>
-</span> functions. We add gates into a recurrent neuron in order to control how much information will flow on the recurrent connection. That is, suppose that <span class="MathJax_Preview"><script type="math/tex">
+</span> functions. We add gates into a recurrent neuron in order to control how much information will flow over the “recurrent connection”. That is, suppose that <span class="MathJax_Preview"><script type="math/tex">
 \mathbf{h}^{\left(t\right)}
 </script>
-</span> is the layer’s current computed state that should be used on the next time step, a gated layer will use the vector <span class="MathJax_Preview"><script type="math/tex">
+</span> is the layer’s current state that should be used at the next time step, a gated layer will use the vector <span class="MathJax_Preview"><script type="math/tex">
 \hat{\mathbf{h}}^{\left(t\right)}=\mathbf{h}^{\left(t\right)}\circ\mathbf{s}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right),
 </script>
 </span> instead of using <span class="MathJax_Preview"><script type="math/tex">
@@ -120,7 +120,7 @@ sig
 <a class="toc" name="toc-Section-3">3</a> LSTM Cell
 </h1>
 <div class="Unindented">
-Long Short Term Memory Cell (LSTM cell) is an improved version of the recurrent neuron that was proposed on 1997. It went through minor modifications until the version presented below (which is from 2013). LSTM cells solve both limitations of the basic recurrent neuron; it prevents the exploding and vanishing gradients problem, and it can <i>remember</i> as well to <i>forget</i>. 
+Long Short Term Memory Cell (LSTM cell) is an improved version of the recurrent neuron that was proposed on 1997. It went through minor modifications until the version presented below (which is from 2013). LSTM cells solve both limitations of the basic recurrent neuron; it prevents the exploding and vanishing gradients problem, and it can <i>remember</i> as well as it can <i>forget</i>. 
 </div>
 <div class="Indented">
 The main addition to the recurrent layer structure is the use of gates and a memory vector for each time step, denoted by <span class="MathJax_Preview"><script type="math/tex">
@@ -182,10 +182,10 @@ and then computes<span class="MathJax_Preview">
 The <i>input</i> and <i>forget</i> gates control the long-short term dependencies (i.e. the recurrent connection), and allow the LSTM layer to adaptively control the balance between new information that come from the state-transition function and the history information that comes from the memory vector, hence the names for the gates: <i>input</i> and <i>forget</i>.
 </div>
 <div class="Indented">
-Another difference from the basic recurrent layer is that LSTM layer controls how much of its inner-memory to expose by using the <i>output</i> gate. That is being formulated in the second equation. 
+Another difference is that LSTM layer controls how much of its inner-memory to expose by using the <i>output</i> gate. That is being formulated in the second equation. 
 </div>
 <div class="Indented">
-The addition of gates is what preventing the exploding and vanishing gradients problem. It makes the LSTM layer able to learn long and short term dependencies at the cost of increasing the number of parameters that are needed to be trained, and that makes the network harder to optimized.
+The addition of gates is what preventing the exploding and vanishing gradients problem. It makes the LSTM layer able to learn long and short term dependencies at the cost of increasing the number of parameters that are needed to be trained, and that makes the network harder to optimize.
 </div>
 <h1 class="Section">
 <a class="toc" name="toc-Section-4">4</a> GRU 
@@ -206,7 +206,7 @@ GRU has two gate functions <span class="MathJax_Preview"><script type="math/tex"
 </span> and the output is <span class="MathJax_Preview"><script type="math/tex">
 \mathbf{h}^{\left(t\right)}
 </script>
-</span> which is being computed as follows: first the layer computes its gates for the current time step, denoted by <span class="MathJax_Preview">
+</span> computed as follow: first the layer computes its gates for the current time step, denoted by <span class="MathJax_Preview">
 <script type="math/tex;mode=display">
 
 \mathbf{z}^{\left(t\right)}:=\mathbf{z}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)
@@ -220,7 +220,7 @@ GRU has two gate functions <span class="MathJax_Preview"><script type="math/tex"
 
 </script>
 </span>
-for the <i>reset gate</i>. Then the output of the layer is computed by<span class="MathJax_Preview">
+for the <i>reset gate</i>. Then the output of the layer is <span class="MathJax_Preview">
 <script type="math/tex;mode=display">
 
 \mathbf{h}^{\left(t\right)}=\left(1-\mathbf{z}^{\left(t\right)}\right)\circ\mathbf{h}^{\left(t-1\right)}+\mathbf{z}^{\left(t\right)}\circ\mathbf{s}\left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\circ\mathbf{r}^{\left(t\right)}\right)
@@ -239,7 +239,7 @@ The term <span class="MathJax_Preview"><script type="math/tex">
 As oppose to the LSTM cell, the GRU doesn’t have an output gate to control how much of its inner state to expose therefore the entire state is being exposed at each time step. 
 </div>
 <div class="Indented">
-Both LSTM and GRU are very common in many recurrent network architectures and achieved great results in many tasks. LSTMs and GRUs can learn dependencies of various lengths which make the network very expressive. However, a too expressive network can leads sometimes to overfitting, to prevent that it is common to use some type of regularization, such as Dropout. 
+Both LSTM and GRU are very common in many recurrent network architectures and achieve great results in many tasks. LSTMs and GRUs can learn dependencies of various lengths which make the network very expressive. However, a too expressive network can leads sometimes to overfitting, to prevent that it is common to use some type of regularization, such as Dropout. 
 </div>
 <div class="Indented">
 Next post I will discuss the dropout variations that are specific for RNNs.
