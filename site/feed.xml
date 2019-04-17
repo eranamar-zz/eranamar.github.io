@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.6.2">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2019-01-15T08:01:44+02:00</updated><id>https://eranamar.github.io/site/</id><title type="html">TheoryLunch Blog</title><subtitle>Computer science topics over lunch</subtitle><author><name>Eran Amar</name></author><entry><title type="html">Dynamic-Graph Orientation</title><link href="https://eranamar.github.io/site/2018/01/17/Dynamic-Graph-Orientation.html" rel="alternate" type="text/html" title="Dynamic-Graph Orientation" /><published>2018-01-17T00:00:00+02:00</published><updated>2018-01-17T00:00:00+02:00</updated><id>https://eranamar.github.io/site/2018/01/17/Dynamic-Graph-Orientation</id><content type="html" xml:base="https://eranamar.github.io/site/2018/01/17/Dynamic-Graph-Orientation.html">&lt;script type=&quot;math/tex&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.6.2">Jekyll</generator><link href="https://eranamar.github.io/site/feed.xml" rel="self" type="application/atom+xml" /><link href="https://eranamar.github.io/site/" rel="alternate" type="text/html" /><updated>2019-04-17T21:20:12+03:00</updated><id>https://eranamar.github.io/site/</id><title type="html">TheoryLunch Blog</title><subtitle>Computer science topics over lunch</subtitle><author><name>Eran Amar</name></author><entry><title type="html">Dynamic-Graph Orientation</title><link href="https://eranamar.github.io/site/2018/01/17/Dynamic-Graph-Orientation.html" rel="alternate" type="text/html" title="Dynamic-Graph Orientation" /><published>2018-01-17T00:00:00+02:00</published><updated>2018-01-17T00:00:00+02:00</updated><id>https://eranamar.github.io/site/2018/01/17/Dynamic-Graph-Orientation</id><content type="html" xml:base="https://eranamar.github.io/site/2018/01/17/Dynamic-Graph-Orientation.html">&lt;script type=&quot;math/tex&quot;&gt;
 \newcommand{\lyxlock}{}
 &lt;/script&gt;
 
@@ -5178,7 +5178,7 @@ f^{\left(t\right)},i^{\left(t\right)},o^{\left(t\right)}
 &lt;/span&gt; on the tuple &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \left(\mathbf{x}^{\left(t\right)},\mathbf{h}^{\left(t-1\right)}\right)
 &lt;/script&gt;
-&lt;/span&gt;, note that those activations are vectors in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt;, note that these activations are vectors in &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \left[0,1\right]^{m}
 &lt;/script&gt;
 &lt;/span&gt;. 
@@ -5203,7 +5203,7 @@ A new memory-vector is then being computed by &lt;span class=&quot;MathJax_Previ
 &lt;/span&gt;. 
 &lt;/div&gt;
 &lt;div class=&quot;Indented&quot;&gt;
-The gate functions are of great importance for LSTM layer, they are what allows the layer to learn short and long term dependencies, and they also help avoiding the &lt;i&gt;exploding and vanishing gradients problem&lt;/i&gt;.
+The gate functions are of great importance for LSTM layer, they are what allow the layer to learn short and long term dependencies, and they also help avoiding the &lt;i&gt;exploding and vanishing gradients problem&lt;/i&gt;.
 &lt;/div&gt;
 &lt;h2 class=&quot;Subsection&quot;&gt;
 &lt;a class=&quot;toc&quot; name=&quot;toc-Subsection-2.2&quot;&gt;2.2&lt;/a&gt; Simple Variations
@@ -5401,7 +5401,7 @@ Formally, define the following transformation &lt;span class=&quot;MathJax_Previ
 &lt;/span&gt; you will see the &lt;i&gt;multiplicative&lt;/i&gt; effect of the input vector on the transformation of &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \mathbf{h}
 &lt;/script&gt;
-&lt;/span&gt;. That way, the author said, &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+&lt;/span&gt;. That way, the authors said, &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \mathcal{S}'_{\sigma,\tau}
 &lt;/script&gt;
 &lt;/span&gt; can yield much richer family of input-dependent transformations for &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
@@ -5481,10 +5481,10 @@ BN
 &lt;/span&gt; parameters).
 &lt;/div&gt;
 &lt;h1 class=&quot;Section&quot;&gt;
-&lt;a class=&quot;toc&quot; name=&quot;toc-Section-4&quot;&gt;4&lt;/a&gt; The Evergrowing Field
+&lt;a class=&quot;toc&quot; name=&quot;toc-Section-4&quot;&gt;4&lt;/a&gt; The Ever-growing Field
 &lt;/h1&gt;
 &lt;div class=&quot;Unindented&quot;&gt;
-RNNs is a rapidly growing field and this series only covered a small part of it. There are much more advance models, some of them are only from few months ago. If you are interested in this field, you may find very interesting stuff &lt;a class=&quot;URL&quot; href=&quot;https://smerity.com/articles/2016/iclr_2017_submissions.html&quot;&gt;here&lt;/a&gt;. 
+RNNs is a rapidly growing field and this series only covers a small part of it. There are much more advanced models, some of them are only from few months ago. If you are interested in this field, you may find very interesting stuff &lt;a class=&quot;URL&quot; href=&quot;https://smerity.com/articles/2016/iclr_2017_submissions.html&quot;&gt;here&lt;/a&gt;. 
 &lt;/div&gt;</content><author><name>Eran Amar</name></author><category term="neural_networks" /><summary type="html">Warning: MathJax requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser. &amp;lt;/hr&amp;gt;</summary></entry><entry><title type="html">Recurrent Neural Network - Dropout for LSTMs</title><link href="https://eranamar.github.io/site/2017/05/12/Recurrent-Neural-Network-Dropout-for-LSTMs.html" rel="alternate" type="text/html" title="Recurrent Neural Network - Dropout for LSTMs" /><published>2017-05-12T00:00:00+03:00</published><updated>2017-05-12T00:00:00+03:00</updated><id>https://eranamar.github.io/site/2017/05/12/Recurrent-Neural-Network---Dropout-for-LSTMs</id><content type="html" xml:base="https://eranamar.github.io/site/2017/05/12/Recurrent-Neural-Network-Dropout-for-LSTMs.html">&lt;script type=&quot;math/tex&quot;&gt;
 \newcommand{\lyxlock}{}
 &lt;/script&gt;
@@ -5606,7 +5606,7 @@ At first glance it seems trivial to apply dropout to LSTM layers. However, when 
 Several works tried to apply dropout to LSTM layers in several naive ways but without success. It seems that just dropping randomly some coordinates from the recurrent connections &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \mathbf{h}^{\left(t-1\right)}
 &lt;/script&gt;
-&lt;/span&gt; impair the ability of the LSTM layer to learn long\short term dependencies. In the next section we will review some works that applied dropout to LSTMs in a way that successfully yields better generalization. 
+&lt;/span&gt; impair the ability of the LSTM layer to learn long\short term dependencies and does not improve generalization. In the next section we will review some works that applied dropout to LSTMs in a way that successfully yields better generalization. 
 &lt;/div&gt;
 &lt;h1 class=&quot;Section&quot;&gt;
 &lt;a class=&quot;toc&quot; name=&quot;toc-Section-3&quot;&gt;3&lt;/a&gt; Variants
@@ -5698,7 +5698,7 @@ Small note, the authors also addressed in their paper some issues related to sca
 &lt;a class=&quot;toc&quot; name=&quot;toc-Subsection-3.5&quot;&gt;3.5&lt;/a&gt; Zoneout
 &lt;/h2&gt;
 &lt;div class=&quot;Unindented&quot;&gt;
-The very last dropout variation is by &lt;a class=&quot;URL&quot; href=&quot;https://arxiv.org/abs/1606.01305&quot;&gt;David Krueger et al&lt;/a&gt;, from 2017. They suggested to treat the memory vector &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
+The very last dropout variation (to the day I wrote this post) is by &lt;a class=&quot;URL&quot; href=&quot;https://arxiv.org/abs/1606.01305&quot;&gt;David Krueger et al&lt;/a&gt;, from 2017. They suggested to treat the memory vector &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
 \mathbf{c}^{\left(t\right)}
 &lt;/script&gt;
 &lt;/span&gt; and the output vector (a.k.a &lt;i&gt;hidden&lt;/i&gt; vector) &lt;span class=&quot;MathJax_Preview&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;
@@ -5756,11 +5756,11 @@ Observe again that the computation of the candidate hidden-vector is based on &l
 &lt;a class=&quot;toc&quot; name=&quot;toc-Section-4&quot;&gt;4&lt;/a&gt; More and More and More
 &lt;/h1&gt;
 &lt;div class=&quot;Unindented&quot;&gt;
-In the last year, dropout for LSTM networks gained more attention, and the list of different variants is growing quickly. This post tried to cover only &lt;i&gt;some&lt;/i&gt; fraction of all the variants available out there. It is left for the interested reader to search for the literature for more about this topic. 
+In the last year, dropout for LSTM networks gained more attention, and the list of different variants is growing quickly. This post tried to cover only &lt;i&gt;some&lt;/i&gt; fraction of all the variants available out there. It is left for the curious reader to search the literature for more about this topic. 
 &lt;/div&gt;
 &lt;div class=&quot;Indented&quot;&gt;
-Note that some of the dropout variations discussed above can be applied to basic RNN and GRU cells without much modifications - we refer you to the papers themselves for more details. 
+Note that some of the dropout variations discussed above can be applied to basic RNN and GRU cells without much modifications - please refer to the papers themselves for more details. 
 &lt;/div&gt;
 &lt;div class=&quot;Indented&quot;&gt;
-Next post, will discuss recent advancement in the field of RNNs, such as Multiplicative LSTMs, Recurrent Batch Normalization and more.
+Next post, I will discuss recent advancement in the field of RNNs, such as Multiplicative LSTMs, Recurrent Batch Normalization and more.
 &lt;/div&gt;</content><author><name>Eran Amar</name></author><category term="neural_networks" /><summary type="html">Warning: MathJax requires JavaScript to correctly process the mathematics on this page. Please enable JavaScript on your browser. &amp;lt;/hr&amp;gt;</summary></entry></feed>
