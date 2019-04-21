@@ -23,10 +23,10 @@ Warning: <a href="http://www.mathjax.org/">MathJax</a> requires JavaScript to co
 <a class="toc" name="toc-Section-1">1</a> Last TheoryLunch Meeting at Weizmann Institute of Science
 </h1>
 <div class="Unindented">
-For those of you who don’t know, this blog originated from my lunch meetings with my friends at <a class="URL" href="https://www.weizmann.ac.il/feinberg/academics/msc-program-outline">Weizmann Institute of Science</a> during my Master studies. As all good things comes to an end, also is my time at Weizmann, and last week our lunch group gathered for the last time. This post presents the topic discussed on that meeting.
+For those of you who don’t know, this blog originated from my lunch meetings with my friends at <a class="URL" href="https://www.weizmann.ac.il/feinberg/academics/msc-program-outline">Weizmann Institute of Science</a> during my Master studies. As all good things comes to an end, also did my time at Weizmann, and last week our lunch group gathered for the last time. This post presents the topic discussed on that meeting.
 </div>
 <div class="Indented">
-I want to thank my good friends, Yosef Pogrow and Ron Shiff, for the great time we had and for all the enriching lunch meetings (also those which didn’t included theory). Without you guys, this blog would not have been created, I wish you both best of luck ahead!
+I want to thank my good friends, Yosef Pogrow and Ron Shiff, for the great time we had and for all the enriching lunch meetings (also those which didn’t include theory). Without you guys, this blog would not have been created, I wish you both best of luck ahead!
 </div>
 <div class="Indented">
 This post, by the way, contains some results from the research of Yosef Pogrow (who also presented most of the meetings). 
@@ -132,7 +132,7 @@ T
 </span> and vertices <span class="MathJax_Preview"><script type="math/tex">
 s\ne t
 </script>
-</span> from it, the min <span class="MathJax_Preview"><script type="math/tex">
+</span> inside it, the min <span class="MathJax_Preview"><script type="math/tex">
 st
 </script>
 </span>-cut is given by <span class="MathJax_Preview"><script type="math/tex">
@@ -240,7 +240,7 @@ G
 </span>, there is a cut-equivalent tree <span class="MathJax_Preview"><script type="math/tex">
 T
 </script>
-</span> that can tells us much about all the minimum cuts in <span class="MathJax_Preview"><script type="math/tex">
+</span> that can tell us much about all the minimum cuts in <span class="MathJax_Preview"><script type="math/tex">
 G
 </script>
 </span>. It can tell us all the possible min-cut values that <span class="MathJax_Preview"><script type="math/tex">
@@ -368,7 +368,7 @@ v\notin S_{T|s}
 </span>. Since <span class="MathJax_Preview"><script type="math/tex">
 uv\in E_{G}
 </script>
-</span> then it participates in <span class="MathJax_Preview"><script type="math/tex">
+</span> then it contributes to <span class="MathJax_Preview"><script type="math/tex">
 w_{G}\left(S_{T|s}\right)
 </script>
 </span>, which is what we wanted to prove.<br>
@@ -458,7 +458,7 @@ n-1
 <div class="Indented">
 <div class="Frameless" style="width: 100%;">
 <div class="center">
-<img alt="figure star_graph.png" class="embedded" src="/site/assets/imgs/2017-10-08-cut-equivalent-trees/star_graph.png" style="width: 5cm; max-width: 1200px; height: auto; max-height: 1200px;">
+<img alt="figure star_graph.png" class="embedded" src="/site/assets/imgs/archive/2017-10-08-cut-equivalent-trees/star_graph.png" style="width: 5cm; height: auto;">
 </div>
 </div>
 </div>

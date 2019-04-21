@@ -23,7 +23,7 @@ Warning: <a href="http://www.mathjax.org/">MathJax</a> requires JavaScript to co
 <a class="toc" name="toc-Section-1">1</a> The Multiway Cut Problem
 </h1>
 <div class="Unindented">
-The <i>Multiway Cut</i> (MC) problem is a generalization of the known<i> Min-Cut</i> problem. The input is the triple <span class="MathJax_Preview"><script type="math/tex">
+The <i>Multiway Cut</i> (MC) problem is a generalization of the known<i> Min-Cut</i> problem. The input is a triple <span class="MathJax_Preview"><script type="math/tex">
 \left(G,T,w\right)
 </script>
 </span> where <span class="MathJax_Preview"><script type="math/tex">
@@ -47,7 +47,7 @@ T\subset V\left(G\right)
 </span> is the set of <i>terminals</i>, and <span class="MathJax_Preview"><script type="math/tex">
 w:E\left(G\right)\to\mathbb{R}_{>0}
 </script>
-</span> is a function that assigned positive weight to each edge in the graph. A valid <i>cut</i> <span class="MathJax_Preview"><script type="math/tex">
+</span> is a function that assign positive weight to each edge in the graph. A valid <i>cut</i> <span class="MathJax_Preview"><script type="math/tex">
 C\subseteq E\left(G\right)
 </script>
 </span> is a set of edges such that any two vertices <span class="MathJax_Preview"><script type="math/tex">
@@ -74,10 +74,10 @@ k=2
 </span> the problem is reduced to the regular <i>Min-Cut</i> problem. For general graphs, any <span class="MathJax_Preview"><script type="math/tex">
 k>2
 </script>
-</span> makes the problem NP-Hard. However, there are efficient algorithms for <i>Multiway-Cut</i> in trees. A tree is a connected acyclic graph. It is easy to see that if our graph is a tree, any two vertices in it must be connected by exactly one path. Moreover, <span class="MathJax_Preview"><script type="math/tex">
+</span> makes the problem NP-Hard. However, there are efficient algorithms for <i>Multiway-Cut</i> in <b>trees</b>. A tree is a connected acyclic graph. It is easy to see that if our graph is a tree, any two vertices in it must be connected by exactly one path. Moreover, <span class="MathJax_Preview"><script type="math/tex">
 m=n-1
 </script>
-</span>. We will use those properties later when we will prove that the algorithm gives an optimal solutions.
+</span>. We will use these properties later when we prove that the algorithm gives an optimal solution.
 </div>
 <h1 class="Section">
 <a class="toc" name="toc-Section-2">2</a> Efficient Algorithm for <i>MC</i> in Trees
@@ -86,7 +86,7 @@ m=n-1
 Let <span class="MathJax_Preview"><script type="math/tex">
 \left(G,T,w\right)
 </script>
-</span> be the input of the algorithm, and <span class="MathJax_Preview"><script type="math/tex">
+</span> be the input to the algorithm, and <span class="MathJax_Preview"><script type="math/tex">
 G
 </script>
 </span> is a tree. To simplify the analysis later on, we will work slightly differently; instead of trying to find a small-weight set <span class="MathJax_Preview"><script type="math/tex">
@@ -149,7 +149,7 @@ G
 A vertex <span class="MathJax_Preview"><script type="math/tex">
 t
 </script>
-</span> is a <i>master node</i> inside a CC if it is a terminal vertex. We then say that all the other vertices in that CC are <i>dominated</i> by <span class="MathJax_Preview"><script type="math/tex">
+</span> inside some CC is a <i>master node</i> if it is a terminal vertex. We then say that all the other vertices in that CC are <i>dominated</i> by <span class="MathJax_Preview"><script type="math/tex">
 t
 </script>
 </span>.
@@ -209,7 +209,7 @@ R_{i-1}
 </span> but with <span class="MathJax_Preview"><script type="math/tex">
 CC_{1},CC_{2}
 </script>
-</span> merged as a single connected component. Otherwise <span class="MathJax_Preview"><script type="math/tex">
+</span> merged into a new single connected component. Otherwise <span class="MathJax_Preview"><script type="math/tex">
 S_{i}=S_{i-1}
 </script>
 </span> and <span class="MathJax_Preview"><script type="math/tex">
@@ -233,11 +233,11 @@ S_{n-1}
 It is easy to see that <span class="MathJax_Preview"><script type="math/tex">
 S_{n-1}
 </script>
-</span> is a valid solution; we started with all the terminals separated in their own CC, and in each iteration we never connect two CCs that have different masters (i.e. terminals). Therefore at the end of the algorithm, all the connected components has at most one master, meaning that the terminals are separated.
+</span> is a valid solution; we started with all the terminals separated in their own CC, and in each iteration we never connect two CCs that have different masters (i.e. terminals). Therefore, in the returned set, all the connected components has at most one master, meaning that the terminals are separated.
 </div>
 <div class="Indented">
 The fact that <span class="MathJax_Preview"><script type="math/tex">
-w\left(S_{n-1}\right)
+S_{n-1}
 </script>
 </span> has maximum weight follows by the two following claims:
 </div>
@@ -339,7 +339,7 @@ S^{*}
 </span> (and such edge exists since <span class="MathJax_Preview"><script type="math/tex">
 G
 </script>
-</span> is connected). We got a new valid solution with greater weight than the weight of <span class="MathJax_Preview"><script type="math/tex">
+</span> is connected). That way, we get a new valid solution with greater weight than the weight of <span class="MathJax_Preview"><script type="math/tex">
 S^{*}
 </script>
 </span> which is a contradiction.<br>
@@ -353,7 +353,7 @@ k
 </span> CCs: If it has less than <span class="MathJax_Preview"><script type="math/tex">
 k
 </script>
-</span>, there must be two terminals in the same CCs which contradicts the correctness of <span class="MathJax_Preview"><script type="math/tex">
+</span>, there must be two terminals in the same CCs, and that contradicts the correctness of <span class="MathJax_Preview"><script type="math/tex">
 S_{n-1}
 </script>
 </span>. If it has more than <span class="MathJax_Preview"><script type="math/tex">
@@ -371,7 +371,7 @@ e_{i}
 </span> wasn’t picked when the algorithm considered it - meaning that it could cause a violation in the sub-graph of the <span class="MathJax_Preview"><script type="math/tex">
 i
 </script>
-</span>th iteration, and since that sub-graph is contained in the sub-graph at the last iteration then we can’t add <span class="MathJax_Preview"><script type="math/tex">
+</span>th iteration, and since that sub-graph is contained in the sub-graph of the last iteration then we can’t add <span class="MathJax_Preview"><script type="math/tex">
 e_{i}
 </script>
 </span> to our solution - a contradiction.
@@ -434,10 +434,10 @@ i
 </span>, so we know that <span class="MathJax_Preview"><script type="math/tex">
 \mathcal{X}_{i-1}
 </script>
-</span> is not empty. It must be that <span class="MathJax_Preview"><script type="math/tex">
+</span> is not empty, and hence <span class="MathJax_Preview"><script type="math/tex">
 S_{i-1}\ne S_{i}
 </script>
-</span>, meaning that in the <span class="MathJax_Preview"><script type="math/tex">
+</span>. In other words, during the <span class="MathJax_Preview"><script type="math/tex">
 i
 </script>
 </span>th iteration, the algorithm added the edge <span class="MathJax_Preview"><script type="math/tex">
@@ -446,7 +446,10 @@ e_{i}=\left\{ v,u\right\}
 </span> to <span class="MathJax_Preview"><script type="math/tex">
 S_{i-1}
 </script>
-</span>.<br>
+</span>, causing <span class="MathJax_Preview"><script type="math/tex">
+\mathcal{X}_{i}
+</script>
+</span> to be empty.<br>
 <br>
 Fix some <span class="MathJax_Preview"><script type="math/tex">
 S^{*}\in\mathcal{X}_{i-1}
@@ -456,6 +459,9 @@ H_{i-1}=\left(V\left(G\right),S_{i-1}\right)
 </script>
 </span> and <span class="MathJax_Preview"><script type="math/tex">
 H^{*}=\left(V\left(G\right),S^{*}\right)
+</script>
+</span> the subgraphs of <span class="MathJax_Preview"><script type="math/tex">
+G
 </script>
 </span>. From the update rule of the algorithm, at least one of <span class="MathJax_Preview"><script type="math/tex">
 \left\{ u,v\right\} 
@@ -476,7 +482,7 @@ u
 H^{*}
 </script>
 </span>, and consider the path connecting <span class="MathJax_Preview"><script type="math/tex">
-r-u
+r\rightsquigarrow u
 </script>
 </span>, note that any edge along that path belongs to <span class="MathJax_Preview"><script type="math/tex">
 S^{*}
@@ -498,13 +504,13 @@ e_{j}
 Observe that it is impossible that <span class="MathJax_Preview"><script type="math/tex">
 w\left(e_{j}\right)>w\left(e_{i}\right)
 </script>
-</span> because that would mean that the algorithm already rejected <span class="MathJax_Preview"><script type="math/tex">
+</span> because it means that the algorithm already rejected <span class="MathJax_Preview"><script type="math/tex">
 e_{j}
 </script>
 </span> on the <span class="MathJax_Preview"><script type="math/tex">
 j
 </script>
-</span>th iteration and since it caused a violation for <span class="MathJax_Preview"><script type="math/tex">
+</span>th iteration and since it was a violation for <span class="MathJax_Preview"><script type="math/tex">
 H_{j}
 </script>
 </span> and <span class="MathJax_Preview"><script type="math/tex">
@@ -545,7 +551,7 @@ H^{*}
 </span> is a sub-graph of a tree, if <span class="MathJax_Preview"><script type="math/tex">
 t=r
 </script>
-</span> then we could close a cycle by adding <span class="MathJax_Preview"><script type="math/tex">
+</span> then we can close a cycle by adding <span class="MathJax_Preview"><script type="math/tex">
 e_{i}
 </script>
 </span> to <span class="MathJax_Preview"><script type="math/tex">
@@ -579,7 +585,7 @@ t
 r
 </script>
 </span> and it must contains the path <span class="MathJax_Preview"><script type="math/tex">
-r-u
+r\rightsquigarrow u
 </script>
 </span>, so removing the edge <span class="MathJax_Preview"><script type="math/tex">
 e_{j}
@@ -590,13 +596,13 @@ t,r
 </span> leading to a valid solution <span class="MathJax_Preview"><script type="math/tex">
 S'=\left(S^{*}\cup\left\{ e_{i}\right\} \right)\backslash\left\{ e_{j}\right\} 
 </script>
-</span>. By that <span class="MathJax_Preview"><script type="math/tex">
+</span>. By the assumption that <span class="MathJax_Preview"><script type="math/tex">
 w\left(e_{j}\right)\le w\left(e_{i}\right)
 </script>
 </span> the weight of <span class="MathJax_Preview"><script type="math/tex">
 S'
 </script>
-</span> can only increased (in fact, the optimality of <span class="MathJax_Preview"><script type="math/tex">
+</span> can only increase (in fact, the optimality of <span class="MathJax_Preview"><script type="math/tex">
 S^{*}
 </script>
 </span> forces <span class="MathJax_Preview"><script type="math/tex">
@@ -615,7 +621,7 @@ S_{i}
 </h1>
 <div class="Unindented">
 Note that <span class="MathJax_Preview"><script type="math/tex">
-E\left(G\right)=n-1
+\left|E\left(G\right)\right|=n-1
 </script>
 </span>, so step 1 of the algorithm takes <span class="MathJax_Preview"><script type="math/tex">
 \mathcal{O}\left(n\log n\right)

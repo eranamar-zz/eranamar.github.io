@@ -235,7 +235,7 @@ e_{i}=\left(u,v\right)
 </span> be the edge given in the current step, and <span class="MathJax_Preview"><script type="math/tex">
 E_{i}=\left\{ e_{1},..,e_{i}\right\} 
 </script>
-</span>. Consider the endpoints if <span class="MathJax_Preview"><script type="math/tex">
+</span>. Consider the endpoints of <span class="MathJax_Preview"><script type="math/tex">
 e_{i}
 </script>
 </span>. If <span class="MathJax_Preview"><script type="math/tex">
@@ -319,7 +319,7 @@ v
 </span>, we apply <span class="MathJax_Preview"><script type="math/tex">
 makeSink\left(v\right)
 </script>
-</span>. That procedure flips the orientation of any outgoing edge of <span class="MathJax_Preview"><script type="math/tex">
+</span>. This procedure will flip the orientation of any outgoing edge of <span class="MathJax_Preview"><script type="math/tex">
 v
 </script>
 </span>. Next, check any neighbor <span class="MathJax_Preview"><script type="math/tex">
@@ -334,7 +334,7 @@ makeSink\left(u\right)
 </span> outgoing edges. This process continues recursively until no orientation is changed.
 </div>
 <div class="Indented">
-Interesting question that immediately pops to mind is, <i>why this process of recursive updates even stops? </i>
+Interesting question that immediately pops to mind is, <i>why this process of recursive updates eventually terminates? </i>
 </div>
 <div class="Indented">
 To see that infinite oscillation is impossible, consider some optimal orientation of <span class="MathJax_Preview"><script type="math/tex">
@@ -349,7 +349,7 @@ deg\left(\hat{G}^{*}\right)\le1
 </span>. Suppose that <span class="MathJax_Preview"><script type="math/tex">
 e_{i}=\left(v,u_{1}\right)
 </script>
-</span> was revealed, and let <span class="MathJax_Preview"><script type="math/tex">
+</span> was revealed to the stream, and let <span class="MathJax_Preview"><script type="math/tex">
 u_{1},u_{2},...
 </script>
 </span> be the chain of vertices that we applied <span class="MathJax_Preview"><script type="math/tex">
@@ -502,7 +502,7 @@ G
 
 </div>
 <div class="Indented">
-It is left to show that at any point in time the total value of previous operation is non negative. The following claim prove that.
+It is left to show that at any point in time, the total value of previous operation is non negative. The following claim prove that.
 </div>
 <div class="Claim">
 For every step, <span class="MathJax_Preview"><script type="math/tex">
@@ -511,7 +511,7 @@ i
 </span>, of the stream, let <span class="MathJax_Preview"><script type="math/tex">
 e_{i}
 </script>
-</span> be the edge given on that step. Let <span class="MathJax_Preview"><script type="math/tex">
+</span> be the edge revealed on that step. Let <span class="MathJax_Preview"><script type="math/tex">
 u_{i,1},u_{i,2},...,u_{i,k_{i}}
 </script>
 </span> be the series of vertices that we applied on <span class="MathJax_Preview"><script type="math/tex">
@@ -541,7 +541,7 @@ t
 </span>.
 </div>
 <div class="Proof">
-Proof by induction on <span class="MathJax_Preview"><script type="math/tex">
+By induction on <span class="MathJax_Preview"><script type="math/tex">
 i
 </script>
 </span>. For <span class="MathJax_Preview"><script type="math/tex">
@@ -587,10 +587,10 @@ t
 
 </div>
 <h1 class="Section">
-<a class="toc" name="toc-Section-4">4</a> Releasing the Strong Assumptions
+<a class="toc" name="toc-Section-4">4</a> Releasing the Assumptions
 </h1>
 <div class="Unindented">
-This post dealt with a relative simple model, in which the stream only revealing new edges but never deleting a previously seen one. In addition, we assume that our graph is acyclic which is also a very strong assumption. There are works that shows more sophisticated streaming algorithm for fully dynamic graphs (i.e. with edges insertions and <i>deletions</i>), and also works on general graphs that are not necessarily acyclic. For further details see this <a class="URL" href="https://arxiv.org/abs/1312.1382">paper</a>.
+This post dealt with a relative simple model, in which the stream only revealing new edges but never deleting a previously seen one. In addition, we assume that our graph is acyclic which is also a very strong assumption. There are works that shows more sophisticated streaming algorithm for fully dynamic graphs (i.e. with edges insertions and <i>deletions</i>), and also works on general graphs that are not necessarily acyclic. Further details can be found in this <a class="URL" href="https://arxiv.org/abs/1312.1382">paper</a>.
 </div>
   
     </div>
