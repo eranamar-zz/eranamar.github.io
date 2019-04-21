@@ -458,7 +458,7 @@ n-1
 <div class="Indented">
 <div class="Frameless" style="width: 100%;">
 <div class="center">
-<img alt="figure star_graph.png" class="embedded" src="/site/assets/imgs/archive/2017-10-08-cut-equivalent-trees/star_graph.png" style="width: 5cm; height: auto;">
+<img alt="figure star_graph.png" class="embedded" src="/site/assets/imgs/2017-10-08-cut-equivalent-trees/star_graph.png" style="width: 5cm; max-width: 1200px; height: auto; max-height: 1200px;">
 </div>
 </div>
 </div>
